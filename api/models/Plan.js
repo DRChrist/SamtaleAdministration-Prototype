@@ -8,7 +8,10 @@
 module.exports = {
 
   attributes: {
-  	
+  	samtaleforløb: {
+  		collection: 'samtaleforløb',
+  		via: 'planer'
+  	}
   }
 };
 

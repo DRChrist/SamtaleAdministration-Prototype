@@ -41,7 +41,7 @@ module.exports = {
   		dominant: true
   	},
   	stillingskategorier: {
-  		collection: 'stilingskategori',
+  		collection: 'stillingskategori',
   		via: 'samtaleforløb',
   		dominant: true
   	},
@@ -54,32 +54,45 @@ module.exports = {
   		collection: 'plan',
   		via: 'samtaleforløb',
   		dominant: true
-  	}
+  	},
+    samtaler: {
+      collection: 'samtale',
+      via: 'samtaleforløb'
+    }
   },
 
-  afterCreate: function(newlyInsertedRecord, cb) {
-  	Samtaleforløb.findOne(newlyInsertedRecord.id)
-  	.populate('runder')
-  	.populate('stillingskategorier')
-  	.populate('afdelinger')
-  	.populate('skemaer')
-  	.populate('planer')
-  	.exec(function(err, samtaleforløb) {
-  		if(err) {
-  			return cb(err);
-  		}
-  		samtaleforløb.runder.add(Math.floor(Math.random() * 30));
-  		samtaleforløb.stillingskategorier.add(Math.floor(Math.random() * 30));
-  		samtaleforløb.afdelinger.add(Math.floor(Math.random() * 30));
-  		samtaleforløb.skemaer.add(Math.floor(Math.random() * 30));
-  		samtaleforløb.planer.add(Math.floor(Math.random() * 30));
-  		samtaleforløb.save(function(err) {
-  			if(err) {
-  				return cb(err);
-  			}
-  			return cb();
-  		});
-  	});
-  }
+  // afterCreate: function(newlyInsertedRecord, cb) {
+  // 	Samtaleforløb.findOne(newlyInsertedRecord.id)
+  // 	.populate('stillingskategorier')
+  // 	.populate('afdelinger')
+  // 	.populate('skemaer')
+  // 	.populate('planer')
+  // 	.exec(function(err, samtaleforløb) {
+  // 		if(err) {
+  // 			return cb(err);
+  // 		}
+  //     if(!samtaleforløb) {
+  //       console.error('Samtaleforløb not properly created');
+  //       return cb(err);
+  //     }
+  //     var rand = Math.floor(Math.random() * 10);
+  //     console.log(samtaleforløb.titel);
+  //     console.log(rand);
+  // 		samtaleforløb.stillingskategorier.add(rand);
+  // 		samtaleforløb.afdelinger.add(rand);
+  // 		// samtaleforløb.skemaer.add(Math.floor(Math.random() * 10));
+  // 		// samtaleforløb.planer.add(Math.floor(Math.random() * 10));
+  // 		samtaleforløb.save(function(err) {
+  // 			if(err) {
+  //         console.log('Error after creating samtaleforløb: ' + samtaleforløb.titel);
+  //         console.error(err);
+  // 				return cb(err);
+  // 			}
+  // 			return cb();
+  // 		});
+  // 	});
+  // }
+
+  
 };
 

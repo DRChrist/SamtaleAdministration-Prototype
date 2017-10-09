@@ -11,7 +11,7 @@ module.exports = {
   	titel: {
   		type: 'string'
   	},
-  	medarbejder: {
+  	medarbejdere: {
   		collection: 'bruger',
   		via: 'stillingskategorier'
   	},

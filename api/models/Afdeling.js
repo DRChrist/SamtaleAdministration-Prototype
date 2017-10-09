@@ -16,7 +16,7 @@ module.exports = {
   	},
   	medarbejdere: {
   		collection: 'bruger',
-  		via: 'afdeling'
+  		via: 'afdelinger'
   	},
   	samtaleforløb: {
   		collection: 'samtaleforløb',

@@ -26,7 +26,33 @@ module.exports = {
   	},
   	runde: {
   		model: 'runde'
-  	}
-  }
+  	},
+    samtaleforløb: {
+      model: 'samtaleforløb'
+    }
+  },
+
+  // afterCreate: function(newlyInsertedRecord, cb) {
+  //   Samtale.findOne(newlyInsertedRecord.id)
+  //   .populate('medarbejder')
+  //   .populate('runde')
+  //   .populate('samtaleforløb')
+  //   .exec(function(err, samtale) {
+  //     if(err) {
+  //       return cb(err);
+  //     }
+  //     samtale.medarbejder.add(Math.floor(Math.random() * 30));
+  //     samtale.runde.add(Math.floor(Math.random() * 10));
+  //     samtale.samtaleforløb.add(Math.floor(Math.random() * 10));
+  //     samtale.save(function(err) {
+  //       if(err) {
+  //         return cb(err);
+  //       }
+  //       return cb();
+  //     });
+  //   });
+  // }
+
+  
 };
 

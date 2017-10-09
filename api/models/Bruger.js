@@ -36,30 +36,29 @@ module.exports = {
   	},
   	samtaler: {
   		collection: 'samtale',
-  		via: 'medarbejder',
-  		dominant: true
+  		via: 'medarbejder'
   	}
   },
 
-  afterCreate: function(newlyInsertedRecord, cb) {
-  	Bruger.findOne(newlyInsertedRecord.id)
-  	.populate('stillingskategorier')
-  	.populate('afdelinger')
-  	.populate('samtaler')
-  	.exec(function(err, bruger) {
-  		if(err) {
-  			return cb(err);
-  		}
-  		bruger.stillingskategorier.add(Math.floor(Math.random() * 30));
-  		bruger.afdelinger.add(Math.floor(Math.random() * 30));
-  		bruger.samtaler.add(Math.floor(Math.random() * 30));
-  		bruger.save(function(err) {
-  			if(err) {
-  				return cb(err);
-  			}
-  			return cb();
-  		});
-  	});
-  }
+  // afterCreate: function(newlyInsertedRecord, cb) {
+  // 	Bruger.findOne(newlyInsertedRecord.id)
+  // 	.populate('stillingskategorier')
+  // 	.populate('afdelinger')
+  // 	.exec(function(err, bruger) {
+  // 		if(err) {
+  // 			return cb(err);
+  // 		}
+  // 		bruger.stillingskategorier.add(Math.floor(Math.random() * 10));
+  // 		bruger.afdelinger.add(Math.floor(Math.random() * 10));
+  // 		bruger.save(function(err) {
+  // 			if(err) {
+  // 				return cb(err);
+  // 			}
+  // 			return cb();
+  // 		});
+  // 	});
+  // }
+
+  
 };
 
