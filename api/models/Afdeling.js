@@ -18,8 +18,8 @@ module.exports = {
   		collection: 'bruger',
   		via: 'afdelinger'
   	},
-  	samtaleforløb: {
-  		collection: 'samtaleforløb',
+  	samtaleforloeb: {
+  		collection: 'samtaleforloeb',
   		via: 'afdelinger'
   	}
   }

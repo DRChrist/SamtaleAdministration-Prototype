@@ -15,8 +15,8 @@ module.exports = {
   		collection: 'bruger',
   		via: 'stillingskategorier'
   	},
-  	samtaleforløb: {
-  		collection: 'samtaleforløb',
+  	samtaleforloeb: {
+  		collection: 'samtaleforloeb',
   		via: 'stillingskategorier'
   	}
   }

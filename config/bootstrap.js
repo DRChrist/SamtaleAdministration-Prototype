@@ -26,18 +26,18 @@ module.exports.bootstrap = function(cb) {
 			},
 			function(callback) {
 				createTestStillingskategorier(callback);
-			},
+      },
+      function(callback) {
+        createTestSamtaler(callback);
+      },
+      function(callback) {
+        createTestBrugere(callback);
+      },
+      function(callback) {
+        createTestRunder(callback);
+      },
 			function(callback) {
-				createTestSamtaleforløb(callback);
-			},
-			function(callback) {
-				createTestBrugere(callback);
-			},
-			function(callback) {
-				createTestSamtaler(callback);
-			},
-			function(callback) {
-				createTestRunder(callback);
+				createTestSamtaleforloeb(callback);
 			}
 			], function(err) {
 				if(err) {
@@ -60,7 +60,6 @@ module.exports.bootstrap = function(cb) {
         if(err) {
           return callback(err);
         }
-        console.log(createdBruger.fornavn);
         next(err);
       });
     }, function(err) {
@@ -72,19 +71,18 @@ module.exports.bootstrap = function(cb) {
   }
 
 
-  function createTestSamtaleforløb(callback) {
+  function createTestSamtaleforloeb(callback) {
     async.times(10, function(n, next) {
-      Samtaleforløb.create({
+      Samtaleforloeb.create({
         titel: faker.company.bsNoun(),
         beskrivelse: faker.lorem.sentence(6),
         invitationsInterval: faker.random.number({min:100, max:350}),
         invitationsFrist: faker.random.number({min:14, max:60}),
-        arkiveret: faker.random.boolean()
-      }).exec(function(err, createdSamtaleforløb) {
+        status: faker.random.arrayElement(['aktiv', 'inaktiv', 'arkiveret'])
+      }).exec(function(err, createdSamtaleforloeb) {
         if(err) {
           return callback(err);
         }
-        console.log(createdSamtaleforløb.titel);
         next(err);
       });
     }, function(err) {
@@ -105,7 +103,6 @@ module.exports.bootstrap = function(cb) {
         if(err) {
           return callback(err);
         }
-        console.log(createdAfdeling.afsnitskode);
         next(err);
       });
     }, function(err) {
@@ -118,13 +115,22 @@ module.exports.bootstrap = function(cb) {
 
 
   function createTestRunder(callback) {
+    var count = 0;
+    Runde.create({
+      titel: faker.lorem.words(2),
+      status: 'aktiv'
+    }).exec(function(err, createdRunde){
+      console.log('Aktiv runde kreeret');
+    });
     async.times(10, function(n, next) {
       Runde.create({
-        titel: faker.lorem.words(2)
+        titel: faker.lorem.words(2),
+        status: faker.random.arrayElement(['kommende', 'arkiveret'])
       }).exec(function(err, createdRunde) {
         if(err) {
           return callback(err);
         }
+        console.log(count++);
         next(err);
       });
     }, function(err) {
@@ -166,7 +172,6 @@ module.exports.bootstrap = function(cb) {
         if(err) {
           return callback(err);
         }
-        console.log(createdStillingskategori.titel);
         next(err);
       });
     }, function(err) {

@@ -40,24 +40,38 @@ module.exports = {
   	}
   },
 
-  // afterCreate: function(newlyInsertedRecord, cb) {
-  // 	Bruger.findOne(newlyInsertedRecord.id)
-  // 	.populate('stillingskategorier')
-  // 	.populate('afdelinger')
-  // 	.exec(function(err, bruger) {
-  // 		if(err) {
-  // 			return cb(err);
-  // 		}
-  // 		bruger.stillingskategorier.add(Math.floor(Math.random() * 10));
-  // 		bruger.afdelinger.add(Math.floor(Math.random() * 10));
-  // 		bruger.save(function(err) {
-  // 			if(err) {
-  // 				return cb(err);
-  // 			}
-  // 			return cb();
-  // 		});
-  // 	});
-  // }
+  afterCreate: function(newlyInsertedRecord, cb) {
+  	Bruger.findOne(newlyInsertedRecord.id)
+  	.exec(function(err, bruger) {
+  		if(err) {
+  			return cb(err);
+  		}
+      Stillingskategori.find().exec(function(err, stillingskategorier) {
+        if(err) {
+          return cb(err);
+        }
+        bruger.stillingskategorier.add(_.sample(stillingskategorier).id);
+        Afdeling.find().exec(function(err, afdelinger) {
+          if(err) {
+            return cb(err);
+          }
+          bruger.afdelinger.add(_.sample(afdelinger).id);
+          Samtale.find().exec(function(err, samtaler) {
+            if(err) {
+              return cb(err);
+            }
+            bruger.samtaler.add(_.sample(samtaler).id);
+      		  bruger.save(function(err) {
+        			if(err) {
+        				return cb(err);
+        			}
+      			return cb();
+      		  });
+          });
+        });
+    	});
+    });
+  }
 
   
 };

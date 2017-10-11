@@ -27,8 +27,8 @@ module.exports = {
   	runde: {
   		model: 'runde'
   	},
-    samtaleforløb: {
-      model: 'samtaleforløb'
+    samtaleforloeb: {
+      model: 'samtaleforloeb'
     }
   },
 
@@ -36,19 +36,34 @@ module.exports = {
   //   Samtale.findOne(newlyInsertedRecord.id)
   //   .populate('medarbejder')
   //   .populate('runde')
-  //   .populate('samtaleforløb')
+  //   .populate('samtaleforloeb')
   //   .exec(function(err, samtale) {
   //     if(err) {
   //       return cb(err);
   //     }
-  //     samtale.medarbejder.add(Math.floor(Math.random() * 30));
-  //     samtale.runde.add(Math.floor(Math.random() * 10));
-  //     samtale.samtaleforløb.add(Math.floor(Math.random() * 10));
-  //     samtale.save(function(err) {
+  //     Bruger.find().exec(function(err, brugere) {
   //       if(err) {
   //         return cb(err);
   //       }
-  //       return cb();
+  //       samtale.medarbejder.add(_.sample(brugere).id);
+  //       Runde.find().exec(function(err, runder) {
+  //         if(err) {
+  //           return cb(err);
+  //         }
+  //         samtale.runde.add(_.sample(runder).id);
+  //         Samtaleforloeb.find().exec(function(err, samtaleforløb){
+  //           if(err) {
+  //             return cb(err);
+  //           }
+  //           samtale.samtaleforloeb.add(_.sample(samtaleforløb).id);
+  //           samtale.save(function(err) {
+  //             if(err) {
+  //               return cb(err);
+  //             }
+  //             return cb();
+  //           });
+  //         });
+  //       });
   //     });
   //   });
   // }

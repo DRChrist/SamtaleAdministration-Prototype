@@ -11,28 +11,37 @@ module.exports = {
   	titel: {
   		type: 'string'
   	},
+    status: {
+      type: 'string',
+      enum: ['aktiv', 'kommende', 'arkiveret']
+    },
   	samtaler: {
   		collection: 'samtale',
   		via: 'runde'
   	},
-  	samtaleforløb: {
-  		model: 'samtaleforløb'
+  	samtaleforloeb: {
+  		collection: 'samtaleforloeb',
+      via: 'runder'
   	}
   },
 
-  // afterCreate: function(newlyInsertedRecord, cb) {
-  // 	Runde.findOne(newlyInsertedRecord.id)
-  // 	.populate('samtaleforløb')
-  // 	.exec(function (err, runde) {
-  // 		runde.samtaleforløb.add(Math.floor(Math.random() * 10));
-  // 		runde.save(function(err) {
-  // 			if(err) {
-  // 				return cb(err);
-  // 			}
-  // 			return cb();
-  // 		});
-  // 	});
-  // }
+  afterCreate: function(newlyInsertedRecord, cb) {
+  	Runde.findOne(newlyInsertedRecord.id)
+  	.exec(function (err, runde) {
+  		Samtale.find().exec(function(err, samtaler) {
+        if(err) {
+          return cb(err);
+        }
+        runde.samtaler.add(_.sample(samtaler).id);
+        runde.save(function(err) {
+          if(err) {
+            return cb(err);
+          }
+          return cb();
+        });
+      });
+  	});
+  }
 
   
 };

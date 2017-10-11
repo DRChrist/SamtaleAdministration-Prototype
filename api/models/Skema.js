@@ -8,8 +8,8 @@
 module.exports = {
 
   attributes: {
-  	samtaleforløb: {
-  		collection: 'samtaleforløb',
+  	samtaleforloeb: {
+  		collection: 'samtaleforloeb',
   		via: 'skemaer'
   	}
   }
