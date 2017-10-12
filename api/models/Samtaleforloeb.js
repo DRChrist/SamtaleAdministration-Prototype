@@ -24,10 +24,7 @@ module.exports = {
   	},
   	status: {
   		type: 'string',
-      enum: ['aktiv', 'inaktiv', 'arkiveret']
-  	},
-  	godkendt: {
-  		type: 'boolean'
+      enum: ['aktiv', 'inaktiv', 'arkiveret', 'godkendt']
   	},
   	runder: {
   		collection: 'runde',

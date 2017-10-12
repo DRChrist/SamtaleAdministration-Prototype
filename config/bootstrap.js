@@ -78,7 +78,7 @@ module.exports.bootstrap = function(cb) {
         beskrivelse: faker.lorem.sentence(6),
         invitationsInterval: faker.random.number({min:100, max:350}),
         invitationsFrist: faker.random.number({min:14, max:60}),
-        status: faker.random.arrayElement(['aktiv', 'inaktiv', 'arkiveret'])
+        status: faker.random.arrayElement(['aktiv', 'inaktiv', 'arkiveret', 'godkendt'])
       }).exec(function(err, createdSamtaleforloeb) {
         if(err) {
           return callback(err);
@@ -115,13 +115,12 @@ module.exports.bootstrap = function(cb) {
 
 
   function createTestRunder(callback) {
-    var count = 0;
     Runde.create({
       titel: faker.lorem.words(2),
       status: 'aktiv'
     }).exec(function(err, createdRunde){
       console.log('Aktiv runde kreeret');
-    });
+      });
     async.times(10, function(n, next) {
       Runde.create({
         titel: faker.lorem.words(2),
@@ -130,7 +129,6 @@ module.exports.bootstrap = function(cb) {
         if(err) {
           return callback(err);
         }
-        console.log(count++);
         next(err);
       });
     }, function(err) {
