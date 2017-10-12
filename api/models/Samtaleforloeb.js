@@ -40,16 +40,11 @@ module.exports = {
   		via: 'samtaleforloeb',
   		dominant: true
   	},
-  	skemaer: {
-  		collection: 'skema',
-  		via: 'samtaleforloeb',
-  		dominant: true
-  	},
-  	planer: {
-  		collection: 'plan',
-  		via: 'samtaleforloeb',
-  		dominant: true
-  	},
+  	ressourcer: {
+      collection: 'ressource',
+      via: 'samtaleforloeb',
+      dominant: true
+    },
     samtaler: {
       collection: 'samtale',
       via: 'samtaleforloeb'
