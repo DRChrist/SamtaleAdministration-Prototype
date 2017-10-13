@@ -22,8 +22,16 @@ $('#add-btn').click(function() {
 
 });
 
+$('.modelbtn').click(function() {
+	var $model = $(this).attr('value');
+	showModel($model);
+});
+
 $('#currentround').click(function() {
-	$('.samtaleforloeb').empty();
+	$('.data').empty();
+	$('#upcomingrounds').removeClass('active');
+	$('#currentround').addClass('active');
+	$('#headline').text('Samtaleforløb');
 	io.socket.get('/runde?status=aktiv', function(resData, jwres) {
 		if(jwres.statusCode !== 200) {
 			console.error(jwres);
@@ -36,25 +44,65 @@ $('#currentround').click(function() {
 					return;
 				}
 				if(!samtaleforløb) {
-					$('.samtaleforloeb').append('Ingen samtaleforløb tilknyttet denne runde.');
+					$('.data').append('Ingen samtaleforløb tilknyttet denne runde.');
 				}
-				$('.samtaleforloeb').append('<div class="row"><div class="col-md-8">'	+ 
-					samtaleforløb.titel + '<br>' + 
+				$('.data').append('<div class="row bg-warning"><div class="col-md-8">'	+ 
+					'<a href="/samtaleforloeb?id=' + samtaleforløb.id + '">' + samtaleforløb.titel + '</a><br>' + 
 					'<p>' + samtaleforløb.beskrivelse + '<p>' + 
 					'Invitationsinterval: ' + samtaleforløb.invitationsInterval + ' dage' +
 					'        Invitationsfrist: ' + samtaleforløb.invitationsFrist + ' dage</div>' + 
 					'<div class="col-md-4">' + 'Afdeling: ' + samtaleforløb.afdelinger[0].afsnitskode + '<br>' + 
-					'Stillingskategori: ' + samtaleforløb.stillingskategorier[0].titel + '<br><br><br>');
-				// $('.samtaleforloeb').append(samtaleforløb.titel + '<br>');
-				// $('.samtaleforloeb').append('<p>' + samtaleforløb.beskrivelse + '<p>');
-				// $('.samtaleforloeb').append('Invitationsinterval: ' + samtaleforløb.invitationsInterval + ' dage');
-				// $('.samtaleforloeb').append('        Invitationsfrist: ' + samtaleforløb.invitationsFrist + ' dage<br>');
-				// $('.samtaleforloeb2').append('Afdeling: ' + samtaleforløb.afdelinger[0].afsnitskode + '<br>');
-				// $('.samtaleforloeb2').append('Stillingskategori: ' + samtaleforløb.stillingskategorier[0].titel + '<br>');
-				// $('.samtaleforloeb').append('<br><br>');
+					'Stillingskategori: ' + samtaleforløb.stillingskategorier[0].titel + '</div></div><br><br>');
 			});
 		});
 	});
 });
+
+$('#upcomingrounds').click(function() {
+	$('.data').empty();
+	$('#currentround').removeClass('active');
+	$('#upcomingrounds').addClass('active');
+	$('#headline').text('Runder');
+	io.socket.get('/runde?status=kommende', function(resData, jwres) {
+		if(jwres.statusCode !== 200) {
+			console.error(jwres);
+			return;
+		}
+		_.forEach(resData, function(runde) {
+			$('.data').append('<div class="row bg-warning"><div class="col-md-6">'	+ 
+					'<a href="/runde?id=' + runde.id + '">' + runde.titel + '</a><br>' + 
+					runde.status + '<br></div>' + 
+					'<div class="col-md-6">' + 'Samtaleforløb: ' + '</div></div><br><br>');
+		});
+	});
+});
+
+function showModel(model) {
+	$('.data').empty();
+	$('#headline').text(model);
+	io.socket.get('/' + model, function(resData, jwres) {
+		if(jwres.statusCode !== 200) {
+			console.error(jwres);
+			return;
+		}
+		_.forEach(resData, function(obj) {
+			$('.data').append('<a href="/' + model + '?id=' + obj.id + '" style="display:block;"><div class="row bg-warning"><div class="col-md-6 cola' + 
+				obj.id + '"></div><div class="col-md-6 colb' + obj.id + '"></div></div></a><br><br>');
+			var shift = false;
+			_.forEach(obj, function(value, key) {
+				if(shift) {
+					$('.cola' + obj.id).append(key + ': ' + value + '<br>');
+					shift = false;
+				} else {
+					$('.colb' + obj.id).append(key + ': ' + value + '<br>');
+					shift = true;
+				}
+			});
+		});
+	});
+}
+
+
+
 
 });

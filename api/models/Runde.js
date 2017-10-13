@@ -21,24 +21,54 @@ module.exports = {
   	},
   	samtaleforloeb: {
   		collection: 'samtaleforloeb',
-      via: 'runder'
+      via: 'runde'
   	}
   },
 
   afterCreate: function(newlyInsertedRecord, cb) {
   	Runde.findOne(newlyInsertedRecord.id)
   	.exec(function (err, runde) {
-  		Samtale.find().exec(function(err, samtaler) {
+      if(err) {
+        console.error(err);
+        return cb(err);
+      }
+      Samtaleforloeb.find().exec(function(err, samtaleforløb) {
         if(err) {
+          console.error(err);
           return cb(err);
         }
-        runde.samtaler.add(_.sample(samtaler).id);
-        runde.save(function(err) {
-          if(err) {
-            return cb(err);
-          }
-          return cb();
-        });
+        runde.samtaleforloeb.add(_.sample(samtaleforløb).id);
+
+        if(newlyInsertedRecord.status === 'aktiv') {
+      		Samtale.find().exec(function(err, samtaler) {
+            if(err) {
+              return cb(err);
+            }
+            async.forEachSeries(samtaler, function(samtale, next) {
+              runde.samtaler.add(samtale.id);
+              next();
+            }, function(err) {
+              if(err) {
+                console.error(err);
+                return cb(err);
+              }
+              runde.save(function(err) {
+                if(err) {
+                  console.error(err);
+                  return cb(err);
+                }
+                return cb();
+              });
+            });
+          });
+        } else {
+          runde.save(function(err) {
+            if(err) {
+              return cb(err);
+            }
+            return cb();
+          });
+         }
       });
   	});
   }

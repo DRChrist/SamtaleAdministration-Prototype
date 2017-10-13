@@ -8,7 +8,10 @@
 module.exports = {
 
   attributes: {
-  	
+  	samtaleforloeb: {
+  		collection: 'samtaleforloeb',
+  		via: 'ressourcer'
+  	}
   }
 };
 

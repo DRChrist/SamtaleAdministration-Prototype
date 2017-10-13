@@ -33,12 +33,12 @@ module.exports.bootstrap = function(cb) {
       function(callback) {
         createTestBrugere(callback);
       },
-      function(callback) {
-        createTestRunder(callback);
-      },
 			function(callback) {
 				createTestSamtaleforloeb(callback);
-			}
+			},
+      function(callback) {
+        createTestRunder(callback);
+      }
 			], function(err) {
 				if(err) {
 					return cb(err);

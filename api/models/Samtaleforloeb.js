@@ -26,9 +26,8 @@ module.exports = {
   		type: 'string',
       enum: ['aktiv', 'inaktiv', 'arkiveret', 'godkendt']
   	},
-  	runder: {
-  		collection: 'runde',
-  		via: 'samtaleforloeb'
+  	runde: {
+  		model: 'runde'
   	},
   	afdelinger: {
   		collection: 'afdeling',
@@ -47,7 +46,8 @@ module.exports = {
     },
     samtaler: {
       collection: 'samtale',
-      via: 'samtaleforloeb'
+      via: 'samtaleforloeb',
+      dominant: true
     }
   },
 
@@ -76,18 +76,28 @@ module.exports = {
               return cb(err);
             }
             samtaleforloeb.samtaler.add(_.sample(samtaler).id);
-            Runde.find().exec(function(err, runder) {
-              if(err) {
-                return cb(err);
-              }
-              samtaleforloeb.runder.add(_.sample(runder).id);
+            // Runde.find().exec(function(err, runder) {
+            //   if(err) {
+            //     return cb(err);
+            //   }
+            //   var rand = Math.random();
+            //   if(rand < 0.4) {
+            //     Runde.findOne({status: 'aktiv'}).exec(function(err, runde) {
+            //       if(err) {
+            //         console.error(err);
+            //         return cb(err);
+            //       }
+            //       samtaleforloeb.runder.add(runde.id);
+            //     });
+            //   }
+            //   samtaleforloeb.runder.add(_.sample(runder).id);
               samtaleforloeb.save(function(err) {
                 if(err) {
                   return cb(err);
                 }
                 return cb();
               });
-            });
+            // });
           });
         });
       });
