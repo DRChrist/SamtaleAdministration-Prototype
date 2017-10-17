@@ -76,8 +76,8 @@ module.exports.bootstrap = function(cb) {
       Samtaleforloeb.create({
         titel: faker.company.bsNoun(),
         beskrivelse: faker.lorem.sentence(6),
-        invitationsInterval: faker.random.number({min:100, max:350}),
-        invitationsFrist: faker.random.number({min:14, max:60}),
+        invitationsInterval: faker.random.number({ min:100, max:350 }),
+        invitationsFrist: faker.random.number({ min:14, max:60 }),
         status: faker.random.arrayElement(['aktiv', 'inaktiv', 'arkiveret', 'godkendt'])
       }).exec(function(err, createdSamtaleforloeb) {
         if(err) {
@@ -119,7 +119,10 @@ module.exports.bootstrap = function(cb) {
       titel: faker.lorem.words(2),
       status: 'aktiv'
     }).exec(function(err, createdRunde){
-      console.log('Aktiv runde kreeret');
+      if(err) {
+        console.error(err);
+        return callback(err);
+      }
       });
     async.times(10, function(n, next) {
       Runde.create({
@@ -142,23 +145,41 @@ module.exports.bootstrap = function(cb) {
 
   function createTestSamtaler(callback) {
     async.times(30, function(n, next) {
-      Samtale.create({
-        mødeTidspunkt: faker.date.future(),
-        indkaldelsesTidspunkt: faker.date.future(),
-        lokale: faker.lorem.words(1),
-        status: faker.random.arrayElement(['pending', 'invited', 'handled', 'afsluttet'])
-      }).exec(function(err, createdSamtale) {
+    var status = faker.random.arrayElement(['pending', 'invited', 'handled', 'afsluttet']);
+      if(status === 'pending' || status === 'invited') {
+        Samtale.create({
+          mødeTidspunkt: faker.date.future(),
+          indkaldelsesTidspunkt: faker.date.future(),
+          lokale: faker.lorem.words(1),
+          status: status
+        }).exec(function(err, createdSamtale) {
+          if(err) {
+            console.error(err);
+            return callback(err);
+          }
+          next(err);
+        });
+      } else {
+        Samtale.create({
+          mødeTidspunkt: faker.date.past(),
+          indkaldelsesTidspunkt: faker.date.past(),
+          lokale: faker.lorem.words(1),
+          status: status
+        }).exec(function(err, createdSamtale) {
+          if(err) {
+            console.error(err);
+            return callback(err);
+          }
+          next(err);
+        });
+      }
+    }, function(err) {
         if(err) {
+          console.error(err);
           return callback(err);
         }
-        next(err);
+        return callback();
       });
-    }, function(err) {
-      if(err) {
-        return callback(err);
-      }
-      return callback();
-    });
   }
 
 
@@ -179,4 +200,65 @@ module.exports.bootstrap = function(cb) {
       return callback();
     });
   }
+
+  function createTestRessourceText(callback) {
+    async.times(10, function(n, next) {
+      RessourceText.create({
+        text: faker.lorem.words(8)
+      }).exec(function(err, createdRessourceText) {
+        if(err) {
+          console.error(err);
+          return callback(err);
+        }
+        next(err);
+      });
+    }, function(err) {
+      if(err) {
+        console.error(err);
+        return callback(err);
+      }
+      return callback();
+    });
+  }
+
+  function createTestRessourcePercent(callback) {
+    async.times(10, function(n, next) {
+      RessourcePercent.create({
+        number: faker.random.number(100)
+      }).exec(function(err, createdRessourceText) {
+        if(err) {
+          console.error(err);
+          return callback(err);
+        }
+        next(err);
+      });
+    }, function(err) {
+      if(err) {
+        console.error(err);
+        return callback(err);
+      }
+      return callback();
+    });
+  }
+
+  function createTestFrame(callback) {
+    async.times(10, function(n, next) {
+      Frame.create({
+        titel: faker.lorem.words(2)
+      }).exec(function(err, createdFrame) {
+        if(err) {
+          console.error(err);
+          return callback(err);
+        }
+        next(err);
+      });
+    }, function(err) {
+      if(err) {
+        console.error(err);
+        return callback(err);
+      }
+      return callback();
+    });
+  }
+
 };

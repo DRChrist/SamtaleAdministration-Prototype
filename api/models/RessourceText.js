@@ -1,5 +1,5 @@
 /**
- * Ressource.js
+ * RessourceText.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -8,20 +8,20 @@
 module.exports = {
 
   attributes: {
-  	titel: {
+  	text: {
   		type: 'string'
   	},
-  	beskrivelse: {
-  		type: 'string'
+  	oneToOne: {
+  		model: 'oneToOne'
   	},
-  	samtaleforloeb: {
-  		collection: 'samtaleforloeb',
-  		via: 'ressourcer'
+  	oneToTwo: {
+  		model: 'oneToTwo'
   	},
-  	frames: {
-  		collection: 'frame',
-  		via: 'ressourcer',
-  		dominant: true
+  	twoToOne: {
+  		model: 'twoToOne'
+  	},
+  	twoToTwo: {
+  		model: 'twoToTwo'
   	}
   }
 };
