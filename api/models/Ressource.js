@@ -23,6 +23,31 @@ module.exports = {
   		via: 'ressourcer',
   		dominant: true
   	}
+  },
+
+  afterCreate: function(newlyInsertedRecord, cb) {
+  	Ressource.findOne(newlyInsertedRecord.id).exec(function(err, ressource) {
+  		if(err) {
+  			console.error(err);
+  			return cb(err);
+  		}
+  		Frame.find().exec(function(err, frames) {
+  			if(err) {
+  				console.error(err);
+  				return cb(err);
+  			}
+  			ressource.frames.add(_.sample(frames).id);
+  			ressource.save(function(err) {
+  				if(err) {
+  					console.error(err);
+  					return cb(err);
+  				}
+  				return cb();
+  			});
+  		});
+  	});
   }
+
+
 };
 

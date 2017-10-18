@@ -21,6 +21,18 @@ module.exports.bootstrap = function(cb) {
 		}
 
 		async.series([
+      function(callback) {
+        createTestRessourceText(callback);
+      },
+      function(callback) {
+        createTestRessourcePercent(callback);
+      },
+      function(callback) {
+        createTestFrames(callback);
+      },
+      function(callback) {
+        createTestRessourcer(callback);
+      },
 			function(callback) {
 				createTestAfdelinger(callback);
 			},
@@ -225,7 +237,7 @@ module.exports.bootstrap = function(cb) {
     async.times(10, function(n, next) {
       RessourcePercent.create({
         number: faker.random.number(100)
-      }).exec(function(err, createdRessourceText) {
+      }).exec(function(err, createdRessourcePercent) {
         if(err) {
           console.error(err);
           return callback(err);
@@ -241,11 +253,32 @@ module.exports.bootstrap = function(cb) {
     });
   }
 
-  function createTestFrame(callback) {
+  function createTestFrames(callback) {
     async.times(10, function(n, next) {
       Frame.create({
         titel: faker.lorem.words(2)
       }).exec(function(err, createdFrame) {
+        if(err) {
+          console.error(err);
+          return callback(err);
+        }
+        next(err);
+      });
+    }, function(err) {
+      if(err) {
+        console.error(err);
+        return callback(err);
+      }
+      return callback();
+    });
+  }
+
+  function createTestRessourcer(callback) {
+    async.times(10, function(n, next) {
+      Ressource.create({
+        titel: faker.lorem.words(1),
+        beskrivelse: faker.lorem.words(7)
+      }).exec(function(err, createdRessource) {
         if(err) {
           console.error(err);
           return callback(err);

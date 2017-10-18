@@ -71,21 +71,37 @@ module.exports = {
             return cb(err);
           }
           samtaleforloeb.afdelinger.add(_.sample(afdelinger).id);
-          Samtale.find().populate('samtaleforloeb').exec(function(err, samtaler) {
+          Ressource.find().exec(function(err, ressourcer) {
             if(err) {
+              console.error(err);
               return cb(err);
             }
-            if(samtaleforloeb.status === 'aktiv') {
-              async.forEachSeries(samtaler, function(samtale, next) {
-                if(Math.random() > 0.4) {
-                  samtaleforloeb.samtaler.add(samtale.id);
-                }
-                next();
-              }, function(err) {
-                if(err) {
-                  console.error(err);
-                  return cb(err);
-                }
+            samtaleforloeb.ressourcer.add(_.sample(ressourcer).id);
+            Samtale.find().populate('samtaleforloeb').exec(function(err, samtaler) {
+              if(err) {
+                return cb(err);
+              }
+            
+              if(samtaleforloeb.status === 'aktiv') {
+                async.forEachSeries(samtaler, function(samtale, next) {
+                  if(Math.random() > 0.4) {
+                    samtaleforloeb.samtaler.add(samtale.id);
+                  }
+                  next();
+                }, function(err) {
+                  if(err) {
+                    console.error(err);
+                    return cb(err);
+                  }
+                  samtaleforloeb.save(function(err) {
+                    if(err) {
+                      console.error(err);
+                      return cb(err);
+                    }
+                    return cb();
+                  });
+                });
+              } else {
                 samtaleforloeb.save(function(err) {
                   if(err) {
                     console.error(err);
@@ -93,38 +109,8 @@ module.exports = {
                   }
                   return cb();
                 });
-              });
-            } else {
-              samtaleforloeb.save(function(err) {
-                if(err) {
-                  console.error(err);
-                  return cb(err);
-                }
-                return cb();
-              });
-            }
-            // Runde.find().exec(function(err, runder) {
-            //   if(err) {
-            //     return cb(err);
-            //   }
-            //   var rand = Math.random();
-            //   if(rand < 0.4) {
-            //     Runde.findOne({status: 'aktiv'}).exec(function(err, runde) {
-            //       if(err) {
-            //         console.error(err);
-            //         return cb(err);
-            //       }
-            //       samtaleforloeb.runder.add(runde.id);
-            //     });
-            //   }
-            //   samtaleforloeb.runder.add(_.sample(runder).id);
-              // samtaleforloeb.save(function(err) {
-              //   if(err) {
-              //     return cb(err);
-              //   }
-              //   return cb();
-              // });
-            // });
+              }
+            });
           });
         });
       });
