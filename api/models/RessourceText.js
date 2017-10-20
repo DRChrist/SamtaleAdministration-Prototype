@@ -11,6 +11,9 @@ module.exports = {
   	text: {
   		type: 'string'
   	},
+    line: {
+      model: 'line'
+    },
   	oneToOne: {
   		model: 'oneToOne'
   	},

@@ -25,144 +25,82 @@ module.exports = {
   	}
   },
 
-  afterCreate: function(newlyInsertedRecord, cb) {
-  	Runde.findOne(newlyInsertedRecord.id).exec(function (err, runde) {
-      if(err) {
-        console.error(err);
-        return cb(err);
-      }
-      if(newlyInsertedRecord.status === 'aktiv') {
-          async.series([
-            function(callback) {
-              Samtaleforloeb.find({status: 'aktiv'}).exec(function(err, samtaleforløb) {
-                if(err) {
-                  console.error(err);
-                  return cb(err);
-                }
-              async.forEachSeries(samtaleforløb, function(sf, next) {
-                runde.samtaleforloeb.add(sf.id);
-                next();
-              }, function(err) {
-                if(err) {
-                  console.error(err);
-                  return cb(err);
-                }
-                callback();
-                });
-              });
-            },
-            function(callback) {
-              Samtale.find().exec(function(err, samtaler) {
-                if(err) {
-                  console.error(err);
-                  return cb(err);
-                }
-                async.forEachSeries(samtaler, function(samtale, next) {
-                  runde.samtaler.add(samtale.id);
-                  next();
-                }, function(err) {
-                  if(err) {
-                    console.error(err);
-                    return cb(err);
-                  }
-                  callback();
-                });
-              });
-            }
-          ], function(err) {
-            if(err) {
-              console.error(err);
-              return cb(err);
-            }
-            runde.save(function(err) {
-              if(err) {
-                console.error(err);
-                return cb(err);
-              }
-              return cb();
-            });
-          });
-          // Samtale.find().exec(function(err, samtaler) {
-          //   if(err) {
-          //     console.error(err);
-          //     return cb(err);
-          //   }
-          //   async.forEachSeries(samtaler, function(samtale, next) {
-          //     runde.samtaler.add(samtale.id);
-          //     next();
-          //   }, function(err) {
-          //     if(err) {
-          //       console.error(err);
-          //       return cb(err);
-          //     }
-          //     runde.save(function(err) {
-          //       if(err) {
-          //         console.error(err);
-          //         return cb(err);
-          //       }
-          //       return cb();
-          //     });
-          //   });
-          // });
-        // });
-      } else {
-        Samtaleforloeb.find().exec(function(err, samtaleforløb) {
-          if(err) {
-            console.error(err);
-            return cb(err);
-          }
-          runde.samtaleforloeb.add(_.sample(samtaleforløb).id);
-          runde.save(function(err) {
-            if(err) {
-              console.error(err);
-              return cb(err);
-            }
-            return cb();
-          });
-        });
-      }
-    });
-  }
-  //     Samtaleforloeb.find().exec(function(err, samtaleforløb) {
-  //       if(err) {
-  //         console.error(err);
-  //         return cb(err);
-  //       }
-  //       runde.samtaleforloeb.add(_.sample(samtaleforløb).id);
-
-  //       if(newlyInsertedRecord.status === 'aktiv') {
-  //     		Samtale.find().exec(function(err, samtaler) {
-  //           if(err) {
-  //             return cb(err);
-  //           }
-  //           async.forEachSeries(samtaler, function(samtale, next) {
-  //             runde.samtaler.add(samtale.id);
-  //             next();
-  //           }, function(err) {
-  //             if(err) {
-  //               console.error(err);
-  //               return cb(err);
-  //             }
-  //             runde.save(function(err) {
-  //               if(err) {
-  //                 console.error(err);
-  //                 return cb(err);
-  //               }
-  //               return cb();
-  //             });
-  //           });
-  //         });
-  //       } else {
-  //         runde.save(function(err) {
-  //           if(err) {
-  //             return cb(err);
-  //           }
-  //           return cb();
-  //         });
-  //        }
-  //     });
-  // 	});
+  // afterCreate: function(newlyInsertedRecord, cb) {
+  	// Runde.findOne(newlyInsertedRecord.id).exec(function (err, runde) {
+   //    if(err) {
+   //      console.error(err);
+   //      return cb(err);
+   //    }
+   //    if(newlyInsertedRecord.status === 'aktiv') {
+   //        async.series([
+   //          function(callback) {
+   //            Samtaleforloeb.find({status: 'aktiv'}).exec(function(err, samtaleforløb) {
+   //              if(err) {
+   //                console.error(err);
+   //                return cb(err);
+   //              }
+   //            async.forEachSeries(samtaleforløb, function(sf, next) {
+   //              runde.samtaleforloeb.add(sf.id);
+   //              next();
+   //            }, function(err) {
+   //              if(err) {
+   //                console.error(err);
+   //                return cb(err);
+   //              }
+   //              callback();
+   //              });
+   //            });
+   //          },
+   //          function(callback) {
+   //            Samtale.find().exec(function(err, samtaler) {
+   //              if(err) {
+   //                console.error(err);
+   //                return cb(err);
+   //              }
+   //              async.forEachSeries(samtaler, function(samtale, next) {
+   //                runde.samtaler.add(samtale.id);
+   //                next();
+   //              }, function(err) {
+   //                if(err) {
+   //                  console.error(err);
+   //                  return cb(err);
+   //                }
+   //                callback();
+   //              });
+   //            });
+   //          }
+   //        ], function(err) {
+   //          if(err) {
+   //            console.error(err);
+   //            return cb(err);
+   //          }
+   //          runde.save(function(err) {
+   //            if(err) {
+   //              console.error(err);
+   //              return cb(err);
+   //            }
+   //            return cb();
+   //          });
+   //        });
+   //    } else {
+   //      Samtaleforloeb.find().exec(function(err, samtaleforløb) {
+   //        if(err) {
+   //          console.error(err);
+   //          return cb(err);
+   //        }
+   //        runde.samtaleforloeb.add(_.sample(samtaleforløb).id);
+   //        runde.save(function(err) {
+   //          if(err) {
+   //            console.error(err);
+   //            return cb(err);
+   //          }
+   //          return cb();
+   //        });
+   //      });
+   //    }
+   //  });
   // }
+
 
   
 };

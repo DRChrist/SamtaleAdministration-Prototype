@@ -11,6 +11,9 @@ module.exports = {
   	number: {
   		type: 'integer'
   	},
+    line: {
+      model: 'line'
+    },
   	oneToOne: {
   		model: 'oneToOne'
   	},

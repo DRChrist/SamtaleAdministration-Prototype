@@ -28,6 +28,9 @@ module.exports.bootstrap = function(cb) {
         createTestRessourcePercent(callback);
       },
       function(callback) {
+        createTestLines(callback);
+      },
+      function(callback) {
         createTestFrames(callback);
       },
       function(callback) {
@@ -72,7 +75,30 @@ module.exports.bootstrap = function(cb) {
         if(err) {
           return callback(err);
         }
-        next(err);
+        Stillingskategori.find().exec(function(err, stillingskategorier) {
+          if(err) {
+            return callback(err);
+          }
+          createdBruger.stillingskategorier.add(_.sample(stillingskategorier).id);
+          Afdeling.find().exec(function(err, afdelinger) {
+            if(err) {
+              return callback(err);
+            }
+            createdBruger.afdelinger.add(_.sample(afdelinger).id);
+            Samtale.find().exec(function(err, samtaler) {
+              if(err) {
+                return callback(err);
+              }
+              createdBruger.samtaler.add(_.sample(samtaler).id);
+              createdBruger.save(function(err) {
+                if(err) {
+                  return callback(err);
+                }
+                next(err);
+              });
+            });
+          });
+        });
       });
     }, function(err) {
       if(err) {
@@ -95,7 +121,59 @@ module.exports.bootstrap = function(cb) {
         if(err) {
           return callback(err);
         }
-        next(err);
+        Stillingskategori.find().exec(function(err, stillingskategorier) {
+          if(err) {
+            return callback(err);
+          }
+          createdSamtaleforloeb.stillingskategorier.add(_.sample(stillingskategorier).id);
+          Afdeling.find().exec(function(err, afdelinger) {
+            if(err) {
+              return callback(err);
+            }
+            createdSamtaleforloeb.afdelinger.add(_.sample(afdelinger).id);
+            Ressource.find().exec(function(err, ressourcer) {
+              if(err) {
+                console.error(err);
+                return callback(err);
+              }
+              createdSamtaleforloeb.ressourcer.add(_.sample(ressourcer).id);
+              Samtale.find().populate('samtaleforloeb').exec(function(err, samtaler) {
+                if(err) {
+                  return callback(err);
+                }
+              
+                if(createdSamtaleforloeb.status === 'aktiv') {
+                  async.forEachSeries(samtaler, function(samtale, next) {
+                    if(Math.random() > 0.4) {
+                      createdSamtaleforloeb.samtaler.add(samtale.id);
+                    }
+                    next();
+                  }, function(err) {
+                    if(err) {
+                      console.error(err);
+                      return callback(err);
+                    }
+                    createdSamtaleforloeb.save(function(err) {
+                      if(err) {
+                        console.error(err);
+                        return callback(err);
+                      }
+                      return callback();
+                    });
+                  });
+                } else {
+                  createdSamtaleforloeb.save(function(err) {
+                    if(err) {
+                      console.error(err);
+                      return callback(err);
+                    }
+                    next(err);
+                  });
+                }
+              });
+            });
+          });
+       });
       });
     }, function(err) {
       if(err) {
@@ -135,6 +213,55 @@ module.exports.bootstrap = function(cb) {
         console.error(err);
         return callback(err);
       }
+      async.series([
+            function(callback) {
+              Samtaleforloeb.find({status: 'aktiv'}).exec(function(err, samtaleforløb) {
+                if(err) {
+                  console.error(err);
+                  return callback(err);
+                }
+              async.forEachSeries(samtaleforløb, function(sf, next) {
+                createdRunde.samtaleforloeb.add(sf.id);
+                next();
+              }, function(err) {
+                if(err) {
+                  console.error(err);
+                  return callback(err);
+                }
+                callback();
+                });
+              });
+            },
+            function(callback) {
+              Samtale.find().exec(function(err, samtaler) {
+                if(err) {
+                  console.error(err);
+                  return callback(err);
+                }
+                async.forEachSeries(samtaler, function(samtale, next) {
+                  createdRunde.samtaler.add(samtale.id);
+                  next();
+                }, function(err) {
+                  if(err) {
+                    console.error(err);
+                    return callback(err);
+                  }
+                  callback();
+                });
+              });
+            }
+          ], function(err) {
+            if(err) {
+              console.error(err);
+              return callback(err);
+            }
+            createdRunde.save(function(err) {
+              if(err) {
+                console.error(err);
+                return callback(err);
+              }
+            });
+          });
       });
     async.times(10, function(n, next) {
       Runde.create({
@@ -144,7 +271,20 @@ module.exports.bootstrap = function(cb) {
         if(err) {
           return callback(err);
         }
-        next(err);
+        Samtaleforloeb.find().exec(function(err, samtaleforløb) {
+          if(err) {
+            console.error(err);
+            return callback(err);
+          }
+          createdRunde.samtaleforloeb.add(_.sample(samtaleforløb).id);
+          createdRunde.save(function(err) {
+            if(err) {
+              console.error(err);
+              return callback(err);
+            }
+            next(err);
+          });
+        });
       });
     }, function(err) {
       if(err) {
@@ -262,7 +402,20 @@ module.exports.bootstrap = function(cb) {
           console.error(err);
           return callback(err);
         }
-        next(err);
+        Line.find().exec(function(err, lines) {
+          if(err) {
+            console.error(err);
+            return callback(err);
+          }
+          createdFrame.lines.add(_.sample(lines).id);
+          createdFrame.save(function(err) {
+            if(err) {
+              console.error(err);
+              return callback(err);
+            }
+            next(err);
+          });
+        });
       });
     }, function(err) {
       if(err) {
@@ -283,7 +436,20 @@ module.exports.bootstrap = function(cb) {
           console.error(err);
           return callback(err);
         }
-        next(err);
+        Frame.find().exec(function(err, frames) {
+          if(err) {
+            console.error(err);
+            return cb(err);
+          }
+          createdRessource.frames.add(_.sample(frames).id);
+          createdRessource.save(function(err) {
+            if(err) {
+              console.error(err);
+              return cb(err);
+            }
+            next(err);
+          });
+        });
       });
     }, function(err) {
       if(err) {
@@ -292,6 +458,95 @@ module.exports.bootstrap = function(cb) {
       }
       return callback();
     });
+  }
+
+  function createTestLines(callback) {
+    async.times(10, function(n, next) {
+      Line.create().exec(function(err, createdLine) {
+        if(err) {
+          console.error(err);
+          return callback(err);
+        }
+        RessourceText.find().exec(function(err, texts) {
+          if(err) {
+            console.error(err);
+            return callback(err);
+          }
+          var zeroToTwo = faker.random.number(2);
+          async.times(zeroToTwo, function(n, next) {
+            createdLine.questionTexts.add(_.sample(texts).id);
+            next();
+        }, function(err) {
+          if(err) {
+            console.error(err);
+            return callback(err);
+          }
+          RessourcePercent.find().exec(function(err, numbers) {
+            if(err) {
+              console.error(err);
+              return callback(err);
+            }
+            var zeroOrOne = faker.random.number(1);
+            async.times(zeroOrOne, function(n, next) {
+              createdLine.questionPercents.add(_.sample(numbers).id);
+              next();
+          }, function(err) {
+            if(err) {
+              console.error(err);
+              return callback(err);
+            }
+            zeroToTwo = faker.random.number(2);
+            async.times(zeroToTwo, function(n, next) {
+              RessourceText.create().exec(function(err, text) {
+                if(err) {
+                  console.error(err);
+                  return callback(err);
+                }
+                createdLine.answerTexts.add(text.id);
+              });
+                next();
+              }, function(err) {
+                if(err) {
+                  console.error(err);
+                  return callback(err);
+                }
+                zeroOrOne = faker.random.number(1);
+                async.times(zeroOrOne, function(n, next) {
+                  RessourcePercent.create().exec(function(err, number) {
+                    if(err) {
+                      console.error(err);
+                      return callback(err);
+                    }
+                    createdLine.answerPercents.add(number.id);
+                  });
+                    next();
+                  }, function(err) {
+                    if(err) {
+                      console.error(err);
+                      return callback(err);
+                    }
+                    createdLine.save(function(err) {
+                      if(err) {
+                        console.error(err);
+                        return callback(err);
+                      }
+                    });
+                  });
+                });
+              });
+            });
+          });
+          });
+        });
+        }, function(err) {
+          if(err) {
+            console.error(err);
+            return callback(err);
+          }
+          return callback();
+        });
+    //   });
+    // });
   }
 
 };
