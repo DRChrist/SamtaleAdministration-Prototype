@@ -29,8 +29,8 @@ module.exports = {
   		via: 'medarbejdere',
   		dominant: true
   	},
-  	afdelinger: {
-  		collection: 'afdeling',
+  	departments: {
+  		collection: 'department',
   		via: 'medarbejdere',
   		dominant: true
   	},

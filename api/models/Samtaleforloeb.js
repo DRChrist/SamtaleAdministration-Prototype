@@ -29,8 +29,8 @@ module.exports = {
   	runde: {
   		model: 'runde'
   	},
-  	afdelinger: {
-  		collection: 'afdeling',
+  	departments: {
+  		collection: 'department',
   		via: 'samtaleforloeb',
   		dominant: true
   	},

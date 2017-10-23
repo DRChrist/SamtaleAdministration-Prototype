@@ -51,7 +51,7 @@ $('#currentround').click(function() {
 					'<p>' + samtaleforløb.beskrivelse + '<p>' + 
 					'Invitationsinterval: ' + samtaleforløb.invitationsInterval + ' dage' +
 					'        Invitationsfrist: ' + samtaleforløb.invitationsFrist + ' dage</div>' + 
-					'<div class="col-md-4">' + 'Afdeling: ' + samtaleforløb.afdelinger[0].afsnitskode + '<br>' + 
+					'<div class="col-md-4">' + 'Departments: ' + samtaleforløb.departments[0].afsnitskode + '<br>' + 
 					'Stillingskategori: ' + samtaleforløb.stillingskategorier[0].titel + '</div></div><br><br>');
 			});
 		});

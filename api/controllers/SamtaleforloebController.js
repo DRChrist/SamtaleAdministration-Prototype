@@ -30,7 +30,7 @@ module.exports = {
 	show: function(req, res) {
 		Samtaleforloeb.findOne({titel: req.param('titel')})
 		.populate('runde')
-		.populate('afdelinger')
+		.populate('departments')
 		.populate('stillingskategorier')
 		.populate('samtaler')
 		.populate('ressourcer')

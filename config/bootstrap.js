@@ -37,7 +37,7 @@ module.exports.bootstrap = function(cb) {
         createTestRessourcer(callback);
       },
 			function(callback) {
-				createTestAfdelinger(callback);
+				createTestDepartments(callback);
 			},
 			function(callback) {
 				createTestStillingskategorier(callback);
@@ -81,11 +81,11 @@ module.exports.bootstrap = function(cb) {
             return callback(err);
           }
           createdBruger.stillingskategorier.add(_.sample(stillingskategorier).id);
-          Afdeling.find().exec(function(err, afdelinger) {
+          Department.find().exec(function(err, departments) {
             if(err) {
               return callback(err);
             }
-            createdBruger.afdelinger.add(_.sample(afdelinger).id);
+            createdBruger.departments.add(_.sample(departments).id);
             Samtale.find().exec(function(err, samtaler) {
               if(err) {
                 return callback(err);
@@ -128,11 +128,11 @@ module.exports.bootstrap = function(cb) {
             return callback(err);
           }
           createdSamtaleforloeb.stillingskategorier.add(_.sample(stillingskategorier).id);
-          Afdeling.find().exec(function(err, afdelinger) {
+          Department.find().exec(function(err, departments) {
             if(err) {
               return callback(err);
             }
-            createdSamtaleforloeb.afdelinger.add(_.sample(afdelinger).id);
+            createdSamtaleforloeb.departments.add(_.sample(departments).id);
             Ressource.find().exec(function(err, ressourcer) {
               if(err) {
                 console.error(err);
@@ -187,13 +187,13 @@ module.exports.bootstrap = function(cb) {
   }
 
 
-  function createTestAfdelinger(callback) {
-    console.log('createTestAfdelinger');
+  function createTestDepartments(callback) {
+    console.log('createTestDepartments');
     async.times(10, function(n, next) {
-      Afdeling.create({
+      Department.create({
         afsnitskode: faker.helpers.replaceSymbolWithNumber('#####'),
         lokation: faker.lorem.words(1)
-      }).exec(function(err, createdAfdeling) {
+      }).exec(function(err, createdDepartment) {
         if(err) {
           return callback(err);
         }
