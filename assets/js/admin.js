@@ -85,10 +85,14 @@ function showModel(model) {
 			console.error(jwres);
 			return;
 		}
-		console.log(resData);
 		_.forEach(resData, function(obj) {
+			if(model === 'samtaleforloeb') {
+				$('.data').append('<a href="/' + model + '/' + obj.titel + '" style="display:block;"><div class="row bg-warning"><div class="col-md-6 cola' + 
+				obj.id + '"></div><div class="col-md-6 colb' + obj.id + '"></div></div></a><br><br>');
+			} else {
 			$('.data').append('<a href="/' + model + '?id=' + obj.id + '" style="display:block;"><div class="row bg-warning"><div class="col-md-6 cola' + 
 				obj.id + '"></div><div class="col-md-6 colb' + obj.id + '"></div></div></a><br><br>');
+			}
 			var shift = false;
 			_.forEach(obj, function(value, key) {
 				if(shift) {

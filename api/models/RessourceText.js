@@ -14,18 +14,6 @@ module.exports = {
     line: {
       model: 'line'
     },
-  	oneToOne: {
-  		model: 'oneToOne'
-  	},
-  	oneToTwo: {
-  		model: 'oneToTwo'
-  	},
-  	twoToOne: {
-  		model: 'twoToOne'
-  	},
-  	twoToTwo: {
-  		model: 'twoToTwo'
-  	}
   }
 };
 

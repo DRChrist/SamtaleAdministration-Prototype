@@ -25,6 +25,26 @@ module.exports = {
 				});
 			});
 		});
+	},
+
+	show: function(req, res) {
+		Samtaleforloeb.findOne({titel: req.param('titel')})
+		.populate('runde')
+		.populate('afdelinger')
+		.populate('stillingskategorier')
+		.populate('samtaler')
+		.populate('ressourcer')
+		.exec(function(err, samtaleforløb) {
+			if(err) {
+				console.error(err);
+				return res.negotiate(err);
+			}
+			if(!samtaleforløb) {
+				console.log('Samtaleforløb not found');
+				return res.notFound();
+			}
+			return res.view('samtaleforloeb');
+		});
 	}
 
 

@@ -64,6 +64,7 @@ module.exports.bootstrap = function(cb) {
 
 
   function createTestBrugere(callback) {
+    console.log('createTestBrugere');
     async.times(30, function(n, next) {
       Bruger.create({
         fornavn: faker.name.firstName(),
@@ -110,6 +111,7 @@ module.exports.bootstrap = function(cb) {
 
 
   function createTestSamtaleforloeb(callback) {
+    console.log('createTestSamtaleforloeb');
     async.times(10, function(n, next) {
       Samtaleforloeb.create({
         titel: faker.company.bsNoun(),
@@ -158,7 +160,8 @@ module.exports.bootstrap = function(cb) {
                         console.error(err);
                         return callback(err);
                       }
-                      return callback();
+                      // return callback();
+                      next();
                     });
                   });
                 } else {
@@ -167,7 +170,7 @@ module.exports.bootstrap = function(cb) {
                       console.error(err);
                       return callback(err);
                     }
-                    next(err);
+                    next();
                   });
                 }
               });
@@ -185,6 +188,7 @@ module.exports.bootstrap = function(cb) {
 
 
   function createTestAfdelinger(callback) {
+    console.log('createTestAfdelinger');
     async.times(10, function(n, next) {
       Afdeling.create({
         afsnitskode: faker.helpers.replaceSymbolWithNumber('#####'),
@@ -296,6 +300,7 @@ module.exports.bootstrap = function(cb) {
 
 
   function createTestSamtaler(callback) {
+    console.log('createTestSamtaler');
     async.times(30, function(n, next) {
     var status = faker.random.arrayElement(['pending', 'invited', 'handled', 'afsluttet']);
       if(status === 'pending' || status === 'invited') {
@@ -336,6 +341,7 @@ module.exports.bootstrap = function(cb) {
 
 
   function createTestStillingskategorier(callback) {
+    console.log('createTestStillingskategorier');
     async.times(10, function(n, next) {
       Stillingskategori.create({
         titel: faker.lorem.words(1)
@@ -354,6 +360,7 @@ module.exports.bootstrap = function(cb) {
   }
 
   function createTestRessourceText(callback) {
+    console.log('createTestRessourceText');
     async.times(10, function(n, next) {
       RessourceText.create({
         text: faker.lorem.words(8)
@@ -374,6 +381,7 @@ module.exports.bootstrap = function(cb) {
   }
 
   function createTestRessourcePercent(callback) {
+    console.log('createTestRessourcePercent');
     async.times(10, function(n, next) {
       RessourcePercent.create({
         number: faker.random.number(100)
@@ -394,6 +402,7 @@ module.exports.bootstrap = function(cb) {
   }
 
   function createTestFrames(callback) {
+    console.log('createTestFrames');
     async.times(10, function(n, next) {
       Frame.create({
         titel: faker.lorem.words(2)
@@ -427,6 +436,7 @@ module.exports.bootstrap = function(cb) {
   }
 
   function createTestRessourcer(callback) {
+    console.log('createTestRessourcer');
     async.times(10, function(n, next) {
       Ressource.create({
         titel: faker.lorem.words(1),
@@ -461,6 +471,7 @@ module.exports.bootstrap = function(cb) {
   }
 
   function createTestLines(callback) {
+    console.log('createTestLines');
     async.times(10, function(n, next) {
       Line.create().exec(function(err, createdLine) {
         if(err) {
@@ -530,6 +541,7 @@ module.exports.bootstrap = function(cb) {
                         console.error(err);
                         return callback(err);
                       }
+                      next();
                     });
                   });
                 });
