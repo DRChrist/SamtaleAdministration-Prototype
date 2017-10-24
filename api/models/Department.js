@@ -8,19 +8,19 @@
 module.exports = {
 
   attributes: {
-  	afsnitskode: {
+  	sectionCode: {
   		type: 'string'
   	},
-  	lokation: {
+  	location: {
   		type: 'string'
   	},
-  	medarbejdere: {
-  		collection: 'bruger',
-  		via: 'afdelinger'
+  	users: {
+  		collection: 'user',
+  		via: 'departments'
   	},
-  	samtaleforloeb: {
-  		collection: 'samtaleforloeb',
-  		via: 'afdelinger'
+  	agendas: {
+  		collection: 'agenda',
+  		via: 'departments'
   	}
   }
 };

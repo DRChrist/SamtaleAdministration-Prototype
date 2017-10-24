@@ -1,18 +1,18 @@
 $(document).ready(function() {
 
-io.socket.get('/samtaleforloeb', function(resData, jwres) {
+io.socket.get('/agenda', function(resData, jwres) {
 	if(jwres.statusCode !== 200) {
 		console.error(jwres);
 		return;
 	}
-	_.forEach(resData, function(samtaleforløb) {
-		$('#add-dropdown').append('<option value="' + samtaleforløb.titel + '">' + samtaleforløb.titel + '</option>');
+	_.forEach(resData, function(agenda) {
+		$('#add-dropdown').append('<option value="' + agenda.titel + '">' + agenda.titel + '</option>');
 	});
 });
 
 $('#add-btn').click(function() {
 	var $select = $('#add-dropdown').val();
-	io.socket.put('/samtaleforloeb/addRunde', {titel: $select}, function(resData, jwres) {
+	io.socket.put('/agenda/addRunde', {titel: $select}, function(resData, jwres) {
 		if(jwres.statusCode !== 200) {
 			console.error(jwres);
 			return;
@@ -37,22 +37,22 @@ $('#currentround').click(function() {
 			console.error(jwres);
 			return;
 		}
-		_.forEach(resData[0].samtaleforloeb, function(samtaleforløb) {
-			io.socket.get('/samtaleforloeb?id=' + samtaleforløb.id, function(samtaleforløb, jwres) {
+		_.forEach(resData[0].agendas, function(agenda) {
+			io.socket.get('/agenda?id=' + agenda.id, function(agenda, jwres) {
 				if(jwres.statusCode !== 200) {
 					console.error(jwres);
 					return;
 				}
-				if(!samtaleforløb) {
-					$('.data').append('Ingen samtaleforløb tilknyttet denne runde.');
+				if(!agenda) {
+					$('.data').append('Ingen agenda tilknyttet denne runde.');
 				}
 				$('.data').append('<div class="row bg-warning"><div class="col-md-8">'	+ 
-					'<a href="/samtaleforloeb?id=' + samtaleforløb.id + '">' + samtaleforløb.titel + '</a><br>' + 
-					'<p>' + samtaleforløb.beskrivelse + '<p>' + 
-					'Invitationsinterval: ' + samtaleforløb.invitationsInterval + ' dage' +
-					'        Invitationsfrist: ' + samtaleforløb.invitationsFrist + ' dage</div>' + 
-					'<div class="col-md-4">' + 'Departments: ' + samtaleforløb.departments[0].afsnitskode + '<br>' + 
-					'Stillingskategori: ' + samtaleforløb.stillingskategorier[0].titel + '</div></div><br><br>');
+					'<a href="/Agenda?id=' + agenda.id + '">' + agenda.title + '</a><br>' + 
+					'<p>' + agenda.description + '<p>' + 
+					'Invitationsinterval: ' + agenda.inviteInterval + ' dage' +
+					'        Invitationsfrist: ' + agenda.invitePeriod + ' dage</div>' + 
+					'<div class="col-md-4">' + 'Departments: ' + agenda.departments[0].sectionCode + '<br>' + 
+					'Stillingskategori: ' + agenda.jobs[0].titel + '</div></div><br><br>');
 			});
 		});
 	});
@@ -86,7 +86,7 @@ function showModel(model) {
 			return;
 		}
 		_.forEach(resData, function(obj) {
-			if(model === 'samtaleforloeb') {
+			if(model === 'agenda') {
 				$('.data').append('<a href="/' + model + '/' + obj.titel + '" style="display:block;"><div class="row bg-warning"><div class="col-md-6 cola' + 
 				obj.id + '"></div><div class="col-md-6 colb' + obj.id + '"></div></div></a><br><br>');
 			} else {

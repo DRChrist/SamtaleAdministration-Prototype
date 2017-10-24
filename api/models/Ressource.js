@@ -14,8 +14,8 @@ module.exports = {
   	beskrivelse: {
   		type: 'string'
   	},
-  	samtaleforloeb: {
-  		collection: 'samtaleforloeb',
+  	agendas: {
+  		collection: 'agenda',
   		via: 'ressourcer'
   	},
   	frames: {

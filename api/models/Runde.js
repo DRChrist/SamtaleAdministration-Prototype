@@ -15,12 +15,12 @@ module.exports = {
       type: 'string',
       enum: ['aktiv', 'kommende', 'arkiveret']
     },
-  	samtaler: {
-  		collection: 'samtale',
+  	meetings: {
+  		collection: 'meeting',
   		via: 'runde'
   	},
-  	samtaleforloeb: {
-  		collection: 'samtaleforloeb',
+  	agendas: {
+  		collection: 'agenda',
       via: 'runde'
   	}
   },

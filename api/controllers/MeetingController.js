@@ -1,7 +1,7 @@
 /**
- * BrugerController
+ * MeetingController
  *
- * @description :: Server-side logic for managing brugers
+ * @description :: Server-side logic for managing Meetings
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 

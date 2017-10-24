@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	// io.socket.get('/samtaleforloeb?titel=' +  window.location.pathname.split('/')[2], function(resData, jwres) {
+	// io.socket.get('/Agenda?titel=' +  window.location.pathname.split('/')[2], function(resData, jwres) {
 	// 	if(jwres.statusCode !== 200) {
 	// 		console.error(jwres);
 	// 		return;

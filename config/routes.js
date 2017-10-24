@@ -40,7 +40,7 @@ module.exports.routes = {
   },
   'GET /ressourceText': 'RessourceTextController.findRessourcerMedText',
   'GET /ressourcePercent': 'RessourcePercentController.findRessourcerMedNumber',
-  'GET /samtaleforloeb/:titel': 'SamtaleforloebController.show'
+  'GET /agenda/:titel': 'AgendaController.show'
 
   /***************************************************************************
   *                                                                          *

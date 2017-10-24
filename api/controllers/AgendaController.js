@@ -1,15 +1,15 @@
 /**
- * SamtaleforløbController
+ * AgendaController
  *
- * @description :: Server-side logic for managing samtaleforløbs
+ * @description :: Server-side logic for managing Agendas
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
 module.exports = {
 
 	addRunde: function(req, res) {
-		Samtaleforloeb.findOne({titel: req.param('titel')})
-		.exec(function(err, samtaleforløb) {
+		Agenda.findOne({titel: req.param('titel')})
+		.exec(function(err, agenda) {
 			if(err) {
 				console.error(err);
 				return res.negotiate(err);
@@ -19,8 +19,8 @@ module.exports = {
 					console.error(err);
 					return res.negotiate(err);
 				}
-				samtaleforløb.runder.add(runde.id);
-				samtaleforløb.save(function(err) {
+				agenda.runder.add(runde.id);
+				agenda.save(function(err) {
 					return res.ok();
 				});
 			});
@@ -28,22 +28,22 @@ module.exports = {
 	},
 
 	show: function(req, res) {
-		Samtaleforloeb.findOne({titel: req.param('titel')})
+		Agenda.findOne({titel: req.param('titel')})
 		.populate('runde')
 		.populate('departments')
-		.populate('stillingskategorier')
-		.populate('samtaler')
+		.populate('jobs')
+		.populate('meetings')
 		.populate('ressourcer')
-		.exec(function(err, samtaleforløb) {
+		.exec(function(err, agenda) {
 			if(err) {
 				console.error(err);
 				return res.negotiate(err);
 			}
-			if(!samtaleforløb) {
-				console.log('Samtaleforløb not found');
+			if(!agenda) {
+				console.log('Agenda not found');
 				return res.notFound();
 			}
-			return res.view('samtaleforloeb');
+			return res.view('agenda');
 		});
 	}
 

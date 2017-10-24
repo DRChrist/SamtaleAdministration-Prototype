@@ -1,7 +1,7 @@
 /**
- * StillingskategoriController
+ * JobController
  *
- * @description :: Server-side logic for managing stillingskategoris
+ * @description :: Server-side logic for managing Jobs
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 

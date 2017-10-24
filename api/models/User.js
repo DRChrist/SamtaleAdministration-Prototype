@@ -1,5 +1,5 @@
 /**
- * Bruger.js
+ * User.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -8,35 +8,35 @@
 module.exports = {
 
   attributes: {
-  	fornavn: {
+  	firstName: {
   		type: 'string'
   	},
-  	efternavn: {
+  	lastName: {
   		type: 'string'
   	},
   	email: {
   		type: 'string'
   	},
-  	adgangskode: {
+  	password: {
   		type: 'string'
   	},
-  	status: {
+  	state: {
   		type: 'string',
-  		enum: ['aktiv', 'inaktiv']
+  		enum: ['active', 'inactive']
   	},
-  	stillingskategorier: {
-  		collection: 'stillingskategori',
-  		via: 'medarbejdere',
+  	jobs: {
+  		collection: 'job',
+  		via: 'users',
   		dominant: true
   	},
   	departments: {
   		collection: 'department',
-  		via: 'medarbejdere',
+  		via: 'users',
   		dominant: true
   	},
-  	samtaler: {
-  		collection: 'samtale',
-  		via: 'medarbejder'
+  	meetings: {
+  		collection: 'meeting',
+  		via: 'user'
   	}
   },
 

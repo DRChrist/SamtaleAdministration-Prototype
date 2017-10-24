@@ -1,5 +1,5 @@
 /**
- * Samtaleforloeb.js
+ * agendas.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -8,45 +8,45 @@
 module.exports = {
 
   attributes: {
-  	titel: {
+  	title: {
   		type: 'string'
   	},
-  	beskrivelse: {
+  	description: {
   		type: 'string'
   	},
-  	invitationsInterval: {
+  	inviteInterval: {
   		// in days
   		type: 'integer'
   	},
-  	invitationsFrist: {
+  	invitePeriod: {
   		// in days
   		type: 'integer'
   	},
-  	status: {
+  	state: {
   		type: 'string',
-      enum: ['aktiv', 'inaktiv', 'arkiveret', 'godkendt']
+      enum: ['active', 'inactive', 'archived', 'approved']
   	},
   	runde: {
   		model: 'runde'
   	},
   	departments: {
   		collection: 'department',
-  		via: 'samtaleforloeb',
+  		via: 'agendas',
   		dominant: true
   	},
-  	stillingskategorier: {
-  		collection: 'stillingskategori',
-  		via: 'samtaleforloeb',
+  	jobs: {
+  		collection: 'job',
+  		via: 'agendas',
   		dominant: true
   	},
   	ressourcer: {
       collection: 'ressource',
-      via: 'samtaleforloeb',
+      via: 'agendas',
       dominant: true
     },
-    samtaler: {
-      collection: 'samtale',
-      via: 'samtaleforloeb',
+    meetings: {
+      collection: 'meeting',
+      via: 'agenda',
       dominant: true
     }
   },

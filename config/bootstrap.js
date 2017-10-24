@@ -12,13 +12,6 @@ var faker = require('faker');
 
 module.exports.bootstrap = function(cb) {
 
-	Bruger.count().exec(function(err, numBrugere) {
-		if(err) {
-			return cb(err);
-		}
-		if(numBrugere > 0) {
-			return cb();
-		}
 
 		async.series([
       function(callback) {
@@ -40,16 +33,16 @@ module.exports.bootstrap = function(cb) {
 				createTestDepartments(callback);
 			},
 			function(callback) {
-				createTestStillingskategorier(callback);
+				createTestJobs(callback);
       },
       function(callback) {
-        createTestSamtaler(callback);
+        createTestMeetings(callback);
       },
       function(callback) {
-        createTestBrugere(callback);
+        createTestUsers(callback);
       },
 			function(callback) {
-				createTestSamtaleforloeb(callback);
+				createTestAgendas(callback);
 			},
       function(callback) {
         createTestRunder(callback);
@@ -60,38 +53,37 @@ module.exports.bootstrap = function(cb) {
 				}
 				return cb();
 			});
-	});
 
 
-  function createTestBrugere(callback) {
-    console.log('createTestBrugere');
+  function createTestUsers(callback) {
+    console.log('createTestUsers');
     async.times(30, function(n, next) {
-      Bruger.create({
-        fornavn: faker.name.firstName(),
-        efternavn: faker.name.lastName(),
+      User.create({
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
         email: faker.internet.email(),
-        adgangskode: faker.internet.email(),
-        status: faker.random.arrayElement(['aktiv', 'inaktiv'])
-      }).exec(function(err, createdBruger) {
+        password: faker.internet.email(),
+        state: faker.random.arrayElement(['active', 'inactive'])
+      }).exec(function(err, createdUser) {
         if(err) {
           return callback(err);
         }
-        Stillingskategori.find().exec(function(err, stillingskategorier) {
+        Job.find().exec(function(err, jobs) {
           if(err) {
             return callback(err);
           }
-          createdBruger.stillingskategorier.add(_.sample(stillingskategorier).id);
+          createdUser.jobs.add(_.sample(jobs).id);
           Department.find().exec(function(err, departments) {
             if(err) {
               return callback(err);
             }
-            createdBruger.departments.add(_.sample(departments).id);
-            Samtale.find().exec(function(err, samtaler) {
+            createdUser.departments.add(_.sample(departments).id);
+            Meeting.find().exec(function(err, meetings) {
               if(err) {
                 return callback(err);
               }
-              createdBruger.samtaler.add(_.sample(samtaler).id);
-              createdBruger.save(function(err) {
+              createdUser.meetings.add(_.sample(meetings).id);
+              createdUser.save(function(err) {
                 if(err) {
                   return callback(err);
                 }
@@ -110,44 +102,44 @@ module.exports.bootstrap = function(cb) {
   }
 
 
-  function createTestSamtaleforloeb(callback) {
-    console.log('createTestSamtaleforloeb');
+  function createTestAgendas(callback) {
+    console.log('createTestAgendas');
     async.times(10, function(n, next) {
-      Samtaleforloeb.create({
-        titel: faker.company.bsNoun(),
-        beskrivelse: faker.lorem.sentence(6),
-        invitationsInterval: faker.random.number({ min:100, max:350 }),
-        invitationsFrist: faker.random.number({ min:14, max:60 }),
-        status: faker.random.arrayElement(['aktiv', 'inaktiv', 'arkiveret', 'godkendt'])
-      }).exec(function(err, createdSamtaleforloeb) {
+      Agenda.create({
+        title: faker.company.bsNoun(),
+        description: faker.lorem.sentence(6),
+        inviteInterval: faker.random.number({ min:100, max:350 }),
+        invitePeriod: faker.random.number({ min:14, max:60 }),
+        state: faker.random.arrayElement(['active', 'inactive', 'archived', 'approved'])
+      }).exec(function(err, createdAgenda) {
         if(err) {
           return callback(err);
         }
-        Stillingskategori.find().exec(function(err, stillingskategorier) {
+        Job.find().exec(function(err, jobs) {
           if(err) {
             return callback(err);
           }
-          createdSamtaleforloeb.stillingskategorier.add(_.sample(stillingskategorier).id);
+          createdAgenda.jobs.add(_.sample(jobs).id);
           Department.find().exec(function(err, departments) {
             if(err) {
               return callback(err);
             }
-            createdSamtaleforloeb.departments.add(_.sample(departments).id);
+            createdAgenda.departments.add(_.sample(departments).id);
             Ressource.find().exec(function(err, ressourcer) {
               if(err) {
                 console.error(err);
                 return callback(err);
               }
-              createdSamtaleforloeb.ressourcer.add(_.sample(ressourcer).id);
-              Samtale.find().populate('samtaleforloeb').exec(function(err, samtaler) {
+              createdAgenda.ressourcer.add(_.sample(ressourcer).id);
+              Meeting.find().populate('agenda').exec(function(err, meetings) {
                 if(err) {
                   return callback(err);
                 }
               
-                if(createdSamtaleforloeb.status === 'aktiv') {
-                  async.forEachSeries(samtaler, function(samtale, next) {
+                if(createdAgenda.state === 'active') {
+                  async.forEachSeries(meetings, function(meeting, next) {
                     if(Math.random() > 0.4) {
-                      createdSamtaleforloeb.samtaler.add(samtale.id);
+                      createdAgenda.meetings.add(meeting.id);
                     }
                     next();
                   }, function(err) {
@@ -155,17 +147,16 @@ module.exports.bootstrap = function(cb) {
                       console.error(err);
                       return callback(err);
                     }
-                    createdSamtaleforloeb.save(function(err) {
+                    createdAgenda.save(function(err) {
                       if(err) {
                         console.error(err);
                         return callback(err);
                       }
-                      // return callback();
                       next();
                     });
                   });
                 } else {
-                  createdSamtaleforloeb.save(function(err) {
+                  createdAgenda.save(function(err) {
                     if(err) {
                       console.error(err);
                       return callback(err);
@@ -191,8 +182,8 @@ module.exports.bootstrap = function(cb) {
     console.log('createTestDepartments');
     async.times(10, function(n, next) {
       Department.create({
-        afsnitskode: faker.helpers.replaceSymbolWithNumber('#####'),
-        lokation: faker.lorem.words(1)
+        sectionCode: faker.helpers.replaceSymbolWithNumber('#####'),
+        location: faker.lorem.words(1)
       }).exec(function(err, createdDepartment) {
         if(err) {
           return callback(err);
@@ -219,13 +210,13 @@ module.exports.bootstrap = function(cb) {
       }
       async.series([
             function(callback) {
-              Samtaleforloeb.find({status: 'aktiv'}).exec(function(err, samtaleforløb) {
+              Agenda.find({state: 'active'}).exec(function(err, agendas) {
                 if(err) {
                   console.error(err);
                   return callback(err);
                 }
-              async.forEachSeries(samtaleforløb, function(sf, next) {
-                createdRunde.samtaleforloeb.add(sf.id);
+              async.forEachSeries(agendas, function(sf, next) {
+                createdRunde.agendas.add(sf.id);
                 next();
               }, function(err) {
                 if(err) {
@@ -237,13 +228,13 @@ module.exports.bootstrap = function(cb) {
               });
             },
             function(callback) {
-              Samtale.find().exec(function(err, samtaler) {
+              Meeting.find().exec(function(err, meetings) {
                 if(err) {
                   console.error(err);
                   return callback(err);
                 }
-                async.forEachSeries(samtaler, function(samtale, next) {
-                  createdRunde.samtaler.add(samtale.id);
+                async.forEachSeries(meetings, function(meeting, next) {
+                  createdRunde.meetings.add(meeting.id);
                   next();
                 }, function(err) {
                   if(err) {
@@ -275,12 +266,12 @@ module.exports.bootstrap = function(cb) {
         if(err) {
           return callback(err);
         }
-        Samtaleforloeb.find().exec(function(err, samtaleforløb) {
+        Agenda.find().exec(function(err, agendas) {
           if(err) {
             console.error(err);
             return callback(err);
           }
-          createdRunde.samtaleforloeb.add(_.sample(samtaleforløb).id);
+          createdRunde.agendas.add(_.sample(agendas).id);
           createdRunde.save(function(err) {
             if(err) {
               console.error(err);
@@ -299,17 +290,17 @@ module.exports.bootstrap = function(cb) {
   }
 
 
-  function createTestSamtaler(callback) {
-    console.log('createTestSamtaler');
+  function createTestMeetings(callback) {
+    console.log('createTestMeetings');
     async.times(30, function(n, next) {
-    var status = faker.random.arrayElement(['pending', 'invited', 'handled', 'afsluttet']);
-      if(status === 'pending' || status === 'invited') {
-        Samtale.create({
-          mødeTidspunkt: faker.date.future(),
-          indkaldelsesTidspunkt: faker.date.future(),
-          lokale: faker.lorem.words(1),
-          status: status
-        }).exec(function(err, createdSamtale) {
+    var state = faker.random.arrayElement(['pending', 'invited', 'handled', 'finished']);
+      if(state === 'pending' || state === 'invited') {
+        Meeting.create({
+          meetingTime: faker.date.future(),
+          inviteTime: faker.date.future(),
+          room: faker.lorem.words(1),
+          state: state
+        }).exec(function(err, createdMeeting) {
           if(err) {
             console.error(err);
             return callback(err);
@@ -317,12 +308,12 @@ module.exports.bootstrap = function(cb) {
           next(err);
         });
       } else {
-        Samtale.create({
-          mødeTidspunkt: faker.date.past(),
-          indkaldelsesTidspunkt: faker.date.past(),
-          lokale: faker.lorem.words(1),
-          status: status
-        }).exec(function(err, createdSamtale) {
+        Meeting.create({
+          meetingTime: faker.date.past(),
+          inviteTime: faker.date.past(),
+          room: faker.lorem.words(1),
+          state: state
+        }).exec(function(err, createdMeeting) {
           if(err) {
             console.error(err);
             return callback(err);
@@ -340,12 +331,12 @@ module.exports.bootstrap = function(cb) {
   }
 
 
-  function createTestStillingskategorier(callback) {
-    console.log('createTestStillingskategorier');
+  function createTestJobs(callback) {
+    console.log('createTestJobs');
     async.times(10, function(n, next) {
-      Stillingskategori.create({
-        titel: faker.lorem.words(1)
-      }).exec(function(err, createdStillingskategori) {
+      Job.create({
+        title: faker.lorem.words(1)
+      }).exec(function(err, createdJob) {
         if(err) {
           return callback(err);
         }
