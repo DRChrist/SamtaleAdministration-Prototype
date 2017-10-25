@@ -24,8 +24,8 @@ module.exports = {
   	user: {
   		model: 'user'
   	},
-  	runde: {
-  		model: 'runde'
+  	round: {
+  		model: 'round'
   	},
     agenda: {
       model: 'agenda'

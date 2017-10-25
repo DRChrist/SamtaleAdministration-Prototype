@@ -1,14 +1,14 @@
 /**
- * RessourcePercentController
+ * ResourcePercentController
  *
- * @description :: Server-side logic for managing ressourcepercents
+ * @description :: Server-side logic for managing contentpercents
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
 module.exports = {
 	
-	findRessourcerMedNumber: function(req, res) {
-		RessourcePercent.find().exec(function(err, records) {
+	findResourcesWithNumber: function(req, res) {
+		ResourcePercent.find().exec(function(err, records) {
 			if(err) {
 				console.error(err);
 				return res.negotiate(err);

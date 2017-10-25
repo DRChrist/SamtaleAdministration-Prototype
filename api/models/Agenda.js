@@ -26,8 +26,8 @@ module.exports = {
   		type: 'string',
       enum: ['active', 'inactive', 'archived', 'approved']
   	},
-  	runde: {
-  		model: 'runde'
+  	round: {
+  		model: 'round'
   	},
   	departments: {
   		collection: 'department',
@@ -39,8 +39,8 @@ module.exports = {
   		via: 'agendas',
   		dominant: true
   	},
-  	ressourcer: {
-      collection: 'ressource',
+  	contents: {
+      collection: 'content',
       via: 'agendas',
       dominant: true
     },

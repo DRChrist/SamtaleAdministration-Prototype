@@ -14,15 +14,15 @@ $(document).ready(function() {
 	});
 
 
-	io.socket.get('/runde', function(resData, jwres) {
+	io.socket.get('/round', function(resData, jwres) {
 		if(jwres.statusCode !== 200) {
 			console.error(jwres);
 			return;
 		}
-		for(var runde of resData) {
-			$('.runder').append('Titel: ' + runde.titel + '<br>');
-			$('.runder').append('Status: ' + runde.status + '<br>');
-			$('.runder').append('<br>');
+		for(var round of resData) {
+			$('.rounds').append('Titel: ' + round.title + '<br>');
+			$('.rounds').append('Status: ' + round.state + '<br>');
+			$('.rounds').append('<br>');
 		}
 	});
 

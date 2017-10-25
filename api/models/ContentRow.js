@@ -1,5 +1,5 @@
 /**
- * Line.js
+ * contentRow.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -9,25 +9,25 @@ module.exports = {
 
   attributes: {
 
-  	frames: {
-  		collection: 'frame',
-  		via: 'lines'
+  	contentFrames: {
+  		collection: 'contentFrame',
+  		via: 'contentRows'
   	},
   	questionTexts: {
-  		collection: 'ressourceText',
-  		via: 'line',
+  		collection: 'resourceText',
+  		via: 'contentRow',
   	},
   	answerTexts: {
-  		collection: 'ressourceText',
-  		via: 'line',
+  		collection: 'resourceText',
+  		via: 'contentRow',
   	},
   	questionPercents: {
-  		collection: 'ressourcePercent',
-  		via: 'line',
+  		collection: 'resourcePercent',
+  		via: 'contentRow',
   	},
   	answerPercents: {
-  		collection: 'ressourcePercent',
-  		via: 'line',
+  		collection: 'resourcePercent',
+  		via: 'contentRow',
   	}
 
   }

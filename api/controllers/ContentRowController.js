@@ -7,7 +7,7 @@
 
 module.exports = {
 	
-	BuildLine: function(req, res) {
+	BuildContentRow: function(req, res) {
 		Line.create().exec(function(err, createdLine) {
 			if(err) {
 				console.error(err);

@@ -12,7 +12,7 @@ io.socket.get('/agenda', function(resData, jwres) {
 
 $('#add-btn').click(function() {
 	var $select = $('#add-dropdown').val();
-	io.socket.put('/agenda/addRunde', {titel: $select}, function(resData, jwres) {
+	io.socket.put('/agenda/addRound', {titel: $select}, function(resData, jwres) {
 		if(jwres.statusCode !== 200) {
 			console.error(jwres);
 			return;
@@ -32,7 +32,7 @@ $('#currentround').click(function() {
 	$('#upcomingrounds').removeClass('active');
 	$('#currentround').addClass('active');
 	$('#headline').text('Samtaleforløb');
-	io.socket.get('/runde?status=aktiv', function(resData, jwres) {
+	io.socket.get('/round?state=active', function(resData, jwres) {
 		if(jwres.statusCode !== 200) {
 			console.error(jwres);
 			return;
@@ -62,16 +62,16 @@ $('#upcomingrounds').click(function() {
 	$('.data').empty();
 	$('#currentround').removeClass('active');
 	$('#upcomingrounds').addClass('active');
-	$('#headline').text('Runder');
-	io.socket.get('/runde?status=kommende', function(resData, jwres) {
+	$('#headline').text('rounds');
+	io.socket.get('/round?state=upcoming', function(resData, jwres) {
 		if(jwres.statusCode !== 200) {
 			console.error(jwres);
 			return;
 		}
-		_.forEach(resData, function(runde) {
+		_.forEach(resData, function(round) {
 			$('.data').append('<div class="row bg-warning"><div class="col-md-6">'	+ 
-					'<a href="/runde?id=' + runde.id + '">' + runde.titel + '</a><br>' + 
-					runde.status + '<br></div>' + 
+					'<a href="/round?id=' + round.id + '">' + round.title + '</a><br>' + 
+					round.state + '<br></div>' + 
 					'<div class="col-md-6">' + 'Samtaleforløb: ' + '</div></div><br><br>');
 		});
 	});

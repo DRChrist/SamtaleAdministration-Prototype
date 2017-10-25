@@ -15,19 +15,19 @@ module.exports.bootstrap = function(cb) {
 
 		async.series([
       function(callback) {
-        createTestRessourceText(callback);
+        createTestResourceTexts(callback);
       },
       function(callback) {
-        createTestRessourcePercent(callback);
+        createTestResourcePercents(callback);
       },
       function(callback) {
-        createTestLines(callback);
+        createTestContentRows(callback);
       },
       function(callback) {
-        createTestFrames(callback);
+        createTestContentFrames(callback);
       },
       function(callback) {
-        createTestRessourcer(callback);
+        createTestContents(callback);
       },
 			function(callback) {
 				createTestDepartments(callback);
@@ -45,7 +45,7 @@ module.exports.bootstrap = function(cb) {
 				createTestAgendas(callback);
 			},
       function(callback) {
-        createTestRunder(callback);
+        createTestRounds(callback);
       }
 			], function(err) {
 				if(err) {
@@ -125,12 +125,12 @@ module.exports.bootstrap = function(cb) {
               return callback(err);
             }
             createdAgenda.departments.add(_.sample(departments).id);
-            Ressource.find().exec(function(err, ressourcer) {
+            Content.find().exec(function(err, contents) {
               if(err) {
                 console.error(err);
                 return callback(err);
               }
-              createdAgenda.ressourcer.add(_.sample(ressourcer).id);
+              createdAgenda.contents.add(_.sample(contents).id);
               Meeting.find().populate('agenda').exec(function(err, meetings) {
                 if(err) {
                   return callback(err);
@@ -199,11 +199,11 @@ module.exports.bootstrap = function(cb) {
   }
 
 
-  function createTestRunder(callback) {
-    Runde.create({
-      titel: faker.lorem.words(2),
-      status: 'aktiv'
-    }).exec(function(err, createdRunde){
+  function createTestRounds(callback) {
+    Round.create({
+      title: faker.lorem.words(2),
+      state: 'active'
+    }).exec(function(err, createdRound){
       if(err) {
         console.error(err);
         return callback(err);
@@ -216,7 +216,7 @@ module.exports.bootstrap = function(cb) {
                   return callback(err);
                 }
               async.forEachSeries(agendas, function(sf, next) {
-                createdRunde.agendas.add(sf.id);
+                createdRound.agendas.add(sf.id);
                 next();
               }, function(err) {
                 if(err) {
@@ -234,7 +234,7 @@ module.exports.bootstrap = function(cb) {
                   return callback(err);
                 }
                 async.forEachSeries(meetings, function(meeting, next) {
-                  createdRunde.meetings.add(meeting.id);
+                  createdRound.meetings.add(meeting.id);
                   next();
                 }, function(err) {
                   if(err) {
@@ -250,7 +250,7 @@ module.exports.bootstrap = function(cb) {
               console.error(err);
               return callback(err);
             }
-            createdRunde.save(function(err) {
+            createdRound.save(function(err) {
               if(err) {
                 console.error(err);
                 return callback(err);
@@ -259,10 +259,10 @@ module.exports.bootstrap = function(cb) {
           });
       });
     async.times(10, function(n, next) {
-      Runde.create({
-        titel: faker.lorem.words(2),
-        status: faker.random.arrayElement(['kommende', 'arkiveret'])
-      }).exec(function(err, createdRunde) {
+      Round.create({
+        title: faker.lorem.words(2),
+        state: faker.random.arrayElement(['upcoming', 'archived'])
+      }).exec(function(err, createdRound) {
         if(err) {
           return callback(err);
         }
@@ -271,8 +271,8 @@ module.exports.bootstrap = function(cb) {
             console.error(err);
             return callback(err);
           }
-          createdRunde.agendas.add(_.sample(agendas).id);
-          createdRunde.save(function(err) {
+          createdRound.agendas.add(_.sample(agendas).id);
+          createdRound.save(function(err) {
             if(err) {
               console.error(err);
               return callback(err);
@@ -350,12 +350,12 @@ module.exports.bootstrap = function(cb) {
     });
   }
 
-  function createTestRessourceText(callback) {
-    console.log('createTestRessourceText');
+  function createTestResourceTexts(callback) {
+    console.log('createTestResourceText');
     async.times(10, function(n, next) {
-      RessourceText.create({
+      ResourceText.create({
         text: faker.lorem.words(8)
-      }).exec(function(err, createdRessourceText) {
+      }).exec(function(err, createdResourceText) {
         if(err) {
           console.error(err);
           return callback(err);
@@ -371,12 +371,12 @@ module.exports.bootstrap = function(cb) {
     });
   }
 
-  function createTestRessourcePercent(callback) {
-    console.log('createTestRessourcePercent');
+  function createTestResourcePercents(callback) {
+    console.log('createTestResourcePercent');
     async.times(10, function(n, next) {
-      RessourcePercent.create({
+      ResourcePercent.create({
         number: faker.random.number(100)
-      }).exec(function(err, createdRessourcePercent) {
+      }).exec(function(err, createdResourcePercent) {
         if(err) {
           console.error(err);
           return callback(err);
@@ -392,23 +392,23 @@ module.exports.bootstrap = function(cb) {
     });
   }
 
-  function createTestFrames(callback) {
-    console.log('createTestFrames');
+  function createTestContentFrames(callback) {
+    console.log('createTestContentFrames');
     async.times(10, function(n, next) {
-      Frame.create({
-        titel: faker.lorem.words(2)
-      }).exec(function(err, createdFrame) {
+      ContentFrame.create({
+        title: faker.lorem.words(2)
+      }).exec(function(err, createdContentFrame) {
         if(err) {
           console.error(err);
           return callback(err);
         }
-        Line.find().exec(function(err, lines) {
+        ContentRow.find().exec(function(err, contentRows) {
           if(err) {
             console.error(err);
             return callback(err);
           }
-          createdFrame.lines.add(_.sample(lines).id);
-          createdFrame.save(function(err) {
+          createdContentFrame.contentRows.add(_.sample(contentRows).id);
+          createdContentFrame.save(function(err) {
             if(err) {
               console.error(err);
               return callback(err);
@@ -426,24 +426,24 @@ module.exports.bootstrap = function(cb) {
     });
   }
 
-  function createTestRessourcer(callback) {
-    console.log('createTestRessourcer');
+  function createTestContents(callback) {
+    console.log('createTestContents');
     async.times(10, function(n, next) {
-      Ressource.create({
-        titel: faker.lorem.words(1),
-        beskrivelse: faker.lorem.words(7)
-      }).exec(function(err, createdRessource) {
+      Content.create({
+        title: faker.lorem.words(1),
+        description: faker.lorem.words(7)
+      }).exec(function(err, createdContent) {
         if(err) {
           console.error(err);
           return callback(err);
         }
-        Frame.find().exec(function(err, frames) {
+        ContentFrame.find().exec(function(err, contentFrames) {
           if(err) {
             console.error(err);
             return cb(err);
           }
-          createdRessource.frames.add(_.sample(frames).id);
-          createdRessource.save(function(err) {
+          createdContent.contentFrames.add(_.sample(contentFrames).id);
+          createdContent.save(function(err) {
             if(err) {
               console.error(err);
               return cb(err);
@@ -461,36 +461,36 @@ module.exports.bootstrap = function(cb) {
     });
   }
 
-  function createTestLines(callback) {
-    console.log('createTestLines');
+  function createTestContentRows(callback) {
+    console.log('createTestContentRows');
     async.times(10, function(n, next) {
-      Line.create().exec(function(err, createdLine) {
+      ContentRow.create().exec(function(err, createdContentRow) {
         if(err) {
           console.error(err);
           return callback(err);
         }
-        RessourceText.find().exec(function(err, texts) {
+        ResourceText.find().exec(function(err, texts) {
           if(err) {
             console.error(err);
             return callback(err);
           }
           var zeroToTwo = faker.random.number(2);
           async.times(zeroToTwo, function(n, next) {
-            createdLine.questionTexts.add(_.sample(texts).id);
+            createdContentRow.questionTexts.add(_.sample(texts).id);
             next();
         }, function(err) {
           if(err) {
             console.error(err);
             return callback(err);
           }
-          RessourcePercent.find().exec(function(err, numbers) {
+          ResourcePercent.find().exec(function(err, numbers) {
             if(err) {
               console.error(err);
               return callback(err);
             }
             var zeroOrOne = faker.random.number(1);
             async.times(zeroOrOne, function(n, next) {
-              createdLine.questionPercents.add(_.sample(numbers).id);
+              createdContentRow.questionPercents.add(_.sample(numbers).id);
               next();
           }, function(err) {
             if(err) {
@@ -499,12 +499,12 @@ module.exports.bootstrap = function(cb) {
             }
             zeroToTwo = faker.random.number(2);
             async.times(zeroToTwo, function(n, next) {
-              RessourceText.create().exec(function(err, text) {
+              ResourceText.create().exec(function(err, text) {
                 if(err) {
                   console.error(err);
                   return callback(err);
                 }
-                createdLine.answerTexts.add(text.id);
+                createdContentRow.answerTexts.add(text.id);
               });
                 next();
               }, function(err) {
@@ -514,12 +514,12 @@ module.exports.bootstrap = function(cb) {
                 }
                 zeroOrOne = faker.random.number(1);
                 async.times(zeroOrOne, function(n, next) {
-                  RessourcePercent.create().exec(function(err, number) {
+                  ResourcePercent.create().exec(function(err, number) {
                     if(err) {
                       console.error(err);
                       return callback(err);
                     }
-                    createdLine.answerPercents.add(number.id);
+                    createdContentRow.answerPercents.add(number.id);
                   });
                     next();
                   }, function(err) {
@@ -527,7 +527,7 @@ module.exports.bootstrap = function(cb) {
                       console.error(err);
                       return callback(err);
                     }
-                    createdLine.save(function(err) {
+                    createdContentRow.save(function(err) {
                       if(err) {
                         console.error(err);
                         return callback(err);

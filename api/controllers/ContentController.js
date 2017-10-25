@@ -1,7 +1,7 @@
 /**
- * RessourceController
+ * ContentController
  *
- * @description :: Server-side logic for managing ressources
+ * @description :: Server-side logic for managing contents
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 

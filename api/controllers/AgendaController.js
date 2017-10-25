@@ -7,19 +7,19 @@
 
 module.exports = {
 
-	addRunde: function(req, res) {
+	addRound: function(req, res) {
 		Agenda.findOne({titel: req.param('titel')})
 		.exec(function(err, agenda) {
 			if(err) {
 				console.error(err);
 				return res.negotiate(err);
 			}
-			Runde.findOne({status: 'aktiv'}).exec(function(err, runde) {
+			Round.findOne({status: 'aktiv'}).exec(function(err, round) {
 				if(err) {
 					console.error(err);
 					return res.negotiate(err);
 				}
-				agenda.runder.add(runde.id);
+				agenda.rounds.add(round.id);
 				agenda.save(function(err) {
 					return res.ok();
 				});
@@ -29,11 +29,11 @@ module.exports = {
 
 	show: function(req, res) {
 		Agenda.findOne({titel: req.param('titel')})
-		.populate('runde')
+		.populate('round')
 		.populate('departments')
 		.populate('jobs')
 		.populate('meetings')
-		.populate('ressourcer')
+		.populate('contents')
 		.exec(function(err, agenda) {
 			if(err) {
 				console.error(err);

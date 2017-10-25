@@ -1,5 +1,5 @@
 /**
- * Frame.js
+ * Content.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -8,21 +8,22 @@
 module.exports = {
 
   attributes: {
-  	titel: {
+  	title: {
   		type: 'string'
   	},
-  	ressourcer: {
-  		collection: 'ressource',
-  		via: 'frames'
+  	description: {
+  		type: 'string'
   	},
-    lines: {
-      collection: 'line',
-      via: 'frames',
-      dominant: true
-    },	
+  	agendas: {
+  		collection: 'agenda',
+  		via: 'contents'
+  	},
+  	contentFrames: {
+  		collection: 'contentFrame',
+  		via: 'contents',
+  		dominant: true
+  	}
   },
-
-  	
 
 };
 
