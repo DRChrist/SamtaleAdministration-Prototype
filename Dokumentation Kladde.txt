@@ -1,5 +1,5 @@
 Introduktion:
-	Dette er et forsøg på opstille en version af MUS-systemets samtaleforløbs administration med en tilføjet feature til runder og med indholdstyper opdelt i mindre elementer. Dette for at undersøge hvilke problemstillinger, der opstår i forbindelse med ændring og lagring af samtaledata, samt for at teste de nye features.
+	Dette er et forsøg på opstille en version af MUS-systemets samtaleforløbsadministration med en tilføjet feature til runder og med indholdstyper opdelt i mindre elementer. Dette for at undersøge hvilke problemstillinger, der opstår i forbindelse med ændring og lagring af samtaledata, samt for at teste de nye features.
 	
 	
 Modeldefinitioner:

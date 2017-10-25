@@ -19,10 +19,10 @@ module.exports = {
   		collection: 'meeting',
   		via: 'round'
   	},
-  	agendas: {
-  		collection: 'agenda',
-      via: 'round'
-  	}
+  	// agendas: {
+  	// 	collection: 'agenda',
+   //    via: 'round'
+  	// }
   },
   
 };

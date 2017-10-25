@@ -26,9 +26,9 @@ module.exports = {
   		type: 'string',
       enum: ['active', 'inactive', 'archived', 'approved']
   	},
-  	round: {
-  		model: 'round'
-  	},
+  	// round: {
+  	// 	model: 'round'
+  	// },
   	departments: {
   		collection: 'department',
   		via: 'agendas',

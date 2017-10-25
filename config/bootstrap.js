@@ -208,25 +208,26 @@ module.exports.bootstrap = function(cb) {
         console.error(err);
         return callback(err);
       }
-      async.series([
-            function(callback) {
-              Agenda.find({state: 'active'}).exec(function(err, agendas) {
-                if(err) {
-                  console.error(err);
-                  return callback(err);
-                }
-              async.forEachSeries(agendas, function(sf, next) {
-                createdRound.agendas.add(sf.id);
-                next();
-              }, function(err) {
-                if(err) {
-                  console.error(err);
-                  return callback(err);
-                }
-                callback();
-                });
-              });
-            },
+      async.series([ //Needs to be refactored, async.series is unnecessary
+            // function(callback) {
+            //   //add active agendas to the active round
+            //   Agenda.find({state: 'active'}).exec(function(err, agendas) {
+            //     if(err) {
+            //       console.error(err);
+            //       return callback(err);
+            //     }
+            //   async.forEachSeries(agendas, function(agenda, next) {
+            //     createdRound.agendas.add(agenda.id);
+            //     next();
+            //   }, function(err) {
+            //     if(err) {
+            //       console.error(err);
+            //       return callback(err);
+            //     }
+            //     callback();
+            //     });
+            //   });
+            // },
             function(callback) {
               Meeting.find().exec(function(err, meetings) {
                 if(err) {
@@ -266,19 +267,19 @@ module.exports.bootstrap = function(cb) {
         if(err) {
           return callback(err);
         }
-        Agenda.find().exec(function(err, agendas) {
-          if(err) {
-            console.error(err);
-            return callback(err);
-          }
-          createdRound.agendas.add(_.sample(agendas).id);
+        // Agenda.find().exec(function(err, agendas) {
+        //   if(err) {
+        //     console.error(err);
+        //     return callback(err);
+        //   }
+        //   createdRound.agendas.add(_.sample(agendas).id);
           createdRound.save(function(err) {
             if(err) {
               console.error(err);
               return callback(err);
             }
             next(err);
-          });
+          // });
         });
       });
     }, function(err) {
