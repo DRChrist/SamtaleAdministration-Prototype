@@ -1,10 +1,13 @@
-#Mockup af system til administration af samtaleforløb med runder
+Mockup af system til administration af samtaleforløb med runder
+===============================================================
 
-###Introduktion
+Introduktion
+------------
 Dette er et forsøg på opstille en version af MUS-systemets samtaleforløbsadministration med en tilføjet feature til runder og med indholdstyper opdelt i mindre elementer. Dette for at undersøge hvilke problemstillinger, der opstår i forbindelse med ændring og lagring af samtaledata, samt for at teste de nye features.
 	
 	
-###Modeldefinitioner
+Modeldefinitioner
+-----------------
 
 Samtale/Meeting: Det centrale objekt i systemet. Udgør en kobling mellem ressource og bruger.
 	
@@ -36,9 +39,10 @@ Content, ContentFrame, ContentRow: Forskellige niveauer af ressourcer.
 ResourceText, ResourcePercent: Eksempler på det laveste niveau af ressourcer.
 	
 	
-###Problemformulering
+Problemformulering
+------------------
 
-####Overgangsproblemer
+**Overgangsproblemer**
 Administration af samtaleforløb gav anledning til en række svært definerbare edge-cases som krævede en afklaring.
 Et centralt eksempel er situationen hvor et samtaleforløb bliver ændret. Et par spørgsmål melder sig når man overvejer hvordan systemet skal opføre sig i den situation:
 	
@@ -49,14 +53,14 @@ Et centralt eksempel er situationen hvor et samtaleforløb bliver ændret. Et pa
 Ikke bare er det vigtigt at have klare regler for hvordan systemet skal forholde sig, så man undgår uforudsigelig opførsel, det er også vigtigt at disse regler giver intuitiv mening, så man ikke gør det sværere end nødvendigt for brugeren at forudse konsekvenserne. 
 Vi ønsker desuden at kode det så dynamisk så muligt, så vi begrænser mængden af kode der skal skrives og gør det nemmere at vedligeholde og ændre fremover.
 
-####Ressourcer
+**Ressourcer**
 Uafhængigt af ovennævnte problemstilling, er det også værd at overveje om det er muligt at organisere og lagre ressourcer på en dynamisk måde.
 Det vi håber at opnå er (1) mulighed for at en bruger relativt frit kan designe deres egne samtaleforløb og (2) på længere sigt at opbygge et bibliotek af ressourcer som brugerne kan vælge imellem og kombinere som de ønsker.
 Lagringen af dataen må ikke glemmes i disse overvejelser. At bevare integriteten af lagret data er højeste prioritet.
 	
 ---	
 		
-###Runder
+**Runder**
 	
 For at afhjælpe nogle af overgangsproblemerne og for at afprøve det som feature har jeg tilføjet runder til denne prototype.
 	
@@ -85,9 +89,9 @@ På den anden side er det altid værd at have så lav coupling som muligt og det
 Ulempen ved denne metode er man skal opdatere de to modeller separat, selvom de skifter state samtidig, fx når en ny runde starter. Jeg er usikker på hvilken variant der fungerer bedst, og det kan nok kun afgøres ved at udvikle systemet til en højere detaljegrad.
 
 
-###Ressourcer
+**Ressourcer**
 	
-####Ressource-hierarkiet:
+*Ressource-hierarkiet*:
 
 -	Samtaleforløb
 
