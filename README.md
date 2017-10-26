@@ -43,6 +43,7 @@ Problemformulering
 ------------------
 
 **Overgangsproblemer**
+
 Administration af samtaleforløb gav anledning til en række svært definerbare edge-cases som krævede en afklaring.
 Et centralt eksempel er situationen hvor et samtaleforløb bliver ændret. Et par spørgsmål melder sig når man overvejer hvordan systemet skal opføre sig i den situation:
 	
@@ -54,6 +55,7 @@ Ikke bare er det vigtigt at have klare regler for hvordan systemet skal forholde
 Vi ønsker desuden at kode det så dynamisk så muligt, så vi begrænser mængden af kode der skal skrives og gør det nemmere at vedligeholde og ændre fremover.
 
 **Ressourcer**
+
 Uafhængigt af ovennævnte problemstilling, er det også værd at overveje om det er muligt at organisere og lagre ressourcer på en dynamisk måde.
 Det vi håber at opnå er (1) mulighed for at en bruger relativt frit kan designe deres egne samtaleforløb og (2) på længere sigt at opbygge et bibliotek af ressourcer som brugerne kan vælge imellem og kombinere som de ønsker.
 Lagringen af dataen må ikke glemmes i disse overvejelser. At bevare integriteten af lagret data er højeste prioritet.
