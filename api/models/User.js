@@ -24,6 +24,9 @@ module.exports = {
   		type: 'string',
   		enum: ['active', 'inactive']
   	},
+    deletedAt: {
+      type: 'datetime'
+    },
   	jobs: {
   		collection: 'job',
   		via: 'users',

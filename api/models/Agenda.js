@@ -24,11 +24,14 @@ module.exports = {
   	},
   	state: {
   		type: 'string',
-      enum: ['active', 'inactive', 'archived', 'approved']
+      enum: ['active', 'inactive', 'upcoming']
   	},
-  	// round: {
-  	// 	model: 'round'
-  	// },
+    approved: {
+      type: 'boolean'
+    },
+  	deletedAt: {
+      type: 'datetime'
+    },
   	departments: {
   		collection: 'department',
   		via: 'agendas',

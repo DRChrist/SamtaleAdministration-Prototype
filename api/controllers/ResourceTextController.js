@@ -7,6 +7,7 @@
 
 module.exports = {
 	
+	//Used to exclude empty ressources, like the ones in answers
 	findResourcesWithText: function(req, res) {
 		ResourceText.find().exec(function(err, records) {
 			if(err) {

@@ -14,6 +14,9 @@ module.exports = {
   	description: {
   		type: 'string'
   	},
+    deletedAt: {
+      type: 'datetime'
+    },
   	agendas: {
   		collection: 'agenda',
   		via: 'contents'

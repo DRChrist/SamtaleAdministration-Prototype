@@ -39,8 +39,7 @@ module.exports.routes = {
     view: 'admin'
   },
   'GET /resourceText': 'ResourceTextController.findResourcesWithText',
-  'GET /resourcePercent': 'ResourcePercentController.findResourcesWithNumber',
-  'GET /agenda/:titel': 'AgendaController.show'
+  'GET /resourcePercent': 'ResourcePercentController.findResourcesWithNumber'
 
   /***************************************************************************
   *                                                                          *

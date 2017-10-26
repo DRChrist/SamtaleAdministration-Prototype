@@ -9,6 +9,9 @@ module.exports = {
 
   attributes: {
 
+    deletedAt: {
+      type: 'datetime'
+    },
   	contentFrames: {
   		collection: 'contentFrame',
   		via: 'contentRows'

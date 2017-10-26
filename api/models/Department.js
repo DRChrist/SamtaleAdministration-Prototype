@@ -14,14 +14,17 @@ module.exports = {
   	location: {
   		type: 'string'
   	},
-  	users: {
-  		collection: 'user',
-  		via: 'departments'
-  	},
-  	agendas: {
-  		collection: 'agenda',
-  		via: 'departments'
-  	}
+    deletedAt: {
+      type: 'datetime'
+    },
+    users: {
+      collection: 'user',
+      via: 'departments'
+    },
+    agendas: {
+      collection: 'agenda',
+      via: 'departments'
+    }
   }
 };
 

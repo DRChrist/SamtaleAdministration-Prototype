@@ -7,15 +7,15 @@
 
 module.exports = {
 	
-	BuildContentRow: function(req, res) {
-		Line.create().exec(function(err, createdLine) {
-			if(err) {
-				console.error(err);
-				return res.negotiate(err);
-			}
-			return res.ok();
-		});
-	}
+	// BuildContentRow: function(req, res) {
+	// 	Line.create().exec(function(err, createdLine) {
+	// 		if(err) {
+	// 			console.error(err);
+	// 			return res.negotiate(err);
+	// 		}
+	// 		return res.ok();
+	// 	});
+	// }
 
 
 };

@@ -11,6 +11,9 @@ module.exports = {
   	title: {
   		type: 'string'
   	},
+    deletedAt: {
+      type: 'datetime'
+    },
   	contents: {
   		collection: 'content',
   		via: 'contentFrames'

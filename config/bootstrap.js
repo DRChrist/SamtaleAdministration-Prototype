@@ -12,7 +12,8 @@ var faker = require('faker');
 
 module.exports.bootstrap = function(cb) {
 
-
+    //call each function in series, the order is important, because the later
+    //functions create associations between models
 		async.series([
       function(callback) {
         createTestResourceTexts(callback);
@@ -68,16 +69,19 @@ module.exports.bootstrap = function(cb) {
         if(err) {
           return callback(err);
         }
+        //Find all jobs and add a random one
         Job.find().exec(function(err, jobs) {
           if(err) {
             return callback(err);
           }
           createdUser.jobs.add(_.sample(jobs).id);
+          //Find all departments and add a random one
           Department.find().exec(function(err, departments) {
             if(err) {
               return callback(err);
             }
             createdUser.departments.add(_.sample(departments).id);
+            //Find all meetings and add a random one
             Meeting.find().exec(function(err, meetings) {
               if(err) {
                 return callback(err);
@@ -110,7 +114,8 @@ module.exports.bootstrap = function(cb) {
         description: faker.lorem.sentence(6),
         inviteInterval: faker.random.number({ min:100, max:350 }),
         invitePeriod: faker.random.number({ min:14, max:60 }),
-        state: faker.random.arrayElement(['active', 'inactive', 'archived', 'approved'])
+        state: faker.random.arrayElement(['active', 'inactive', 'upcoming']),
+        approved: faker.random.boolean()
       }).exec(function(err, createdAgenda) {
         if(err) {
           return callback(err);
@@ -120,22 +125,27 @@ module.exports.bootstrap = function(cb) {
             return callback(err);
           }
           createdAgenda.jobs.add(_.sample(jobs).id);
+          //Find all departments and add a random one
           Department.find().exec(function(err, departments) {
             if(err) {
               return callback(err);
             }
             createdAgenda.departments.add(_.sample(departments).id);
+            //Find all contents and add a random one
             Content.find().exec(function(err, contents) {
               if(err) {
                 console.error(err);
                 return callback(err);
               }
               createdAgenda.contents.add(_.sample(contents).id);
-              Meeting.find().populate('agenda').exec(function(err, meetings) {
+              //Find all meetings
+              Meeting.find()
+              // .populate('agenda')
+              .exec(function(err, meetings) {
                 if(err) {
                   return callback(err);
                 }
-              
+                //if the agenda was assigned an active state, it has a chance of getting some meetings
                 if(createdAgenda.state === 'active') {
                   async.forEachSeries(meetings, function(meeting, next) {
                     if(Math.random() > 0.4) {
@@ -155,6 +165,7 @@ module.exports.bootstrap = function(cb) {
                       next();
                     });
                   });
+                  //if the agenda is not active, it has no meetings
                 } else {
                   createdAgenda.save(function(err) {
                     if(err) {
@@ -200,6 +211,7 @@ module.exports.bootstrap = function(cb) {
 
 
   function createTestRounds(callback) {
+    //First create one active round
     Round.create({
       title: faker.lorem.words(2),
       state: 'active'
@@ -208,57 +220,30 @@ module.exports.bootstrap = function(cb) {
         console.error(err);
         return callback(err);
       }
-      async.series([ //Needs to be refactored, async.series is unnecessary
-            // function(callback) {
-            //   //add active agendas to the active round
-            //   Agenda.find({state: 'active'}).exec(function(err, agendas) {
-            //     if(err) {
-            //       console.error(err);
-            //       return callback(err);
-            //     }
-            //   async.forEachSeries(agendas, function(agenda, next) {
-            //     createdRound.agendas.add(agenda.id);
-            //     next();
-            //   }, function(err) {
-            //     if(err) {
-            //       console.error(err);
-            //       return callback(err);
-            //     }
-            //     callback();
-            //     });
-            //   });
-            // },
-            function(callback) {
-              Meeting.find().exec(function(err, meetings) {
-                if(err) {
-                  console.error(err);
-                  return callback(err);
-                }
-                async.forEachSeries(meetings, function(meeting, next) {
-                  createdRound.meetings.add(meeting.id);
-                  next();
-                }, function(err) {
-                  if(err) {
-                    console.error(err);
-                    return callback(err);
-                  }
-                  callback();
-                });
-              });
-            }
-          ], function(err) {
+      //Find all meetings and add them to the active round
+      Meeting.find().exec(function(err, meetings) {
+        if(err) {
+          console.error(err);
+          return callback(err);
+        }
+        async.forEachSeries(meetings, function(meeting, next) {
+          createdRound.meetings.add(meeting.id);
+          next();
+        }, function(err) {
+          if(err) {
+            console.error(err);
+            return callback(err);
+          }
+          createdRound.save(function(err) {
             if(err) {
               console.error(err);
               return callback(err);
             }
-            createdRound.save(function(err) {
-              if(err) {
-                console.error(err);
-                return callback(err);
-              }
-            });
           });
+        });
       });
+    });
+    //Then create 10 rounds that are not active
     async.times(10, function(n, next) {
       Round.create({
         title: faker.lorem.words(2),
@@ -267,19 +252,12 @@ module.exports.bootstrap = function(cb) {
         if(err) {
           return callback(err);
         }
-        // Agenda.find().exec(function(err, agendas) {
-        //   if(err) {
-        //     console.error(err);
-        //     return callback(err);
-        //   }
-        //   createdRound.agendas.add(_.sample(agendas).id);
-          createdRound.save(function(err) {
-            if(err) {
-              console.error(err);
-              return callback(err);
-            }
-            next(err);
-          // });
+        createdRound.save(function(err) {
+          if(err) {
+            console.error(err);
+            return callback(err);
+          }
+          next(err);
         });
       });
     }, function(err) {
@@ -294,7 +272,10 @@ module.exports.bootstrap = function(cb) {
   function createTestMeetings(callback) {
     console.log('createTestMeetings');
     async.times(30, function(n, next) {
+      //create a random state to determine whether meetingTime and inviteTime are
+      //in the past or in the future
     var state = faker.random.arrayElement(['pending', 'invited', 'handled', 'finished']);
+    //meeting in the future
       if(state === 'pending' || state === 'invited') {
         Meeting.create({
           meetingTime: faker.date.future(),
@@ -308,6 +289,7 @@ module.exports.bootstrap = function(cb) {
           }
           next(err);
         });
+        //meeting in the past
       } else {
         Meeting.create({
           meetingTime: faker.date.past(),
@@ -403,6 +385,7 @@ module.exports.bootstrap = function(cb) {
           console.error(err);
           return callback(err);
         }
+        //find all contentRows and add a random one
         ContentRow.find().exec(function(err, contentRows) {
           if(err) {
             console.error(err);
@@ -438,6 +421,7 @@ module.exports.bootstrap = function(cb) {
           console.error(err);
           return callback(err);
         }
+        //Find all contentFrames and add a random one
         ContentFrame.find().exec(function(err, contentFrames) {
           if(err) {
             console.error(err);
@@ -475,6 +459,7 @@ module.exports.bootstrap = function(cb) {
             console.error(err);
             return callback(err);
           }
+          //adds a random number of texts for the question part
           var zeroToTwo = faker.random.number(2);
           async.times(zeroToTwo, function(n, next) {
             createdContentRow.questionTexts.add(_.sample(texts).id);
@@ -489,6 +474,7 @@ module.exports.bootstrap = function(cb) {
               console.error(err);
               return callback(err);
             }
+            //adds a random number of percents for the question part 
             var zeroOrOne = faker.random.number(1);
             async.times(zeroOrOne, function(n, next) {
               createdContentRow.questionPercents.add(_.sample(numbers).id);
@@ -498,6 +484,7 @@ module.exports.bootstrap = function(cb) {
               console.error(err);
               return callback(err);
             }
+            //creates a random number of empty texts for the answer part
             zeroToTwo = faker.random.number(2);
             async.times(zeroToTwo, function(n, next) {
               ResourceText.create().exec(function(err, text) {
@@ -513,6 +500,7 @@ module.exports.bootstrap = function(cb) {
                   console.error(err);
                   return callback(err);
                 }
+                //creates a random number of empty percents for the answer part
                 zeroOrOne = faker.random.number(1);
                 async.times(zeroOrOne, function(n, next) {
                   ResourcePercent.create().exec(function(err, number) {
@@ -549,8 +537,6 @@ module.exports.bootstrap = function(cb) {
           }
           return callback();
         });
-    //   });
-    // });
   }
 
 };

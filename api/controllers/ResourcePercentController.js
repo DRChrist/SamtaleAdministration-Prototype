@@ -7,6 +7,7 @@
 
 module.exports = {
 	
+	//Used to exclude resources without numbers, like the ones in answers
 	findResourcesWithNumber: function(req, res) {
 		ResourcePercent.find().exec(function(err, records) {
 			if(err) {
