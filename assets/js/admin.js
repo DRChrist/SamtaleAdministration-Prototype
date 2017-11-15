@@ -37,7 +37,7 @@ $('#currentround').click(function() {
 		}
 	$('#headline').text('Meetings');
 		showArrayOfObjects(resData[0].meetings, 'meeting');
-		
+
 	});
 });
 
@@ -70,8 +70,8 @@ function showModel(model) {
 function showArrayOfObjects(array, model) {
 	$('.data').empty();
 	_.forEach(array, function(obj) {
-		$('.data').append('<a href="/' + model + '?id=' + obj.id + 
-			'" style="display:block;"><div class="row bg-warning"><div class="col-md-6 cola' + 
+		$('.data').append('<a href="/' + model + '/' + obj.id +
+			'" style="display:block;"><div class="row bg-warning"><div class="col-md-6 cola' +
 			obj.id + '"></div><div class="col-md-6 colb' + obj.id + '"></div></div></a><br><br>');
 		var shift = false;
 		_.forEach(obj, function(value, key) {

@@ -38,8 +38,12 @@ module.exports.routes = {
   '/admin': {
     view: 'admin'
   },
+  '/buildContentRow': {
+    view: 'buildContentRow'
+  },
   'GET /resourceText': 'ResourceTextController.findResourcesWithText',
-  'GET /resourcePercent': 'ResourcePercentController.findResourcesWithNumber'
+  'GET /resourcePercent': 'ResourcePercentController.findResourcesWithNumber',
+  'GET /agenda/:id': 'AgendaController.showAgenda'
 
   /***************************************************************************
   *                                                                          *

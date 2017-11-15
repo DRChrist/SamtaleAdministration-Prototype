@@ -9,7 +9,11 @@ module.exports = {
 
 	showAgenda: function(req, res) {
 
-	  Agenda.findOne(req.param('id')).exec(function(err, foundAgenda) {
+	  Agenda.findOne(req.param('id'))
+      .populate('departments')
+      .populate('jobs')
+      .populate('meetings')
+      .exec(function(err, foundAgenda) {
 	    if(err) return res.negotiate(err);
       if(!foundAgenda) return res.notFound();
 

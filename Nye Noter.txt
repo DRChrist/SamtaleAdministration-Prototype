@@ -1,0 +1,22 @@
+Arbejde på at lære koncepter i nær tilknytning til problemet med modulære indholdstyper: 
+	Forsøge at lære designpatterns, ikke bare læse om dem.
+	Er der noget databasestruktur eller datastruktur jeg kan undersøge?
+	
+
+Visse dele er nemmere at vide hvad jeg skal skrive om, når jeg har kodet dem.
+
+Hvad vil det sige at systemet skal distribueres gennem HTTP-protokollen?
+
+BuildContentRow:
+	How do we pass the resources?
+		An array of objects.
+	
+	ResourceText: <textfield>
+	ResourcePercent: <number>, needs checks for format
+	ResourceCheckbox: <checkbox>, probably contains a corresponding array of strings.
+	ResourceRadio: <radio>, contains a corresponding array of strings.
+	(ResourceTextShort: <text>)
+	
+	
+	Mon ikke det ville give mening at splitte spørgsmål og svar helt op? Så de trækker på forskellige resourcer?
+	Eller måske skal jeg bare lave specifikke svar-ressourcer?

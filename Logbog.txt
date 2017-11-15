@@ -1,0 +1,36 @@
+Log til hovedopgave:
+06-11:
+	Tænkt over problemformulering. Skrevet og bedt Anders om at sende sin synopsis.
+	
+07-11:
+	Skrevet udkast til problemformulering og sendt det til Lars.
+	Forsøgt at skrive en indholdsfortegnelse for at få overblik og planlægge.
+	Færdiggjort kapitel 11 i Sails in Action.
+	
+08-11:
+	Rettet problemformulering og skrevet udkast til synopsis og sendt begge til Hardy.
+	Researchet database management systems. Burde skifte til noSQL eller sails default i min prototype (sails default er nosql)
+	Begyndt på kapitel 12 i Sails.js in action.
+	
+09-11:
+	Fortsat på kapitel 12 i Sails.js in action.
+	
+10-11:
+	Færdiggjort kapitel 12 i Sails.js in Action.
+	Startet på kapitel 13 i Sails.js in Action.
+	
+13-11:
+	Færdiggjort kapitel 13 i Sails.js in Action.
+	Overvejet de næste tasks og tilføjet dem til Asana.
+	
+14-11:
+	Opsat webstorm på Excelsior og startet på agendaside til test af Sails locals.
+	
+15-11:
+	Testet Sails locals og opdaget, at det fungerer fantastisk.
+	Startet på buildContentRow-rutine:
+		Tilføjet buildAnswerHtml og buildQuestionHtml-funktioner til ContentRow.
+		Lavet en ny side, buildContentRow,og dertil et script.
+		Startet på en buildContentRow-funktion i ContentRowController, 
+			som skal sætte alle brikkerne sammen og returnere en html-string
+	

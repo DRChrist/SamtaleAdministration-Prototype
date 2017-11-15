@@ -1,0 +1,14 @@
+<div>
+  <p>Titel: <%= agenda.title %></p>
+  <p>Beskrivelse: <%= agenda.description %></p>
+  <p>Status: <%= agenda.state %></p>
+  <p>Afdeling: <%= agenda.departments[0].sectionCode %></p>
+  <p>Stillingstyper: <%= agenda.jobs[0].title %></p>
+  <% if(agenda.meetings.length > 0) { %>
+  <p>Samtaler: </p>
+  <% _.forEach(agenda.meetings, function(meeting) { %>
+    <p>Mødetid: <%= meeting.meetingTime %> Mødested: <%= meeting.room %></p>
+  <% }); %>
+
+  <% } %>
+</div>
