@@ -42,17 +42,17 @@ module.exports = {
       err.message = require('util').format('Too many elements in answer');
       return cb(err);
     }
-    var answerHtml = '<div class="row">';
+    var answerHtml = '';
     // var firstElement = '';
     // var secondElement = '';
     // var thirdElement = '';
-    async.each(options, function(resource) {
-      if(resource instanceof ResourceText) {
-        answerHtml.concat('<textField></textField>');
-      } else if(resource instanceof ResourcePercent) {
-        answerHtml.concat('<number></number>');
+    async.each(options, function(resource, next) {
+      if(resource.type === 'ResourceText') {//resource instanceof ResourceText) {
+        answerHtml += answerHtml + '<textField></textField>';
+      } else if(resource.type === 'ResourcePercent') {//resource instanceof ResourcePercent) {
+        answerHtml += answerHtml + '<number></number>';
       }
-
+      next()
     }, function(err) {
       if(err) {
         console.error(err);
@@ -68,21 +68,26 @@ module.exports = {
       err.message = 'Too many elements in question';
       return cb(err);
     }
+    console.log(options);
     var questionHtml = '<div class="row">';
-    async.each(options, function(resource) {
-      if (resource instanceof ResourceText) {
-        questionHtml.concat('<p>' + resource.text + '</p>');
-      } else if (resource instanceof ResourcePercent) {
+    async.each(options, function(resource, next) {
+      if (resource.type === 'ResourceText') {//resource instanceof ResourceText) {
+        questionHtml += questionHtml + resource.text;
+        console.log(resource.type + resource.text);
+      } else if (resource.type === 'ResourcePercent') {//resource instanceof ResourcePercent) {
         questionHtml.concat('<p>' + resource.number + '</p>');
+        questionHtml += questionHtml + resource.number;
+        console.log(resource.type + resource.number);
       }
-
+      next();
     }, function(err) {
       if(err) {
         console.error(err);
         return cb(err);
       }
-      return cb(questionHtml.concat('</div>'));
-    })
+      return cb(questionHtml);
+    });
   }
+
 };
 
