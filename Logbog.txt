@@ -43,3 +43,10 @@ Log til hovedopgave:
       tror der er en mere elegant måde at håndtere muligheden for et 0 på.
   Researchet instancetype checking.
 
+17-11:
+  Debugget buildContentRow-rutinen:
+    Tilføjet error-checks til model functions.
+    ændret answerhtml til inputs
+    ændret each-loops til each-series loops.
+    Fixet stupid string concatenation fejl
+

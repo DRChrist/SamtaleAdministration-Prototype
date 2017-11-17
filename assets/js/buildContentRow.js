@@ -17,7 +17,6 @@ $(document).ready(function() {
         console.error(jwres);
         return;
       }
-        console.log(jwres.statusCode);
         console.log(resData);
       $('#contentRowShow').append(resData);
     });

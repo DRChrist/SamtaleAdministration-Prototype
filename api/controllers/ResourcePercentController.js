@@ -6,17 +6,17 @@
  */
 
 module.exports = {
-	
+
 	//Used to exclude resources without numbers, like the ones in answers
 	findResourcesWithNumber: function(req, res) {
-		ResourcePercent.find().exec(function(err, records) {
+		ResourcePercent.findResourcesWithNumber(function(err, records) {
 			if(err) {
 				console.error(err);
 				return res.negotiate(err);
 			}
-			return res.json(_.filter(records, function(o) { return o.number; }));
+			return res.json(records);
 		});
 	}
-	
+
 };
 
