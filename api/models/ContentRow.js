@@ -42,7 +42,7 @@ module.exports = {
       err.message = require('util').format('Too many elements in answer');
       return cb(err);
     }
-    var answerHtml = '';
+    var answerHtml = '<div class="col-md-6">';
     // var firstElement = '';
     // var secondElement = '';
     // var thirdElement = '';
@@ -50,9 +50,9 @@ module.exports = {
     // console.log(options);
     async.eachSeries(options, function(resource, next) {
       if(resource.type === 'ResourceText') {//resource instanceof ResourceText) {
-        answerHtml += '<input type="text"> text </input>';
+        answerHtml += '<input type="text">';
       } else if(resource.type === 'ResourcePercent') {//resource instanceof ResourcePercent) {
-        answerHtml += '<input type="number"> number </input>';
+        answerHtml += '<input type="number">';
       }
       next()
     }, function(err) {
@@ -60,27 +60,59 @@ module.exports = {
         console.error(err);
         return cb(err)
       }
-      return cb(null, answerHtml.concat('</form></div>'));
+      return cb(null, answerHtml.concat('</form></div></div>'));
     });
   },
 
+  // buildQuestionHtml: function(options, cb) {
+  //   if(Object.keys(options).length > 3) {
+  //     err = new Error();
+  //     err.message = 'Too many elements in question';
+  //     return cb(err);
+  //   }
+  //   var questionHtml = '<div class="row"><div class="col-md-6"><form>';
+  //   console.log('QuestionOptions length: ' + options.length);
+  //   console.log(options);
+  //   async.eachSeries(options, function(resource, next) {
+  //     if (resource.type === 'ResourceText') {//resource instanceof ResourceText) {
+  //       questionHtml += resource.text;
+  //       console.log(resource.type + resource.text);
+  //     } else if (resource.type === 'ResourcePercent') {//resource instanceof ResourcePercent) {
+  //       questionHtml.concat('<p>' + resource.number + '</p>');
+  //       questionHtml += resource.number;
+  //       console.log(resource.type + resource.number);
+  //     }
+  //     next();
+  //   }, function(err) {
+  //     if(err) {
+  //       console.error(err);
+  //       return cb(err);
+  //     }
+  //     // var startHtml = '<div class="row"><form>';
+  //     return cb(null, questionHtml + '</div>');
+  //   });
+  // },
+
+  // options should be of the form: { resourceType: id, resourceType: id }
   buildQuestionHtml: function(options, cb) {
-    if(Object.keys(options).length > 3) {
-      err = new Error();
-      err.message = 'Too many elements in question';
-      return cb(err);
-    }
-    var questionHtml = '<div class="row"><form>';
-    console.log('QuestionOptions length: ' + options.length);
-    console.log(options);
-    async.eachSeries(options, function(resource, next) {
-      if (resource.type === 'ResourceText') {//resource instanceof ResourceText) {
-        questionHtml += resource.text;
-        console.log(resource.type + resource.text);
-      } else if (resource.type === 'ResourcePercent') {//resource instanceof ResourcePercent) {
-        questionHtml.concat('<p>' + resource.number + '</p>');
-        questionHtml += resource.number;
-        console.log(resource.type + resource.number);
+    var questionHtml = '<div class="row"><div class="col-md-6"><form>';
+    async.eachOfSeries(options, function(id, resourceType, next) {
+      if(resourceType === 'ResourceText') {
+        ResourceText.findOne(id).exec(function(err, foundResourceText) {
+          if(err) {
+            console.error(err);
+            return next(err);
+          }
+          questionHtml += foundResourceText.text;
+        })
+      } else if(resourceType === 'ResourcePercent') {
+        ResourcePercent.findOne(id).exec(function(err, foundResourcePercent) {
+          if(err) {
+            console.error(err);
+            return next(err);
+          }
+          questionHtml += foundResourcePercent.number;
+        })
       }
       next();
     }, function(err) {
@@ -88,9 +120,8 @@ module.exports = {
         console.error(err);
         return cb(err);
       }
-      // var startHtml = '<div class="row"><form>';
-      return cb(null, questionHtml);
-    });
+      return cb(null, questionHtml + '</div>');
+    })
   }
 
 };
