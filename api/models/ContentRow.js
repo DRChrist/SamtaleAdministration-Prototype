@@ -122,6 +122,16 @@ module.exports = {
       }
       return cb(null, questionHtml + '</div>');
     })
+  },
+
+
+  buildAnswerHtml: function(options, cb) {
+    var answerHtml = '<div class="col-md-6">';
+    async.eachOfSeries(options, function(id, resourceType, next) {
+      if(resourceType === 'ResourceText') {
+        ResourceText.findOne()
+      }
+    })
   }
 
 };

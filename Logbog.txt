@@ -50,3 +50,8 @@ Log til hovedopgave:
     ændret each-loops til each-series loops.
     Fixet stupid string concatenation fejl
 
+20-11:
+  Ikke arbejdet. Researchet kommunevalgskandidater.
+
+21-11_
+
