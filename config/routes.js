@@ -44,7 +44,8 @@ module.exports.routes = {
   'GET /resourceText': 'ResourceTextController.findResourcesWithText',
   'GET /resourcePercent': 'ResourcePercentController.findResourcesWithNumber',
   'GET /agenda/:id': 'AgendaController.showAgenda',
-  'PUT /contentRow/buildContentRow': 'ContentRowController.buildContentRow'
+  'POST /contentRow/buildContentRow': 'ContentRowController.buildContentRow',
+  'GET /contentRow/getHtml': 'ContentRowController.getHtml'
 
   /***************************************************************************
   *                                                                          *

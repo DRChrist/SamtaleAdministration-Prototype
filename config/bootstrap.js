@@ -16,10 +16,7 @@ module.exports.bootstrap = function(cb) {
     //functions create associations between models
 		async.series([
       function(callback) {
-        createTestResourceTexts(callback);
-      },
-      function(callback) {
-        createTestResourcePercents(callback);
+        createTestResourceQuestionTexts(callback);
       },
       function(callback) {
         createTestContentRows(callback);
@@ -333,33 +330,12 @@ module.exports.bootstrap = function(cb) {
     });
   }
 
-  function createTestQuestionResourceTexts(callback) {
-    console.log('createTestResourceText');
+  function createTestResourceQuestionTexts(callback) {
+    console.log('createTestResourceQuestionText');
     async.times(10, function(n, next) {
-      ResourceText.create({
+      ResourceQuestionText.create({
         text: faker.lorem.words(8)
-      }).exec(function(err, createdResourceText) {
-        if(err) {
-          console.error(err);
-          return callback(err);
-        }
-        next(err);
-      });
-    }, function(err) {
-      if(err) {
-        console.error(err);
-        return callback(err);
-      }
-      return callback();
-    });
-  }
-
-  function createTestResourcePercents(callback) {
-    console.log('createTestResourcePercent');
-    async.times(10, function(n, next) {
-      ResourcePercent.create({
-        number: faker.random.number(100)
-      }).exec(function(err, createdResourcePercent) {
+      }).exec(function(err, createdText) {
         if(err) {
           console.error(err);
           return callback(err);
@@ -454,7 +430,7 @@ module.exports.bootstrap = function(cb) {
           console.error(err);
           return callback(err);
         }
-        ResourceText.find().exec(function(err, texts) {
+        ResourceQuestionText.find().exec(function(err, texts) {
           if(err) {
             console.error(err);
             return callback(err);
@@ -469,25 +445,10 @@ module.exports.bootstrap = function(cb) {
             console.error(err);
             return callback(err);
           }
-          ResourcePercent.find().exec(function(err, numbers) {
-            if(err) {
-              console.error(err);
-              return callback(err);
-            }
-            //adds a random number of percents for the question part
-            var zeroOrOne = faker.random.number(1);
-            async.times(zeroOrOne, function(n, next) {
-              createdContentRow.questionPercents.add(_.sample(numbers).id);
-              next();
-          }, function(err) {
-            if(err) {
-              console.error(err);
-              return callback(err);
-            }
             //creates a random number of empty texts for the answer part
             zeroToTwo = faker.random.number(2);
             async.times(zeroToTwo, function(n, next) {
-              ResourceText.create().exec(function(err, text) {
+              ResourceAnswerText.create().exec(function(err, text) {
                 if(err) {
                   console.error(err);
                   return callback(err);
@@ -503,7 +464,7 @@ module.exports.bootstrap = function(cb) {
                 //creates a random number of empty percents for the answer part
                 zeroOrOne = faker.random.number(1);
                 async.times(zeroOrOne, function(n, next) {
-                  ResourcePercent.create().exec(function(err, number) {
+                  ResourceAnswerPercent.create().exec(function(err, number) {
                     if(err) {
                       console.error(err);
                       return callback(err);
@@ -528,8 +489,6 @@ module.exports.bootstrap = function(cb) {
               });
             });
           });
-          });
-        });
         }, function(err) {
           if(err) {
             console.error(err);

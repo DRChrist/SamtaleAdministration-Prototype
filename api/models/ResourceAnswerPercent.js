@@ -11,11 +11,11 @@ module.exports = {
   	number: {
   		type: 'integer'
   	},
-    type: {
+    html: {
   	  type: 'string',
-      defaultsTo: 'ResourcePercent'
+      defaultsTo: '<input type="number">'
     },
-    contentRow: {
+    answer: {
       model: 'contentRow'
     }
   },
@@ -26,9 +26,9 @@ module.exports = {
       return cb(null, []);
     } else {
       async.times(numberOfResources, function (n, next) {
-        ResourcePercent.create().exec(function (err, createdResourcePercent) {
+        ResourceAnswerPercent.create().exec(function (err, createdResourcePercent) {
           if (err) return next(err);
-          returnArray.push(createdResourcePercent);
+          returnArray.push(createdResourcePercent.id);
           next();
         });
       }, function (err) {
@@ -39,18 +39,8 @@ module.exports = {
         return cb(null, returnArray);
       });
     }
-  },
-
-  //Used to exclude resources without numbers, like the ones in answers
-  findResourcesWithNumber: function(cb) {
-    ResourcePercent.find().exec(function(err, records) {
-      if(err) {
-        console.error(err);
-        return cb(err);
-      }
-      return cb(null, _.filter(records, function(o) { return o.number; }));
-    });
   }
+
 
 };
 

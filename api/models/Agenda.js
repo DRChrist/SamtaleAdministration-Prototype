@@ -52,7 +52,7 @@ module.exports = {
       via: 'agenda',
       dominant: true
     }
-  },
-  
+  }
+
 };
 

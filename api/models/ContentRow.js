@@ -17,23 +17,40 @@ module.exports = {
   		via: 'contentRows'
   	},
   	questionTexts: {
-  		collection: 'resourceText',
-  		via: 'contentRow'
+  		collection: 'resourceQuestionText',
+  		via: 'question'
   	},
+    questionHeads: {
+      collection: 'resourceQuestionHead',
+      via: 'question'
+    },
+    questionLinks: {
+      collection: 'resourceQuestionLink',
+      via: 'question'
+    },
   	answerTexts: {
-  		collection: 'resourceText',
-  		via: 'contentRow'
+  		collection: 'resourceAnswerText',
+  		via: 'answer'
   	},
-  	questionPercents: {
-  		collection: 'resourcePercent',
-  		via: 'contentRow'
-  	},
+    answerLongTexts: {
+      collection: 'resourceAnswerLongText',
+      via: 'answer'
+    },
   	answerPercents: {
-  		collection: 'resourcePercent',
-  		via: 'contentRow'
-  	}
+  		collection: 'resourceAnswerPercent',
+  		via: 'answer'
+  	},
+    answerRadios: {
+      collection: 'resourceAnswerRadio',
+      via: 'answer'
+    },
+    answerCheckboxes: {
+      collection: 'resourceAnswerCheckbox',
+      via: 'answer'
+    }
 
-  },
+
+  }
 
   //Builds the answer side of a contentRow object. options is expected to be an array of resources
   // buildAnswerHtml: function(options, cb) {
@@ -94,54 +111,54 @@ module.exports = {
   // },
 
   // options should be of the form: { resourceType: id, resourceType: id }
-  buildQuestionHtml: function(options, cb) {
-    var questionHtml = '<div class="row"><div class="col-md-6"><form>';
-    async.eachOfSeries(options, function(id, resourceType, next) {
-      if(resourceType === 'ResourceText') {
-        ResourceText.findOne(id).exec(function(err, foundResourceText) {
-          if(err) {
-            console.error(err);
-            return next(err);
-          }
-          questionHtml += foundResourceText.text;
-        })
-      } else if(resourceType === 'ResourcePercent') {
-        ResourcePercent.findOne(id).exec(function(err, foundResourcePercent) {
-          if(err) {
-            console.error(err);
-            return next(err);
-          }
-          questionHtml += foundResourcePercent.number;
-        })
-      }
-      next();
-    }, function(err) {
-      if(err) {
-        console.error(err);
-        return cb(err);
-      }
-      return cb(null, questionHtml + '</div>');
-    });
-  },
-
-
-  buildAnswerHtml: function(options, cb) {
-    var answerHtml = '<div class="col-md-6">';
-    async.eachOfSeries(options, function(id, resourceType, next) {
-      if(resourceType === 'ResourceText') {
-        answerHtml += '<input type="text">';
-      } else if(resourceType === 'ResourcePercent') {
-        answerHtml += '<input type="number">';
-      }
-      next();
-    }, function(err) {
-      if(err) {
-        console.error(err);
-        return cb(err);
-      }
-      return cb(null, answerHtml + '</div>');
-    });
-  }
+  // buildQuestionHtml: function(options, cb) {
+  //   var questionHtml = '<div class="row"><div class="col-md-6"><form>';
+  //   async.eachOfSeries(options, function(id, resourceType, next) {
+  //     if(resourceType === 'ResourceText') {
+  //       ResourceText.findOne(id).exec(function(err, foundResourceText) {
+  //         if(err) {
+  //           console.error(err);
+  //           return next(err);
+  //         }
+  //         questionHtml += foundResourceText.text;
+  //       })
+  //     } else if(resourceType === 'ResourcePercent') {
+  //       ResourcePercent.findOne(id).exec(function(err, foundResourcePercent) {
+  //         if(err) {
+  //           console.error(err);
+  //           return next(err);
+  //         }
+  //         questionHtml += foundResourcePercent.number;
+  //       })
+  //     }
+  //     next();
+  //   }, function(err) {
+  //     if(err) {
+  //       console.error(err);
+  //       return cb(err);
+  //     }
+  //     return cb(null, questionHtml + '</div>');
+  //   });
+  // },
+  //
+  //
+  // buildAnswerHtml: function(options, cb) {
+  //   var answerHtml = '<div class="col-md-6">';
+  //   async.eachOfSeries(options, function(id, resourceType, next) {
+  //     if(resourceType === 'ResourceText') {
+  //       answerHtml += '<input type="text">';
+  //     } else if(resourceType === 'ResourcePercent') {
+  //       answerHtml += '<input type="number">';
+  //     }
+  //     next();
+  //   }, function(err) {
+  //     if(err) {
+  //       console.error(err);
+  //       return cb(err);
+  //     }
+  //     return cb(null, answerHtml + '</div>');
+  //   });
+  // }
 
 };
 

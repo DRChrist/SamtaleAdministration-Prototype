@@ -51,7 +51,9 @@ Log til hovedopgave:
     Fixet stupid string concatenation fejl
 
 20-11:
-  Ikke arbejdet. Researchet kommunevalgskandidater.
+  Ikke arbejdet. Researchet til valgdag.
 
-21-11_
-
+21-11:
+  Splittet resources op i questions og answers og refaktoreret så det passer.
+  Ændret i funktionerne, så man skal bruge et contentRow objekt for at få noget html der passer til.
+  Tilføjet modeller for en række flere ressourcer.

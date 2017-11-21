@@ -21,12 +21,29 @@ BuildContentRow:
 	Mon ikke det ville give mening at splitte spørgsmål og svar helt op? Så de trækker på forskellige resourcer?
 	Eller måske skal jeg bare lave specifikke svar-ressourcer?
 
-	Jeg er nødt til at forholde mig til, hvordan jeg skal repræsentere antallet af ressourcer i et contentRow.
-	Det jeg gør nu, er at repræsentere dem med et objekt og så sende dem til contentRow-modelmetoderne,
-	men burde jeg ikke lave et contentRow-objekt? Selvfølgelig burde jeg lave et ContentRow-objekt,
-	men problemstillingen er den samme. Måske burde jeg sende et dictionary (json) fra contentRowController:
-	  { question: { resourceText: 1, resourcePercent: 0 }, answer: { resourceText: 1, resourcePercent: 1 } }
-  Men giver det mening i forhold til det endelige system? I det endelige system får jeg jo sendt specifikke
-  resource-objekter fra front-end, og dem er jeg jo nødt til at akkomodere. Måske sender jeg bare id'et videre,
-  men hvad så med answer-delen, hvor objektet er ligegyldigt. Måske laver jeg bare de tomme objekter først.
-    { question: { resourceText: 27 }, answer: { resourceText: 526, resourcePercent: 567 } }
+Question ressourcetyper:
+overskrift, link
+
+Answer ressourcetyper:
+checkbox, radio, textlong, (billede, video, fil, link)
+
+How many layouts would we need?
+checkboxes
+checkboxes + text/long text
+radios
+radios + text/long text
+text
+text + number
+long text
+long text + number
+number
+
+is that:
+one resource plus a possible text?
+or maybe
+one resource plus a possible text OR a number.
+
+And then maybe two layouts for the contentRow:
+Question above and question in line
+
+

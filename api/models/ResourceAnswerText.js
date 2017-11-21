@@ -11,11 +11,11 @@ module.exports = {
   	text: {
   		type: 'string'
   	},
-    type: {
-  	  type: 'string',
-      defaultsTo: 'ResourceText'
+    html: {
+      type: 'string',
+      defaultsTo: '<input type="text">'
     },
-    contentRow: {
+    answer: {
       model: 'contentRow'
     }
   },
@@ -26,9 +26,9 @@ module.exports = {
       return cb(null, []);
     } else {
       async.times(numberOfResources, function (n, next) {
-        ResourceText.create().exec(function (err, createdResourceText) {
+        ResourceAnswerText.create().exec(function (err, createdResourceText) {
           if (err) return next(err);
-          returnArray.push(createdResourceText);
+          returnArray.push(createdResourceText.id);
           next();
         });
       }, function (err) {
@@ -41,15 +41,5 @@ module.exports = {
     }
   },
 
-  //Used to exclude empty resources, like the ones in answers
-  findResourcesWithText: function(cb) {
-    ResourceText.find().exec(function(err, records) {
-      if(err) {
-        console.error(err);
-        return cb(err);
-      }
-      return cb(null, _.filter(records, function(o) { return o.text; }));
-    });
-  }
 };
 

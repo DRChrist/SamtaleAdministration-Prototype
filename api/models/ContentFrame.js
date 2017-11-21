@@ -22,10 +22,10 @@ module.exports = {
       collection: 'contentRow',
       via: 'contentFrames',
       dominant: true
-    },	
-  },
+    }
+  }
 
-  	
+
 
 };
 
