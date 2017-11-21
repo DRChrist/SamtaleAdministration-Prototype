@@ -36,33 +36,33 @@ module.exports = {
   },
 
   //Builds the answer side of a contentRow object. options is expected to be an array of resources
-  buildAnswerHtml: function(options, cb) {
-    if(Object.keys(options).length > 3) {
-      err = new Error();
-      err.message = require('util').format('Too many elements in answer');
-      return cb(err);
-    }
-    var answerHtml = '<div class="col-md-6">';
-    // var firstElement = '';
-    // var secondElement = '';
-    // var thirdElement = '';
-    // console.log('Answeroptions length: ' + options.length);
-    // console.log(options);
-    async.eachSeries(options, function(resource, next) {
-      if(resource.type === 'ResourceText') {//resource instanceof ResourceText) {
-        answerHtml += '<input type="text">';
-      } else if(resource.type === 'ResourcePercent') {//resource instanceof ResourcePercent) {
-        answerHtml += '<input type="number">';
-      }
-      next()
-    }, function(err) {
-      if(err) {
-        console.error(err);
-        return cb(err)
-      }
-      return cb(null, answerHtml.concat('</form></div></div>'));
-    });
-  },
+  // buildAnswerHtml: function(options, cb) {
+  //   if(Object.keys(options).length > 3) {
+  //     err = new Error();
+  //     err.message = require('util').format('Too many elements in answer');
+  //     return cb(err);
+  //   }
+  //   var answerHtml = '<div class="col-md-6">';
+  //   // var firstElement = '';
+  //   // var secondElement = '';
+  //   // var thirdElement = '';
+  //   // console.log('Answeroptions length: ' + options.length);
+  //   // console.log(options);
+  //   async.eachSeries(options, function(resource, next) {
+  //     if(resource.type === 'ResourceText') {//resource instanceof ResourceText) {
+  //       answerHtml += '<input type="text">';
+  //     } else if(resource.type === 'ResourcePercent') {//resource instanceof ResourcePercent) {
+  //       answerHtml += '<input type="number">';
+  //     }
+  //     next()
+  //   }, function(err) {
+  //     if(err) {
+  //       console.error(err);
+  //       return cb(err)
+  //     }
+  //     return cb(null, answerHtml.concat('</form></div></div>'));
+  //   });
+  // },
 
   // buildQuestionHtml: function(options, cb) {
   //   if(Object.keys(options).length > 3) {
@@ -121,7 +121,7 @@ module.exports = {
         return cb(err);
       }
       return cb(null, questionHtml + '</div>');
-    })
+    });
   },
 
 
@@ -129,9 +129,18 @@ module.exports = {
     var answerHtml = '<div class="col-md-6">';
     async.eachOfSeries(options, function(id, resourceType, next) {
       if(resourceType === 'ResourceText') {
-        ResourceText.findOne()
+        answerHtml += '<input type="text">';
+      } else if(resourceType === 'ResourcePercent') {
+        answerHtml += '<input type="number">';
       }
-    })
+      next();
+    }, function(err) {
+      if(err) {
+        console.error(err);
+        return cb(err);
+      }
+      return cb(null, answerHtml + '</div>');
+    });
   }
 
 };

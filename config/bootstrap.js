@@ -333,7 +333,7 @@ module.exports.bootstrap = function(cb) {
     });
   }
 
-  function createTestResourceTexts(callback) {
+  function createTestQuestionResourceTexts(callback) {
     console.log('createTestResourceText');
     async.times(10, function(n, next) {
       ResourceText.create({
@@ -474,7 +474,7 @@ module.exports.bootstrap = function(cb) {
               console.error(err);
               return callback(err);
             }
-            //adds a random number of percents for the question part 
+            //adds a random number of percents for the question part
             var zeroOrOne = faker.random.number(1);
             async.times(zeroOrOne, function(n, next) {
               createdContentRow.questionPercents.add(_.sample(numbers).id);

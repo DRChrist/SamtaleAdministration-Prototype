@@ -8,8 +8,8 @@
 module.exports = {
 
   buildContentRow: function(req, res) {
-    var questionOptions = [];
-    var answerOptions = [];
+    var questionOptions = {};
+    var answerOptions = {};
     var questionTexts = +req.param('questionTexts');
     var questionPercents = +req.param('questionPercents');
     var answerTexts = +req.param('answerTexts');
@@ -27,7 +27,8 @@ module.exports = {
           if(questionTexts < 1) {
             next();
           } else {
-            questionOptions.push(_.sample(resourceTexts));
+            var randomText = _.sample(resourceTexts);
+            questionOptions.resourceText.push(randomText.id);
             next();
           }
         }, function(err) {
@@ -45,7 +46,7 @@ module.exports = {
             if (questionPercents < 1) {
               next();
             } else {
-              questionOptions.push(_.sample(resourcePercents));
+              questionOptions.resourcePercent.push(_.sample(resourcePercents).id);
               next();
             }
         }, function(err) {
@@ -84,6 +85,17 @@ module.exports = {
         });
       });
     });
+  },
+
+  buildContentRow2: function(req, res) {
+    var questionTexts = +req.param('questionTexts');
+    var questionPercents = +req.param('questionPercents');
+    var answerTexts = +req.param('answerTexts');
+    var answerPercents = +req.param('answerPercents');
+    ResourceText.findResourcesWithText
+    ContentRow.create({}).exec(function(err, createdContentRow) {
+
+    })
   }
 
 
