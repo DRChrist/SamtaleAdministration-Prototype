@@ -57,3 +57,21 @@ Log til hovedopgave:
   Splittet resources op i questions og answers og refaktoreret så det passer.
   Ændret i funktionerne, så man skal bruge et contentRow objekt for at få noget html der passer til.
   Tilføjet modeller for en række flere ressourcer.
+
+22-11:
+	Tænkt over indhold til rapport og opsat et udkast til afsnit, der skal skrives.
+
+23-11:
+	Skrevet på afsnittet om Pure Byte og lidt om afgrænsning.
+
+24-11:
+	Skrevet det meste af SWOT-analyse.
+
+25-11:
+	Ikke arbejdet.
+
+26-11:
+	Skrevet indledning, firmaprofil, noget af Kravsanalyse, user stories.
+	Overvejet struktur.
+	Arbejdet på at lave ER-diagram.
+
