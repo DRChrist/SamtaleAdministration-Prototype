@@ -19,6 +19,12 @@ module.exports.bootstrap = function(cb) {
         createTestResourceQuestionTexts(callback);
       },
       function(callback) {
+		    createTestResourceQuestionLinks(callback);
+      },
+      function(callback) {
+		  createTestResourceQuestionHeads(callback);
+      },
+      function(callback) {
         createTestContentRows(callback);
       },
       function(callback) {
@@ -335,6 +341,48 @@ module.exports.bootstrap = function(cb) {
     async.times(10, function(n, next) {
       ResourceQuestionText.create({
         text: faker.lorem.words(8)
+      }).exec(function(err, createdText) {
+        if(err) {
+          console.error(err);
+          return callback(err);
+        }
+        next(err);
+      });
+    }, function(err) {
+      if(err) {
+        console.error(err);
+        return callback(err);
+      }
+      return callback();
+    });
+  }
+
+  function createTestResourceQuestionLinks(callback) {
+    console.log('createTestResourceQuestionLink');
+    async.times(10, function(n, next) {
+      ResourceQuestionLink.create({
+        url: faker.internet.url()
+      }).exec(function(err, createdLink) {
+        if(err) {
+          console.error(err);
+          return callback(err);
+        }
+        next(err);
+      });
+    }, function(err) {
+      if(err) {
+        console.error(err);
+        return callback(err);
+      }
+      return callback();
+    });
+  }
+
+  function createTestResourceQuestionHeads(callback) {
+    console.log('createTestResourceQuestionHead');
+    async.times(10, function(n, next) {
+      ResourceQuestionHead.create({
+        text: faker.company.catchPhraseNoun()
       }).exec(function(err, createdText) {
         if(err) {
           console.error(err);

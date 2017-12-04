@@ -39,7 +39,7 @@ module.exports = {
         return cb(null, returnArray);
       });
     }
-  },
+  }
 
 };
 

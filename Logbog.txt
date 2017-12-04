@@ -75,3 +75,7 @@ Log til hovedopgave:
 	Overvejet struktur.
 	Arbejdet på at lave ER-diagram.
 
+04-12:
+  Tilføjet fields og listeners til buildContentRow.
+  Tilføjet link og head til bootstrap.
+  Startet på at inkorporere de nye ressourcer i buildContentRow
