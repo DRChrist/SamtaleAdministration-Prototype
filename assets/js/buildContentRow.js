@@ -9,7 +9,7 @@ $(document).ready(function() {
     var $answerLongTexts = $('#ResourceAnswerLongText').val();
     var $answerCheckboxes = $('#ResourceAnswerCheckbox').val();
     var $answerRadios = $('#ResourceAnswerRadio').val();
-    var $checkboxTexts = $('.checkBoxTests').val();
+    var $checkboxTexts = $('.checkboxTexts').val();
     var $radioTexts = $('.radioTexts').val();
     console.log($checkboxTexts);
     console.log($radioTexts);

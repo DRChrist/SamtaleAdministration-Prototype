@@ -13,10 +13,22 @@ module.exports = {
     },
     answer: {
       model: 'contentRow'
+    },
+    getHtml: function(cb) {
+      var checkboxHtml = '';
+      async.eachOf(this, function(value, key) {
+        checkboxHtml += '<input type="checkbox"> + key + <br>'
+      }, function(err) {
+        if(err) {
+          console.error(err);
+          return cb(err);
+        }
+        return cb(null, checkboxHtml);
+      })
     }
   },
 
-  buildEmptyResourceCheckboxes: function(numberOfResources, arrayOfTexts, cb) {
+  buildEmptyResourceCheckbox: function(numberOfResources, arrayOfTexts, cb) {
     if(numberOfResources < 1) {
       return cb(null, [])
     } else {
@@ -24,7 +36,7 @@ module.exports = {
       counter = 0;
       //TODO: find a better way of doing this
       async.times(numberOfResources, function(n, next) {
-        checkboxes.arrayOfTexts[counter] = false;
+        checkboxes[arrayOfTexts[counter]] = false;
         counter++;
         next();
       }, function(err) {

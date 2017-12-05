@@ -79,3 +79,6 @@ Log til hovedopgave:
   Tilføjet fields og listeners til buildContentRow.
   Tilføjet link og head til bootstrap.
   Startet på at inkorporere de nye ressourcer i buildContentRow
+
+05-12:
+

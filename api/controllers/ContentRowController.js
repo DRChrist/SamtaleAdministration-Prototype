@@ -213,24 +213,56 @@ module.exports = {
             console.error(err);
             return res.negotiate(err);
           }
-          contentRowHtml += '</div><div class="col-md-6">';
-          async.eachSeries(foundContentRow.answerTexts, function(answerText, next) {
-            contentRowHtml += answerText.html;
+          async.eachSeries(foundContentRow.questionLinks, function(questionLink, next) {
+            contentRowHtml += questionLink.url;
             next();
           }, function(err) {
             if(err) {
               console.error(err);
               return res.negotiate(err);
             }
-            async.eachSeries(foundContentRow.answerPercents, function(answerPercent, next) {
-              contentRowHtml += answerPercent.html;
+            async.eachSeries(foundContentRow.questionHeads, function(questionHead, next) {
+              contentRowHtml += questionHead.text;
               next();
             }, function(err) {
               if(err) {
                 console.error(err);
                 return res.negotiate(err);
               }
-              return res.ok(contentRowHtml + '</div></div>');
+              contentRowHtml += '</div><div class="col-md-6">';
+              async.eachSeries(foundContentRow.answerTexts, function(answerText, next) {
+                contentRowHtml += answerText.html;
+                next();
+              }, function(err) {
+                if(err) {
+                  console.error(err);
+                  return res.negotiate(err);
+                }
+                async.eachSeries(foundContentRow.answerPercents, function(answerPercent, next) {
+                  contentRowHtml += answerPercent.html;
+                  next();
+                }, function(err) {
+                  if(err) {
+                    console.error(err);
+                    return res.negotiate(err);
+                  }
+                  async.eachSeries(foundContentRow.answerLongTexts, function(answerLongText, next) {
+                    contentRowHtml += answerLongText.html;
+                    next();
+                  }, function(err) {
+                    if(err) {
+                      console.error(err);
+                      return res.negotiate(err);
+                    }
+                    foundContentRow.checkboxes.getHtml(function(err, checkboxHtml) {
+                      contentRowHtml += checkboxHtml;
+                    })
+
+                    })
+                  })
+                  return res.ok(contentRowHtml + '</div></div>');
+                });
+              });
             });
           });
         });
