@@ -16,13 +16,16 @@ module.exports = {
     },
     getHtml: function(cb) {
       var checkboxHtml = '';
-      async.eachOf(this, function(value, key) {
-        checkboxHtml += '<input type="checkbox"> + key + <br>'
+      async.eachOf(this.checkboxes, function(value, key, next) {
+        checkboxHtml += '<input type="checkbox">' + key + '<br>';
+        console.log(key);
+        next();
       }, function(err) {
         if(err) {
           console.error(err);
           return cb(err);
         }
+        console.log(checkboxHtml);
         return cb(null, checkboxHtml);
       })
     }
@@ -49,6 +52,7 @@ module.exports = {
             console.error(err);
             return cb(err);
           }
+          // console.log(createdCheckbox);
           return cb(null, createdCheckbox.id);
         });
       });

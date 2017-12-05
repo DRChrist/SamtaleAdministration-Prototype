@@ -9,10 +9,14 @@ $(document).ready(function() {
     var $answerLongTexts = $('#ResourceAnswerLongText').val();
     var $answerCheckboxes = $('#ResourceAnswerCheckbox').val();
     var $answerRadios = $('#ResourceAnswerRadio').val();
-    var $checkboxTexts = $('.checkboxTexts').val();
-    var $radioTexts = $('.radioTexts').val();
-    console.log($checkboxTexts);
-    console.log($radioTexts);
+
+    var $checkboxTexts = $('.checkboxTexts').map(function() {
+      return $(this).val();
+    }).get();
+
+    var $radioTexts = $('.radioTexts').map(function() {
+      return $(this).val();
+    }).get();
 
     io.socket.post('/ContentRow/buildContentRow', {
       'questionTexts': $questionTexts,
@@ -30,6 +34,7 @@ $(document).ready(function() {
         console.error(jwres);
         return;
       }
+      console.log(resContentRow);
       io.socket.get('/ContentRow/getHtml', {'id': resContentRow.id }, function(resData, jwres) {
         if(jwres.statusCode !== 200) {
           console.error(jwres);

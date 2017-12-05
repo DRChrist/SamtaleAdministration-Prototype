@@ -198,12 +198,19 @@ module.exports = {
     });
   },
 
+
   getHtml: function(req, res) {
     var contentRowHtml = '<div class="row"><div class="col-md-6">';
+    console.log('Getting HTML' + contentRowHtml);
     ContentRow.findOne(req.param('id'))
       .populate('questionTexts')
+      .populate('questionLinks')
+      .populate('questionHeads')
       .populate('answerTexts')
       .populate('answerPercents')
+      .populate('answerLongTexts')
+      .populate('answerCheckboxes')
+      .populate('answerRadios')
       .exec(function (err, foundContentRow) {
         async.eachSeries(foundContentRow.questionTexts, function(questionText, next) {
           contentRowHtml += questionText.text;
@@ -230,6 +237,7 @@ module.exports = {
                 return res.negotiate(err);
               }
               contentRowHtml += '</div><div class="col-md-6">';
+              console.log('Done with question' + contentRowHtml);
               async.eachSeries(foundContentRow.answerTexts, function(answerText, next) {
                 contentRowHtml += answerText.html;
                 next();
@@ -254,13 +262,23 @@ module.exports = {
                       console.error(err);
                       return res.negotiate(err);
                     }
-                    foundContentRow.checkboxes.getHtml(function(err, checkboxHtml) {
+                    foundContentRow.answerCheckboxes[0].getHtml(function(err, checkboxHtml) {
+                      if(err) {
+                        console.error(err);
+                        return res.negotiate(err);
+                      }
                       contentRowHtml += checkboxHtml;
-                    })
-
-                    })
-                  })
-                  return res.ok(contentRowHtml + '</div></div>');
+                      // foundContentRow.answerRadios[0].getHtml(function(err, radioHtml) {
+                      //   if(err) {
+                      //     console.error(err);
+                      //     return res.negotiate(err);
+                      //   }
+                      //   contentRowHtml += radioHtml;
+                        console.log('RETURNING' + contentRowHtml);
+                        return res.ok(contentRowHtml + '</div></div>');
+                      });
+                    // });
+                  });
                 });
               });
             });

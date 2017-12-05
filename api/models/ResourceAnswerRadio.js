@@ -13,6 +13,19 @@ module.exports = {
     },
     answer: {
       model: 'contentRow'
+    },
+    getHtml: function(cb) {
+      var radioHtml = '';
+      async.eachOf(this.radios, function(value, key, next) {
+        radioHtml += '<input type="radio"> + key + <br>'
+        next();
+      }, function(err) {
+        if(err) {
+          console.error(err);
+          return cb(err);
+        }
+        return cb(null, radioHtml);
+      })
     }
   },
 
