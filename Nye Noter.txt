@@ -46,4 +46,13 @@ one resource plus a possible text OR a number.
 And then maybe two layouts for the contentRow:
 Question above and question in line
 
+NOTE: Not saving the texts from checkbox and radio creation properly.
+  Er der en struktur der fungerer som en slags gatekeeper. Tjekker hvilken information man kommer med og sender en på rette vej?
+  Er det bare en switch case?
 
+How to check objects? Maybe there is no simple solution?
+
+Is it mostly just mindless hacking I need to do?
+
+Check for undefined or 0 -> call functions to do what needs to be done.
+The checks don't have to be in series.

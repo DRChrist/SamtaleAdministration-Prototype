@@ -31,6 +31,23 @@ module.exports = {
     }
   },
 
+  getHtml: function(resource, cb) {
+    if(!resource) return cb();
+    var checkboxHtml = '';
+    async.eachOf(resource.checkboxes, function(value, key, next) {
+      checkboxHtml += '<input type="checkbox">' + key + '<br>';
+      console.log(key);
+      next();
+    }, function(err) {
+      if(err) {
+        console.error(err);
+        return cb(err);
+      }
+      console.log(checkboxHtml);
+      return cb(null, checkboxHtml);
+    })
+  },
+
   buildEmptyResourceCheckbox: function(numberOfResources, arrayOfTexts, cb) {
     if(numberOfResources < 1) {
       return cb(null, [])

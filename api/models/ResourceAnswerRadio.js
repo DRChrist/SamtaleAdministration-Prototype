@@ -29,6 +29,21 @@ module.exports = {
     }
   },
 
+  getHtml: function(resource, cb) {
+    if(!resource) return cb();
+    var radioHtml = '';
+    async.eachOf(resource.radios, function(value, key, next) {
+      radioHtml += '<input type="radio">' + key + '<br>'
+      next();
+    }, function(err) {
+      if(err) {
+        console.error(err);
+        return cb(err);
+      }
+      return cb(null, radioHtml);
+    })
+  },
+
   buildEmptyResourceRadio: function(numberOfResources, arrayOfTexts, cb) {
     if(numberOfResources < 1) {
       return cb(null, [])

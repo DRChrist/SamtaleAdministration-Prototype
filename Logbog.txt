@@ -81,8 +81,9 @@ Log til hovedopgave:
   Startet på at inkorporere de nye ressourcer i buildContentRow
 
 05-12:
-  NOTE: Not saving the texts from checkbox and radio creation properly.
-  Er der en struktur der fungerer som en slags gatekeeper. Tjekker hvilken information man kommer med og sender en på rette vej?
-  Er det bare en switch case?
   Arbejdet på konstruktion af contentRowHtml med de nye resourcer.
   Mangler et godt system til at kontrollere hvilke metoder der kaldes, alt efter indholdet af objektet.
+
+06-12:
+  Rettet i contentRowHtml.
+  Startet på buildContentFrame.

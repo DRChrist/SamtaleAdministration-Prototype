@@ -7,86 +7,6 @@
 
 module.exports = {
 
-  // buildContentRow: function(req, res) {
-  //   var questionOptions = {};
-  //   var answerOptions = {};
-  //   var questionTexts = +req.param('questionTexts');
-  //   var questionPercents = +req.param('questionPercents');
-  //   var answerTexts = +req.param('answerTexts');
-  //   var answerPercents = +req.param('answerPercents');
-  //   console.log('Started building');
-  //   console.log(req.param('questionTexts') + req.param('questionPercents') +
-  //     req.param('answerTexts') + req.param('answerPercents'));
-  //     ResourceText.findResourcesWithText(function(err, resourceTexts) {
-  //       if(err) {
-  //         console.error(err);
-  //         return res.negotiate(err);
-  //       }
-  //       async.times(questionTexts, function(n, next) {
-  //         //Check if the loop is supposed to run zero times
-  //         if(questionTexts < 1) {
-  //           next();
-  //         } else {
-  //           var randomText = _.sample(resourceTexts);
-  //           questionOptions.resourceText.push(randomText.id);
-  //           next();
-  //         }
-  //       }, function(err) {
-  //         if (err) {
-  //           console.error(err);
-  //           return res.negotiate(err);
-  //         }
-  //       ResourcePercent.findResourcesWithNumber(function(err, resourcePercents) {
-  //         if(err) {
-  //           console.error(err);
-  //           return res.negotiate(err);
-  //         }
-  //         async.times(questionPercents, function(n, next) {
-  //           //Check if the loop is supposed to run zero times
-  //           if (questionPercents < 1) {
-  //             next();
-  //           } else {
-  //             questionOptions.resourcePercent.push(_.sample(resourcePercents).id);
-  //             next();
-  //           }
-  //       }, function(err) {
-  //           if(err) {
-  //             console.error(err);
-  //             return res.negotiate(err);
-  //           }
-  //           ResourceText.buildEmptyResourceTexts(answerTexts, function(err, emptyTexts) {
-  //             if(err) {
-  //               console.error(err);
-  //               return res.negotiate(err);
-  //             }
-  //             ResourcePercent.buildEmptyResourcePercents(answerPercents, function(err, emptyPercents) {
-  //               if(err) {
-  //                 console.error(err);
-  //                 return res.negotiate(err);
-  //               }
-  //               answerOptions = emptyTexts.concat(emptyPercents);
-  //               ContentRow.buildQuestionHtml(questionOptions, function(err, questionHtml) {
-  //                 if(err) {
-  //                   console.error(err);
-  //                   return res.negotiate(err);
-  //                 }
-  //                 ContentRow.buildAnswerHtml(answerOptions, function(err, answerHtml) {
-  //                   if(err) {
-  //                     console.error(err);
-  //                     return res.negotiate(err);
-  //                   }
-  //                   console.log('About to send response');
-  //                   return res.ok(questionHtml.concat(answerHtml));
-  //                 });
-  //               });
-  //             });
-  //           });
-  //         });
-  //       });
-  //     });
-  //   });
-  // },
-
   buildContentRow: function(req, res) {
     var questionTexts = +req.param('questionTexts');
     var questionHeads = +req.param('questionHeads');
@@ -221,7 +141,7 @@ module.exports = {
             return res.negotiate(err);
           }
           async.eachSeries(foundContentRow.questionLinks, function(questionLink, next) {
-            contentRowHtml += questionLink.url;
+            contentRowHtml += '<a href="' + questionLink.url + '">' + questionLink.url + '</a>';
             next();
           }, function(err) {
             if(err) {
@@ -262,22 +182,21 @@ module.exports = {
                       console.error(err);
                       return res.negotiate(err);
                     }
-                    foundContentRow.answerCheckboxes[0].getHtml(function(err, checkboxHtml) {
+                    ResourceAnswerCheckbox.getHtml(foundContentRow.answerCheckboxes[0], function(err, checkboxHtml) {
                       if(err) {
                         console.error(err);
                         return res.negotiate(err);
                       }
-                      contentRowHtml += checkboxHtml;
-                      // foundContentRow.answerRadios[0].getHtml(function(err, radioHtml) {
-                      //   if(err) {
-                      //     console.error(err);
-                      //     return res.negotiate(err);
-                      //   }
-                      //   contentRowHtml += radioHtml;
-                        console.log('RETURNING' + contentRowHtml);
+                      if(checkboxHtml) contentRowHtml += checkboxHtml;
+                      ResourceAnswerRadio.getHtml(foundContentRow.answerRadios[0], function(err, radioHtml) {
+                        if(err) {
+                          console.error(err);
+                          return res.negotiate(err);
+                        }
+                        if(radioHtml) contentRowHtml += radioHtml;
                         return res.ok(contentRowHtml + '</div></div>');
                       });
-                    // });
+                    });
                   });
                 });
               });

@@ -1,0 +1,15 @@
+<div class="container">
+  <%_.forEach(contentRows, function(contentRow) {
+     %>
+    <%= contentRow.questionTexts[0].text %> <br>
+    <%= contentRow.questionLinks[0].url %>
+    <%= contentRow.questionHeads[0].text %>
+    <%= contentRow.answerTexts[0].text %>
+    <%= contentRow.answerPercents[0].number %>
+    <%= contentRow.answerLongTexts[0].text %>
+    <%= contentRow.answerCheckboxes[0] %>
+    <%= contentRow.answerRadios[0] %>
+  <%
+  });%>
+
+</div>
