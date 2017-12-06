@@ -361,7 +361,8 @@ module.exports.bootstrap = function(cb) {
     console.log('createTestResourceQuestionLink');
     async.times(10, function(n, next) {
       ResourceQuestionLink.create({
-        url: faker.internet.url()
+        url: faker.internet.url(),
+        linkText: 'Description'
       }).exec(function(err, createdLink) {
         if(err) {
           console.error(err);

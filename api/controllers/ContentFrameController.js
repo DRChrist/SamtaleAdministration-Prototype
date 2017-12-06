@@ -26,7 +26,22 @@ module.exports = {
           contentRows: foundContentRows
         });
       });
+  },
+
+  buildContentFrame: function(req, res) {
+    ContentFrame.create({
+      title: req.param('title'),
+      contentRows: req.param('contentRowIds')
+    }).exec(function(err, createdContentFrame) {
+      if(err) {
+        console.error(err);
+        return res.negotiate(err);
+      }
+      return res.ok(createdContentFrame);
+    });
   }
+
+
 
 
 };

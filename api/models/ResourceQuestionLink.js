@@ -11,8 +11,14 @@ module.exports = {
     url: {
       type: 'string'
     },
+    linkText: {
+      type: 'string'
+    },
     question: {
       model: 'contentRow'
+    },
+    getHtml: function(cb) {
+      return cb(null, '<a href="' + this.url + '">' + this.linkText + '</a>');
     }
   }
 };

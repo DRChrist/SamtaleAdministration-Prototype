@@ -1,15 +1,10 @@
 <div class="container">
-  <%_.forEach(contentRows, function(contentRow) {
-     %>
-    <%= contentRow.questionTexts[0].text %> <br>
-    <%= contentRow.questionLinks[0].url %>
-    <%= contentRow.questionHeads[0].text %>
-    <%= contentRow.answerTexts[0].text %>
-    <%= contentRow.answerPercents[0].number %>
-    <%= contentRow.answerLongTexts[0].text %>
-    <%= contentRow.answerCheckboxes[0] %>
-    <%= contentRow.answerRadios[0] %>
+  <%_.forEach(contentRows, function(contentRow) { %>
+    <%= contentRow.id %> <input type="checkbox" class="rowChecks" value="<%= contentRow.id %>"> <br>
   <%
   });%>
-
+  <input type="text" id="contentFrameTitle">
+<button id="buildFrameBtn">Build Frame</button>
+  Id is:
+  <input type="text" id="contentFrameId">
 </div>

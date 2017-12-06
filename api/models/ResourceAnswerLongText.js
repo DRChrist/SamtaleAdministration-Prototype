@@ -17,6 +17,10 @@ module.exports = {
     },
     answer: {
       model: 'contentRow'
+    },
+    //callback has parameters (err, htmlString);
+    getHtml: function(cb) {
+      return cb(null, '<textarea></textarea>');
     }
   },
 

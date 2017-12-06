@@ -56,3 +56,17 @@ Is it mostly just mindless hacking I need to do?
 
 Check for undefined or 0 -> call functions to do what needs to be done.
 The checks don't have to be in series.
+
+
+_.forEach(contentRow, function(value) {
+
+    })
+     %>
+    <%= contentRow.questionTexts[0].text %> <br>
+    <%= contentRow.questionLinks[0].url %>
+    <%= contentRow.questionHeads[0].text %>
+    <%= contentRow.answerTexts[0].text %>
+    <%= contentRow.answerPercents[0].number %>
+    <%= contentRow.answerLongTexts[0].text %>
+    <%= contentRow.answerCheckboxes[0] %>
+    <%= contentRow.answerRadios[0] %>

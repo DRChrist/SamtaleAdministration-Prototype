@@ -17,6 +17,9 @@ module.exports = {
     },
     answer: {
       model: 'contentRow'
+    },
+    getHtml: function(cb) {
+  	  return cb(null, '<input type="number">');
     }
   },
 

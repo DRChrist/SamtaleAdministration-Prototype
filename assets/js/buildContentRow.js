@@ -35,14 +35,18 @@ $(document).ready(function() {
         return;
       }
       console.log(resContentRow);
-      io.socket.get('/ContentRow/getHtml', {'id': resContentRow.id }, function(resData, jwres) {
-        if(jwres.statusCode !== 200) {
-          console.error(jwres);
-          return;
-        }
-        console.log(resData);
-        $('#contentRowShow').html(resData);
-      });
+      $('#contentRowId').val(resContentRow.id);
+    });
+  });
+
+  $('#showButton').click(function() {
+    io.socket.get('/ContentRow/getHtml', {'id': $('#contentRowId').val() }, function(resData, jwres) {
+      if(jwres.statusCode !== 200) {
+        console.error(jwres);
+        return;
+      }
+      console.log(resData);
+      $('#contentRowShow').html(resData);
     });
   });
 

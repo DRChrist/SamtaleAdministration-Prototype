@@ -13,6 +13,9 @@ module.exports = {
     },
     question: {
       model: 'contentRow'
+    },
+    getHtml: function(cb) {
+      return cb(null, '<strong>' + this.text + '</strong>');
     }
   }
 };

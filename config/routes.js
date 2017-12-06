@@ -46,7 +46,8 @@ module.exports.routes = {
   'GET /agenda/:id': 'AgendaController.showAgenda',
   'POST /contentRow/buildContentRow': 'ContentRowController.buildContentRow',
   'GET /contentRow/getHtml': 'ContentRowController.getHtml',
-  'GET /buildContentFrame': 'ContentFrameController.showBuildPage'
+  'GET /buildContentFrame': 'ContentFrameController.showBuildPage',
+  'POST /contentFrame/buildContentFrame': 'ContentFrameController.buildContentFrame'
 
   /***************************************************************************
   *                                                                          *

@@ -22,7 +22,19 @@ module.exports = {
       collection: 'contentRow',
       via: 'contentFrames',
       dominant: true
-    }
+    },
+    // getHtml: function(req, res) {
+    //   var contentFrameHtml = '';
+    //   ContentFrame.find(req.param('id'))
+    //     .populate('contentRows')
+    //     .populate('contents')
+    //     .exec(function(err, foundContentFrame) {
+    //       contentFrameHtml += '<h2>' + foundContentFrame.title + '</h2>';
+    //       async.eachOfSeries(foundContentFrame.contentRows, function(contentRow, next) {
+    //
+    //       })
+    //     })
+    // }
   }
 
 

@@ -85,5 +85,6 @@ Log til hovedopgave:
   Mangler et godt system til at kontrollere hvilke metoder der kaldes, alt efter indholdet af objektet.
 
 06-12:
-  Rettet i contentRowHtml.
+  Reworked contentRowHtml. Hver model har nu en getHtml-funktion.
   Startet på buildContentFrame.
+  TODO: getHtml() for contentRow og ContentFrame ind i deres respektive modeller.

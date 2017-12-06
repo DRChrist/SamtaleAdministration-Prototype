@@ -14,11 +14,11 @@ module.exports = {
     answer: {
       model: 'contentRow'
     },
+    //callback has parameters (err, htmlString).
     getHtml: function(cb) {
       var checkboxHtml = '';
       async.eachOf(this.checkboxes, function(value, key, next) {
         checkboxHtml += '<input type="checkbox">' + key + '<br>';
-        console.log(key);
         next();
       }, function(err) {
         if(err) {
@@ -36,14 +36,12 @@ module.exports = {
     var checkboxHtml = '';
     async.eachOf(resource.checkboxes, function(value, key, next) {
       checkboxHtml += '<input type="checkbox">' + key + '<br>';
-      console.log(key);
       next();
     }, function(err) {
       if(err) {
         console.error(err);
         return cb(err);
       }
-      console.log(checkboxHtml);
       return cb(null, checkboxHtml);
     })
   },
