@@ -23,18 +23,30 @@ module.exports = {
       via: 'contentFrames',
       dominant: true
     },
-    // getHtml: function(req, res) {
-    //   var contentFrameHtml = '';
-    //   ContentFrame.find(req.param('id'))
-    //     .populate('contentRows')
-    //     .populate('contents')
-    //     .exec(function(err, foundContentFrame) {
-    //       contentFrameHtml += '<h2>' + foundContentFrame.title + '</h2>';
-    //       async.eachOfSeries(foundContentFrame.contentRows, function(contentRow, next) {
-    //
-    //       })
-    //     })
-    // }
+    getHtml: function(cb) {
+      var contentFrameHtml = '';
+      contentFrameHtml += '<h2>' + this.title + '</h2>';
+
+      //Loop through each of the contentRows associated with this contentFrame, calling getHtml
+      async.eachSeries(this.contentRows, function(contentRow, next) {
+        console.log(contentRow);
+        //NOT WORKING. Maybe not populating dependencies properly
+        contentRow.getHtml(function(err, contentRowHtml) {
+          if(err) {
+            next(err);
+          }
+          console.log(contentRowHtml);
+          contentFrameHtml += '<br>' + contentRowHtml;
+        });
+        next()
+      }, function(err) {
+        if(err) {
+          console.error(err);
+          return cb(err);
+        }
+        return cb(null, contentFrameHtml);
+      })
+    }
   }
 
 

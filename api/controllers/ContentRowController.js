@@ -120,7 +120,6 @@ module.exports = {
 
 
   getHtml: function(req, res) {
-    var contentRowHtml = '<div class="row"><div class="col-md-6">';
     ContentRow.findOne(req.param('id'))
       .populate('questionTexts')
       .populate('questionLinks')
@@ -130,7 +129,7 @@ module.exports = {
       .populate('answerLongTexts')
       .populate('answerCheckboxes')
       .populate('answerRadios')
-      .exec(function (err, foundContentRow) {
+      .exec(function(err, foundContentRow) {
         if(err) {
           console.error(err);
           return res.negotiate(err);
@@ -139,115 +138,74 @@ module.exports = {
           console.error('ContentRow does not exist');
           return res.notFound();
         }
-        console.log(foundContentRow.id);
-        delete foundContentRow.createdAt;
-        delete foundContentRow.updatedAt;
-        delete foundContentRow.id;
-        delete foundContentRow.contentFrames;
-
-        async.eachOfSeries(foundContentRow, function (resourceArray, resourceName, next) {
-          if(resourceName === 'answerTexts') {
-            contentRowHtml += '</div><div class="col-md-6">';
-          }
-          async.eachOfSeries(resourceArray, function (resource, index, next) {
-            if (resource) {
-              console.log('Resource is ' + resource);
-              resource.getHtml(function (err, htmlString) {
-                if (err) {
-                  next(err);
-                }
-                contentRowHtml += htmlString;
-              })
-            }
-            next();
-          }, function (err) {
-            if (err) {
-              next(err);
-            }
-            next();
-          });
-        }, function (err) {
-          if (err) {
+        foundContentRow.getHtml(function(err, contentRowHtml) {
+          if(err) {
             console.error(err);
             return res.negotiate(err);
           }
-          return res.ok(contentRowHtml + '</div></div>');
-        });
-      });
+          return res.ok(contentRowHtml);
+        })
+      })
+    // var contentRowHtml = '<div class="row"><div class="col-md-6">';
+    // ContentRow.findOne(req.param('id'))
+    //   .populate('questionTexts')
+    //   .populate('questionLinks')
+    //   .populate('questionHeads')
+    //   .populate('answerTexts')
+    //   .populate('answerPercents')
+    //   .populate('answerLongTexts')
+    //   .populate('answerCheckboxes')
+    //   .populate('answerRadios')
+    //   .exec(function (err, foundContentRow) {
+    //     if(err) {
+    //       console.error(err);
+    //       return res.negotiate(err);
+    //     }
+    //     if(!foundContentRow) {
+    //       console.error('ContentRow does not exist');
+    //       return res.notFound();
+    //     }
+    //     console.log(foundContentRow.id);
+    //     //Delete the attributes that are not associations with resources
+    //     //This is purely so that we are able to loop through the contentRow object
+    //     delete foundContentRow.createdAt;
+    //     delete foundContentRow.updatedAt;
+    //     delete foundContentRow.id;
+    //     delete foundContentRow.contentFrames;
+    //
+    //     //Loop through the resource associations in foundContentRow
+    //     async.eachOfSeries(foundContentRow, function (resourceArray, resourceName, next) {
+    //       if(resourceName === 'answerTexts') {
+    //         contentRowHtml += '</div><div class="col-md-6">';
+    //       }
+    //       //Loop through the individual resources in a resource association array
+    //       //In many cases, there will be only one element in the array
+    //       async.eachOfSeries(resourceArray, function (resource, index, next) {
+    //         if (resource) {
+    //           console.log('Resource is ' + resource);
+    //           resource.getHtml(function (err, htmlString) {
+    //             if (err) {
+    //               next(err);
+    //             }
+    //             contentRowHtml += htmlString;
+    //           })
+    //         }
+    //         next();
+    //       }, function (err) {
+    //         if (err) {
+    //           next(err);
+    //         }
+    //         next();
+    //       });
+    //     }, function (err) {
+    //       if (err) {
+    //         console.error(err);
+    //         return res.negotiate(err);
+    //       }
+    //       return res.ok(contentRowHtml + '</div></div>');
+    //     });
+    //   });
   }
-  //       console.log(foundContentRow);
-  //       async.eachSeries(foundContentRow.questionTexts, function(questionText, next) {
-  //         contentRowHtml += questionText.text;
-  //         next();
-  //       }, function(err) {
-  //         if(err){
-  //           console.error(err);
-  //           return res.negotiate(err);
-  //         }
-  //         async.eachSeries(foundContentRow.questionLinks, function(questionLink, next) {
-  //           contentRowHtml += '<a href="' + questionLink.url + '">' + questionLink.url + '</a>';
-  //           next();
-  //         }, function(err) {
-  //           if(err) {
-  //             console.error(err);
-  //             return res.negotiate(err);
-  //           }
-  //           async.eachSeries(foundContentRow.questionHeads, function(questionHead, next) {
-  //             contentRowHtml += questionHead.text;
-  //             next();
-  //           }, function(err) {
-  //             if(err) {
-  //               console.error(err);
-  //               return res.negotiate(err);
-  //             }
-  //             contentRowHtml += '</div><div class="col-md-6">';
-  //             async.eachSeries(foundContentRow.answerTexts, function(answerText, next) {
-  //               contentRowHtml += answerText.html;
-  //               next();
-  //             }, function(err) {
-  //               if(err) {
-  //                 console.error(err);
-  //                 return res.negotiate(err);
-  //               }
-  //               async.eachSeries(foundContentRow.answerPercents, function(answerPercent, next) {
-  //                 contentRowHtml += answerPercent.html;
-  //                 next();
-  //               }, function(err) {
-  //                 if(err) {
-  //                   console.error(err);
-  //                   return res.negotiate(err);
-  //                 }
-  //                 async.eachSeries(foundContentRow.answerLongTexts, function(answerLongText, next) {
-  //                   contentRowHtml += answerLongText.html;
-  //                   next();
-  //                 }, function(err) {
-  //                   if(err) {
-  //                     console.error(err);
-  //                     return res.negotiate(err);
-  //                   }
-  //                   ResourceAnswerCheckbox.getHtml(foundContentRow.answerCheckboxes[0], function(err, checkboxHtml) {
-  //                     if(err) {
-  //                       console.error(err);
-  //                       return res.negotiate(err);
-  //                     }
-  //                     if(checkboxHtml) contentRowHtml += checkboxHtml;
-  //                     ResourceAnswerRadio.getHtml(foundContentRow.answerRadios[0], function(err, radioHtml) {
-  //                       if(err) {
-  //                         console.error(err);
-  //                         return res.negotiate(err);
-  //                       }
-  //                       if(radioHtml) contentRowHtml += radioHtml;
-  //                       return res.ok(contentRowHtml + '</div></div>');
-  //                     });
-  //                   });
-  //                 });
-  //               });
-  //             });
-  //           });
-  //         });
-  //       });
-  //   });
-  // }
 
 
 

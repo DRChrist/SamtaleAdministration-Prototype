@@ -17,7 +17,7 @@ module.exports = {
     getHtml: function(cb) {
       var radioHtml = '';
       async.eachOf(this.radios, function(value, key, next) {
-        radioHtml += '<input type="radio"> + key + <br>'
+        radioHtml += '<input type="radio">' + key + '<br>'
         next();
       }, function(err) {
         if(err) {

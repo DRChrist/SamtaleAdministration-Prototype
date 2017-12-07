@@ -39,6 +39,28 @@ module.exports = {
       }
       return res.ok(createdContentFrame);
     });
+  },
+
+  getHtml: function(req, res) {
+    ContentFrame.findOne(req.param('id'))
+      .populate('contentRows')
+      .exec(function(err, foundContentFrame) {
+        if(err) {
+          console.error(err);
+          return res.negotiate(err);
+        }
+        if(!foundContentFrame) {
+          console.error('ContentFrame does not exist');
+          return res.notFound();
+        }
+        foundContentFrame.getHtml(function(err, contentFrameHtml) {
+          if(err) {
+            console.error(err);
+            return res.negotiate(err);
+          }
+          return res.ok(contentFrameHtml);
+        })
+      })
   }
 
 
