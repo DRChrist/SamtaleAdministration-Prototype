@@ -1,0 +1,14 @@
+<div class="container">
+  <%_.forEach(contentFrames, function(contentFrame) { %>
+  <%= contentFrame.id + contentFrame.title %> <input type="checkbox" class="frameChecks" value="<%= contentFrame.id %>"> <br>
+  <%
+  });%>
+  Title:
+  <input type="text" id="contentTitle">
+  <input type="textarea" id="contentDesc">
+  <button id="buildContentBtn">Build Content</button>
+  <button id="showContentBtn">Show Content</button>
+  Id is:
+  <input type="text" id="contentId">
+  <div id="contentShowPlace"></div>
+</div>

@@ -89,8 +89,10 @@ Log til hovedopgave:
   Startet på buildContentFrame.
   TODO: getHtml() for contentRow og ContentFrame ind i deres respektive modeller.
 
-07-12: Flyttet getHtml-funktioner ind i modellerne. Mangler stadig at debugge.
-
 07-12:
+  Flyttet getHtml-funktioner ind i modellerne. Mangler stadig at debugge.
 
 08-12:
+  Debugget getHtml-funktioner. Next-callback i loop-funktioner stod uden for db-kald og pga. asynkronicitet
+  blev db-kaldene ikke altid processeret. Dette var både et problem i ContentFrame og Content men gav
+  forskellige resultater pga. tidsforskellen på db-kaldene.

@@ -17,14 +17,14 @@ $(document).ready(function() {
   });
 
   $('#showFrameBtn').click(function() {
-    $('#showContentFrame').html('');
+    // $('#showContentFrame').html('');
     io.socket.get('/ContentFrame/getHtml', { 'id': $('#contentFrameId').val() }, function(resData, jwres) {
       if(jwres.statusCode !== 200) {
         console.error(jwres);
         return;
       }
       console.log(resData);
-      $('#showContentFrame').html(resData);
+      $('#frameShowPlace').html(resData);
       }
     )
   });

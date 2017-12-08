@@ -25,26 +25,11 @@ module.exports = {
           console.error(err);
           return cb(err);
         }
-        console.log(checkboxHtml);
         return cb(null, checkboxHtml);
       })
     }
   },
 
-  getHtml: function(resource, cb) {
-    if(!resource) return cb();
-    var checkboxHtml = '';
-    async.eachOf(resource.checkboxes, function(value, key, next) {
-      checkboxHtml += '<input type="checkbox">' + key + '<br>';
-      next();
-    }, function(err) {
-      if(err) {
-        console.error(err);
-        return cb(err);
-      }
-      return cb(null, checkboxHtml);
-    })
-  },
 
   buildEmptyResourceCheckbox: function(numberOfResources, arrayOfTexts, cb) {
     if(numberOfResources < 1) {
@@ -67,7 +52,6 @@ module.exports = {
             console.error(err);
             return cb(err);
           }
-          // console.log(createdCheckbox);
           return cb(null, createdCheckbox.id);
         });
       });

@@ -25,8 +25,35 @@ module.exports = {
   		collection: 'contentFrame',
   		via: 'contents',
   		dominant: true
-  	}
-  },
+  	},
+    getHtml: function(cb) {
+      var contentHtml = '';
+      contentHtml += '<h2>' + this.title + '</h2>';
+      contentHtml += '<p>' + this.description + '</p>';
+      //Loop through each of the contentFrames associated with this content, calling getHtml
+      async.eachSeries(this.contentFrames, function(contentFrame, next) {
+        ContentFrame.findOne(contentFrame.id)
+          .populate('contentRows')
+          .exec(function (err, foundContentFrame) {
+            foundContentFrame.getHtml(function (err, contentFrameHtml) {
+              if (err) {
+                next(err);
+              }
+              contentHtml += '<br> <br>' + contentFrameHtml
+              next();
+            });
+          });
+      }, function (err) {
+        if (err) {
+          console.error(err);
+          return cb(err);
+        }
+        return cb(null, contentHtml);
+      });
+    }
+
+
+  }
 
 };
 

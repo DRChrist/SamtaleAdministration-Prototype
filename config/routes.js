@@ -48,7 +48,10 @@ module.exports.routes = {
   'GET /contentRow/getHtml': 'ContentRowController.getHtml',
   'GET /buildContentFrame': 'ContentFrameController.showBuildPage',
   'POST /contentFrame/buildContentFrame': 'ContentFrameController.buildContentFrame',
-  'GET /contentFrame/getHtml': 'ContentFrameController.getHtml'
+  'GET /contentFrame/getHtml': 'ContentFrameController.getHtml',
+  'GET /buildContent': 'ContentController.showBuildPage',
+  'POST /content/buildContent': 'ContentController.buildContent',
+  'GET /content/getHtml': 'ContentController.getHtml'
 
   /***************************************************************************
   *                                                                          *

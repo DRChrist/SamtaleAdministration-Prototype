@@ -25,13 +25,11 @@ module.exports = {
     },
     getHtml: function(cb) {
       var contentFrameHtml = '';
-      contentFrameHtml += '<h2>' + this.title + '</h2>';
+      contentFrameHtml += '<h3>' + this.title + '</h3>';
 
       //Loop through each of the contentRows associated with this contentFrame, calling getHtml
       async.eachSeries(this.contentRows, function(contentRow, next) {
-        console.log('The Searced for contentRow is: ' + contentRow);
-        //NOT WORKING. Maybe not populating dependencies properly
-        ContentRow.find(contentRow.id)
+        ContentRow.findOne(contentRow.id)
           .populate('questionTexts')
           .populate('questionLinks')
           .populate('questionHeads')
@@ -41,24 +39,14 @@ module.exports = {
           .populate('answerCheckboxes')
           .populate('answerRadios')
           .exec(function (err, foundContentRow) {
-            console.log('The found contentRow is: ' + foundContentRow);
             foundContentRow.getHtml(function (err, contentRowHtml) {
               if (err) {
                 next(err);
               }
               contentFrameHtml += '<br>' + contentRowHtml
+              next();
             });
-            next();
           });
-            //   }
-            // contentRow.getHtml(function(err, contentRowHtml) {
-            //   if(err) {
-            //     next(err);
-            //   }
-            //   console.log(contentRowHtml);
-            //   contentFrameHtml += '<br>' + contentRowHtml;
-            // });
-            // next()
           }, function (err) {
             if (err) {
               console.error(err);
