@@ -88,3 +88,7 @@ Log til hovedopgave:
   Reworked contentRowHtml. Hver model har nu en getHtml-funktion.
   Startet på buildContentFrame.
   TODO: getHtml() for contentRow og ContentFrame ind i deres respektive modeller.
+
+07-12:
+
+08-12:

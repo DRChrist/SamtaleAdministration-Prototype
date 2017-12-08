@@ -29,23 +29,43 @@ module.exports = {
 
       //Loop through each of the contentRows associated with this contentFrame, calling getHtml
       async.eachSeries(this.contentRows, function(contentRow, next) {
-        console.log(contentRow);
+        console.log('The Searced for contentRow is: ' + contentRow);
         //NOT WORKING. Maybe not populating dependencies properly
-        contentRow.getHtml(function(err, contentRowHtml) {
-          if(err) {
-            next(err);
-          }
-          console.log(contentRowHtml);
-          contentFrameHtml += '<br>' + contentRowHtml;
-        });
-        next()
-      }, function(err) {
-        if(err) {
-          console.error(err);
-          return cb(err);
-        }
-        return cb(null, contentFrameHtml);
-      })
+        ContentRow.find(contentRow.id)
+          .populate('questionTexts')
+          .populate('questionLinks')
+          .populate('questionHeads')
+          .populate('answerTexts')
+          .populate('answerPercents')
+          .populate('answerLongTexts')
+          .populate('answerCheckboxes')
+          .populate('answerRadios')
+          .exec(function (err, foundContentRow) {
+            console.log('The found contentRow is: ' + foundContentRow);
+            foundContentRow.getHtml(function (err, contentRowHtml) {
+              if (err) {
+                next(err);
+              }
+              contentFrameHtml += '<br>' + contentRowHtml
+            });
+            next();
+          });
+            //   }
+            // contentRow.getHtml(function(err, contentRowHtml) {
+            //   if(err) {
+            //     next(err);
+            //   }
+            //   console.log(contentRowHtml);
+            //   contentFrameHtml += '<br>' + contentRowHtml;
+            // });
+            // next()
+          }, function (err) {
+            if (err) {
+              console.error(err);
+              return cb(err);
+            }
+            return cb(null, contentFrameHtml);
+          });
     }
   }
 
