@@ -90,3 +90,7 @@ Log til hovedopgave:
   TODO: getHtml() for contentRow og ContentFrame ind i deres respektive modeller.
 
 07-12: Flyttet getHtml-funktioner ind i modellerne. Mangler stadig at debugge.
+
+07-12:
+
+08-12:
