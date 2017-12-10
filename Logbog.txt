@@ -96,3 +96,8 @@ Log til hovedopgave:
   Debugget getHtml-funktioner. Next-callback i loop-funktioner stod uden for db-kald og pga. asynkronicitet
   blev db-kaldene ikke altid processeret. Dette var både et problem i ContentFrame og Content men gav
   forskellige resultater pga. tidsforskellen på db-kaldene.
+
+10-12:
+  Genovervejet struktur for rapport.
+  Besluttet at jeg vil inkludere et ER-diagram og enten et aktivitetsdiagram eller et bpmn-diagram.
+  TODO: Tjek om dataen i ER-diagrammet er up-to-date. Der kan være ændringer i ressourcernes attributes.
