@@ -57,6 +57,8 @@ Is it mostly just mindless hacking I need to do?
 Check for undefined or 0 -> call functions to do what needs to be done.
 The checks don't have to be in series.
 
+Koordinatsystem til at håndtere grafisk opsætning?
+
 
 _.forEach(contentRow, function(value) {
 
