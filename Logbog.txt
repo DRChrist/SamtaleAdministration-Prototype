@@ -103,7 +103,8 @@ Log til hovedopgave:
   TODO: Tjek om dataen i ER-diagrammet er up-to-date. Der kan være ændringer i ressourcernes attributes.
 
 11-12:
-  Mødtes med Anders og skrevet om ER-diagram
+  TODO: Tænke over hvordan data gemmes efter samtale (specifikt checkbox + radio)
+  Skrevet om ER-diagram.
 
 16-12:
   Skrevet om states, lavet aktivitetsdagrammer og skrevet om dem.
