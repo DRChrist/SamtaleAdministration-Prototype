@@ -66,4 +66,14 @@ $(document).ready(function() {
     }
   });
 
+  $('#toContentFrame').click(function() {
+    io.socket.get('/buildContentFrame', function(resData, jwres) {
+      if(jwres.statusCode !== 200) {
+        console.error(jwres);
+        return;
+      }
+      console.log(resData);
+    })
+  })
+
 });

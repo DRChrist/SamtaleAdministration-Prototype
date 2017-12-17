@@ -87,7 +87,7 @@ Log til hovedopgave:
 06-12:
   Reworked contentRowHtml. Hver model har nu en getHtml-funktion.
   Startet på buildContentFrame.
-  TODO: getHtml() for contentRow og ContentFrame ind i deres respektive modeller.
+  X TODO: getHtml() for contentRow og ContentFrame ind i deres respektive modeller.
 
 07-12:
   Flyttet getHtml-funktioner ind i modellerne. Mangler stadig at debugge.
@@ -101,3 +101,12 @@ Log til hovedopgave:
   Genovervejet struktur for rapport.
   Besluttet at jeg vil inkludere et ER-diagram og enten et aktivitetsdiagram eller et bpmn-diagram.
   TODO: Tjek om dataen i ER-diagrammet er up-to-date. Der kan være ændringer i ressourcernes attributes.
+
+11-12:
+  Mødtes med Anders og skrevet om ER-diagram
+
+16-12:
+  Skrevet om states, lavet aktivitetsdagrammer og skrevet om dem.
+
+17-12:
+  Skrevet om Http-protokollen.

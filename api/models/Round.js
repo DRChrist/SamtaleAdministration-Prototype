@@ -18,8 +18,8 @@ module.exports = {
   	meetings: {
   		collection: 'meeting',
   		via: 'round'
-  	},
-  },
-  
+  	}
+  }
+
 };
 

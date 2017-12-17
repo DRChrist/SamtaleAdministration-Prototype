@@ -70,3 +70,21 @@ _.forEach(contentRow, function(value) {
     <%= contentRow.answerLongTexts[0].text %>
     <%= contentRow.answerCheckboxes[0] %>
     <%= contentRow.answerRadios[0] %>
+
+Hvornår invitationen udsendes til medarbejderen defineres af attributen invitePeriod i Agenda, som angiver hvor mange dage før samtalens dato, invitationen udsendes. InvitePeriod definerer hvor lang tid der skal gå mellem samtaler. Det virker ikke optimalt at denne information er knyttet til et Agenda-objekt.
+Enten er det okay fordi systemet venter til en ny runde begynder med at oprette nye meetingobjekter. Dette betyder dog at runder der trækker ud, kan udsætte samtaler, og at der ikke kan køre to runder på samme tid. Derfor vil det være nødvendigt med en rundedefinition der involverer en tidsperiode.
+Eller også er det endnu værre fordi meetingobjekter bliver dannet på baggrund af seneste samtale. Og ændringer af inviteInterval tager derfor en ekstra runde at gennemføre. Men måske er det løst ved at man altid genberegner inviteInterval ved en
+Scratch all that. Vi har jo altid en upcoming Agenda. Den kan jo bare altid bruges til at beregne datoer til samtaler der er knyttet til upcoming runde. Så når man ændrer upcoming samtaleforløb vil man blive nødt til at genberegne datoer.
+
+
+Problemet er at der ikke er noget definerer et samtaleforløb som skabelon, så hvordan ved vi hvilket samtaleforløb er aktivt?
+Vi ved heller ikke hvilket samtaleforløb der er upcoming eller hvornår et nyt samtaleforløb bliver upcoming.
+Det virker som om der er to typer af ting her: Samtaleforløbsskabeloner og samtaleforløbsskemaer.
+
+Løsningsforslag:
+1. Lav et skabelon flag som kan rejses.
+  Virker meget udynamisk. Det lyder ikke som en god løsning.
+2. Lav en association til runde. De samtaleforløb der har en runde-association er vigtigt.
+  Men har vi ikke måske en pool af mulige samtaleforløb? Hvordan adskiller vi dem fra alle de andre?
+  Og hvorfor er dette bedre end 1.?
+3. Builder-pattern?
