@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <strong>Contents:</strong> <br>
+      <%_.forEach(contents, function(content) { %>
+      <%= content.id + content.title %> <input type="checkbox" class="contentChecks" value="<%= content.id %>"> <br>
+      <%
+      });%>
+    </div>
+    <div class="col-md-4">
+      <strong>Departments:</strong> <br>
+      <%_.forEach(departments, function(department) { %>
+      <%= department.id + department.sectionCode %> <input type="checkbox" class="departmentChecks" value="<%= department.id %>"> <br>
+      <%
+      });%>
+    </div>
+    <div class="col-md-4">
+      <strong>Jobs:</strong> <br>
+      <%_.forEach(jobs, function(job) { %>
+      <%= job.id + job.title %> <input type="checkbox" class="jobChecks" value="<%= job.id %>"> <br>
+      <%
+      });%>
+    </div>
+  </div>
+  <br><br><br>
+  Title:
+  <input type="text" id="agendaTitle">
+  Description:
+  <input type="textarea" id="agendaDesc">
+  <br>
+  Days between meetings:
+  <input type="number" id="agendaInterval">
+  Days before meeting to send out interval:
+  <input type="number" id="agendaPeriod">
+  <br>
+  <button id="buildAgendaBtn">Build Agenda</button>
+  <button id="showAgendaBtn">Show Agenda</button>
+  Id is:
+  <input type="text" id="agendaId">
+  <a href="/buildContent">Build Content</a>
+  <div id="agendaShowPlace"></div>
+</div>

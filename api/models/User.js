@@ -29,20 +29,18 @@ module.exports = {
     },
   	jobs: {
   		collection: 'job',
-  		via: 'users',
-  		dominant: true
+  		via: 'users'
   	},
   	departments: {
   		collection: 'department',
-  		via: 'users',
-  		dominant: true
+  		via: 'users'
   	},
   	meetings: {
   		collection: 'meeting',
   		via: 'user'
   	}
-  },
+  }
 
-  
+
 };
 

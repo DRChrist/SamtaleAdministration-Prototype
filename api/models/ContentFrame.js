@@ -20,8 +20,7 @@ module.exports = {
   	},
     contentRows: {
       collection: 'contentRow',
-      via: 'contentFrames',
-      dominant: true
+      via: 'contentFrames'
     },
     getHtml: function(cb) {
       var contentFrameHtml = '';

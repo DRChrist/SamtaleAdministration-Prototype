@@ -14,43 +14,43 @@ module.exports = {
   	description: {
   		type: 'string'
   	},
+    //how long there is between meetings
   	inviteInterval: {
   		// in days
   		type: 'integer'
   	},
+    //how long before a meeting that an invitation should be sent out
   	invitePeriod: {
   		// in days
   		type: 'integer'
   	},
   	state: {
   		type: 'string',
-      enum: ['active', 'inactive', 'upcoming']
+      enum: ['active', 'inactive', 'upcoming'],
+      defaultsTo: 'inactive'
   	},
     approved: {
-      type: 'boolean'
+      type: 'boolean',
+      defaultsTo: 'false'
     },
   	deletedAt: {
       type: 'datetime'
     },
   	departments: {
   		collection: 'department',
-  		via: 'agendas',
-  		dominant: true
+  		via: 'agendas'
   	},
   	jobs: {
   		collection: 'job',
-  		via: 'agendas',
-  		dominant: true
+  		via: 'agendas'
   	},
   	contents: {
       collection: 'content',
-      via: 'agendas',
-      dominant: true
+      via: 'agendas'
     },
     meetings: {
       collection: 'meeting',
-      via: 'agenda',
-      dominant: true
+      via: 'agenda'
     }
   }
 

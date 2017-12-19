@@ -23,8 +23,7 @@ module.exports = {
   	},
   	contentFrames: {
   		collection: 'contentFrame',
-  		via: 'contents',
-  		dominant: true
+  		via: 'contents'
   	},
     getHtml: function(cb) {
       var contentHtml = '';

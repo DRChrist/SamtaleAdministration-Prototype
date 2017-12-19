@@ -146,65 +146,7 @@ module.exports = {
           return res.ok(contentRowHtml);
         })
       })
-    // var contentRowHtml = '<div class="row"><div class="col-md-6">';
-    // ContentRow.findOne(req.param('id'))
-    //   .populate('questionTexts')
-    //   .populate('questionLinks')
-    //   .populate('questionHeads')
-    //   .populate('answerTexts')
-    //   .populate('answerPercents')
-    //   .populate('answerLongTexts')
-    //   .populate('answerCheckboxes')
-    //   .populate('answerRadios')
-    //   .exec(function (err, foundContentRow) {
-    //     if(err) {
-    //       console.error(err);
-    //       return res.negotiate(err);
-    //     }
-    //     if(!foundContentRow) {
-    //       console.error('ContentRow does not exist');
-    //       return res.notFound();
-    //     }
-    //     console.log(foundContentRow.id);
-    //     //Delete the attributes that are not associations with resources
-    //     //This is purely so that we are able to loop through the contentRow object
-    //     delete foundContentRow.createdAt;
-    //     delete foundContentRow.updatedAt;
-    //     delete foundContentRow.id;
-    //     delete foundContentRow.contentFrames;
-    //
-    //     //Loop through the resource associations in foundContentRow
-    //     async.eachOfSeries(foundContentRow, function (resourceArray, resourceName, next) {
-    //       if(resourceName === 'answerTexts') {
-    //         contentRowHtml += '</div><div class="col-md-6">';
-    //       }
-    //       //Loop through the individual resources in a resource association array
-    //       //In many cases, there will be only one element in the array
-    //       async.eachOfSeries(resourceArray, function (resource, index, next) {
-    //         if (resource) {
-    //           console.log('Resource is ' + resource);
-    //           resource.getHtml(function (err, htmlString) {
-    //             if (err) {
-    //               next(err);
-    //             }
-    //             contentRowHtml += htmlString;
-    //           })
-    //         }
-    //         next();
-    //       }, function (err) {
-    //         if (err) {
-    //           next(err);
-    //         }
-    //         next();
-    //       });
-    //     }, function (err) {
-    //       if (err) {
-    //         console.error(err);
-    //         return res.negotiate(err);
-    //       }
-    //       return res.ok(contentRowHtml + '</div></div>');
-    //     });
-    //   });
+
   }
 
 
