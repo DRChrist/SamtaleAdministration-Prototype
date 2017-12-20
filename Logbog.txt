@@ -115,3 +115,6 @@ Log til hovedopgave:
 18-12:
   Skrevet om modellaget, Waterline, Bootstrap, Web Sockets, samt konklusion.
   Tilføjet agenda til buildrutinen.
+
+19-12:
+  Lavet resten.
