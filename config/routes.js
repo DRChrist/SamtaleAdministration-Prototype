@@ -53,7 +53,7 @@ module.exports.routes = {
   'POST /content/buildContent': 'ContentController.buildContent',
   'GET /content/getHtml': 'ContentController.getHtml',
   'GET /buildAgenda': 'AgendaController.showBuildPage',
-  // 'POST /agenda/buildAgenda': 'AgendaController.buildAgenda'
+  'POST /agenda/buildAgenda': 'AgendaController.buildAgenda'
 
   /***************************************************************************
   *                                                                          *

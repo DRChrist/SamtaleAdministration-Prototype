@@ -1,6 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4">
+      <!--Show all Contents, Departments and jobs and set up checkboxes next to them-->
       <strong>Contents:</strong> <br>
       <%_.forEach(contents, function(content) { %>
       <%= content.id + content.title %> <input type="checkbox" class="contentChecks" value="<%= content.id %>"> <br>

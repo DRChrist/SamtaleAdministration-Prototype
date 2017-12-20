@@ -48,6 +48,7 @@ module.exports = {
       collection: 'resourceAnswerCheckbox',
       via: 'answer'
     },
+    //callback has parameters (err, htmlString);
     getHtml: function(cb) {
       var contentRowHtml = '<div class="row"><div class="col-md-6">';
 

@@ -11,18 +11,16 @@ module.exports = {
   	text: {
   		type: 'string'
   	},
-    html: {
-      type: 'string',
-      defaultsTo: '<input type="text">'
-    },
     answer: {
       model: 'contentRow'
     },
+    //callback has parameters (err, htmlString);
     getHtml: function(cb) {
   	  return cb(null, '<input type="text">');
     }
   },
 
+  //Create a number of objects with an empty text attribute
   buildEmptyResourceTexts: function(numberOfResources, cb) {
     var returnArray = [];
     if(numberOfResources < 1) {

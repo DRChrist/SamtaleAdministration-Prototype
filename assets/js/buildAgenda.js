@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
   $('#buildAgendaBtn').click(function() {
+    //Map the checked checkboxes to an array
     var selectedContents = $('.contentChecks:checkbox:checked').map(function(){
       return $(this).val();
     }).get();
@@ -10,6 +11,7 @@ $(document).ready(function() {
     var selectedJobs = $('.jobChecks:checkbox:checked').map(function() {
       return $(this).val();
     }).get();
+
     io.socket.post('/Agenda/buildAgenda', {
       title: $('#agendaTitle').val(),
       description: $('#agendaDesc').val(),
@@ -28,15 +30,8 @@ $(document).ready(function() {
   });
 
   $('#showAgendaBtn').click(function() {
-    io.socket.get('/Agenda/' + $('#agendaId').val(), function(resData, jwres) {
-        if(jwres.statusCode !== 200) {
-          console.error(jwres);
-          return;
-        }
-        console.log(resData);
-        $('#agendaShowPlace').html(resData);
+        window.location.assign('/Agenda?id=' + $('#agendaId').val());
       }
     )
-  });
 
 });

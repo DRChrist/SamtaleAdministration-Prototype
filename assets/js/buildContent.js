@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
   $('#buildContentBtn').click(function() {
+    //Map the checked checkboxes to an array
     var selectedRows = $('.frameChecks:checkbox:checked').map(function(){
       return $(this).val();
     }).get();

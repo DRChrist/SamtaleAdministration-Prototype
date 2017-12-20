@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
   $('#buildFrameBtn').click(function() {
+    //Map the checked checkboxes to an array
     var selectedRows = $('.rowChecks:checkbox:checked').map(function(){
       return $(this).val();
     }).get();
@@ -17,7 +18,6 @@ $(document).ready(function() {
   });
 
   $('#showFrameBtn').click(function() {
-    // $('#showContentFrame').html('');
     io.socket.get('/ContentFrame/getHtml', { 'id': $('#contentFrameId').val() }, function(resData, jwres) {
       if(jwres.statusCode !== 200) {
         console.error(jwres);

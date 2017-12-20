@@ -143,7 +143,6 @@ module.exports.bootstrap = function(cb) {
               createdAgenda.contents.add(_.sample(contents).id);
               //Find all meetings
               Meeting.find()
-              // .populate('agenda')
               .exec(function(err, meetings) {
                 if(err) {
                   return callback(err);

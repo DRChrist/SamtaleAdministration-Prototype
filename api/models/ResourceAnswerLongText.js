@@ -11,10 +11,6 @@ module.exports = {
     text: {
       type: 'string'
     },
-    html: {
-      type: 'string',
-      defaultsTo: '<textarea></textarea>'
-    },
     answer: {
       model: 'contentRow'
     },
@@ -24,6 +20,7 @@ module.exports = {
     }
   },
 
+  //Create a number of resources with an empty text attribute
   buildEmptyResourceLongTexts: function(numberOfResources, cb) {
     var returnArray = [];
     if(numberOfResources < 1) {

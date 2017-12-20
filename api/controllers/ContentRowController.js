@@ -8,6 +8,7 @@
 module.exports = {
 
   buildContentRow: function(req, res) {
+    //+-operator makes sure that the var is an integer
     var questionTexts = +req.param('questionTexts');
     var questionHeads = +req.param('questionHeads');
     var questionLinks = +req.param('questionLinks');

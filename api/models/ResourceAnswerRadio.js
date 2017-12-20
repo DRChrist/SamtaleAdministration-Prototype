@@ -14,6 +14,8 @@ module.exports = {
     answer: {
       model: 'contentRow'
     },
+    //Loop through the radios json and add html for each key
+    //callback has parameters (err, htmlString);
     getHtml: function(cb) {
       var radioHtml = '';
       async.eachOf(this.radios, function(value, key, next) {
@@ -29,7 +31,7 @@ module.exports = {
     }
   },
 
-
+  //Build an object with arrayOfTexts as the keys in the radios json and false booleans as values
   buildEmptyResourceRadio: function(numberOfResources, arrayOfTexts, cb) {
     if(numberOfResources < 1) {
       return cb(null, [])
@@ -37,6 +39,7 @@ module.exports = {
       var radios = {};
       counter = 0;
       //TODO: find a better way of doing this
+      //Loop until there are no more strings in arrayOfTexts, adding the strings to the json
       async.times(numberOfResources, function(n, next) {
         radios[arrayOfTexts[counter]] = false;
         counter++;

@@ -30,7 +30,7 @@ module.exports = {
     }
   },
 
-
+  //Build an object with arrayOfTexts as the keys in the checkbox json and false booleans as values
   buildEmptyResourceCheckbox: function(numberOfResources, arrayOfTexts, cb) {
     if(numberOfResources < 1) {
       return cb(null, [])
@@ -38,6 +38,7 @@ module.exports = {
       var checkboxes = {};
       counter = 0;
       //TODO: find a better way of doing this
+      //Loop until there are no more strings in arrayOfTexts, adding the strings to the json
       async.times(numberOfResources, function(n, next) {
         checkboxes[arrayOfTexts[counter]] = false;
         counter++;

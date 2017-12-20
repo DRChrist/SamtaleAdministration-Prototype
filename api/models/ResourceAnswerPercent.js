@@ -11,18 +11,16 @@ module.exports = {
   	number: {
   		type: 'integer'
   	},
-    html: {
-  	  type: 'string',
-      defaultsTo: '<input type="number">'
-    },
     answer: {
       model: 'contentRow'
     },
+    //callback has parameters (err, htmlString);
     getHtml: function(cb) {
   	  return cb(null, '<input type="number">');
     }
   },
 
+  //Create a number of resources with an empty number attribute
   buildEmptyResourcePercents: function(numberOfResources, cb) {
     var returnArray = [];
     if(numberOfResources < 1) {

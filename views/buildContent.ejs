@@ -1,4 +1,5 @@
 <div class="container">
+  <!--Show all the ContentFrames in the db and set up checkboxes next to them-->
   <%_.forEach(contentFrames, function(contentFrame) { %>
   <%= contentFrame.id + contentFrame.title %> <input type="checkbox" class="frameChecks" value="<%= contentFrame.id %>"> <br>
   <%

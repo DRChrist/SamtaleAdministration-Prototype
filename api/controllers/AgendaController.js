@@ -53,8 +53,8 @@ module.exports = {
 	  Agenda.create({
       title: req.param('title'),
       description: req.param('description'),
-      invitePeriod: req.param('invitePeriod'),
-      inviteInterval: req.param('inviteInterval'),
+      invitePeriod: +req.param('invitePeriod'),
+      inviteInterval: +req.param('inviteInterval'),
       jobs: req.param('jobIds'),
       departments: req.param('departmentIds'),
       contents: req.param('contentIds')
